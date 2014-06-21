@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ImpressJS ANU Template Demo</title>
+
+<!--
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic|Roboto:400,500,700,400italic,500italic" rel="stylesheet" />
+-->
+
+    <!-- Roboto is as close to Helvetica Neue as I can get for free, that in turn
+         is the ANU official font -->
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic" rel="stylesheet" />
+
+    <link href="../Resources/nizette-anu-impressjs.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="0">
+        <div style="float:left;width=200;vertical-align:middle">
+            <img src='../Resources/horizontal-black-on-white-logo.jpg' width='180' /></div>
+
+        <div style="float:right;text-align:right;vertical-align:middle">
+            <p>Research School of Engineering</p>
+            <p style="font-size:16px">
+                ENGN8537: Embedded Systems and Real Time Digital Signal Processing
+            </p>
+        </div>
+        <div style="clear:both;text-align:center">
+            <p style="padding-top:175px"/>
+            <h1>Usage Demo of ImpressJS</h1>
+        </div>
+	<h2 style="text-align:right;padding-top:100px;padding-right:40px;">Ben Nizette</h2>
+    <p style="padding-top:100px;font-size:16px">
+        <a href="?print">print view</a> |
+        <a href="#overview">overview</a>
+    </p>
+    </div>
+
+    <!-- Content 1-->
+    <div class="step" data-x='1000' data-y='0'>
+        <h1>Content slide</h1>
+        <p>Some text that goes on for a long time to see how it might wrap.  Hopefully it wraps.. And it does!</p>
+        <h2>Subtitle, ordered list</h2>
+        <ol>
+            <li>Ordered 1</li>
+            <li>Ordered 2</li>
+        </ol>
+        <h3>Also unordered</h3>
+        <ul>
+            <li>See</li>
+            <li>Dots!</li>
+        </ul>
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step" data-x="500" data-y="0" data-scale="2.2"/>
+
+</div>
+
+
+<script src="../Resources/impress.js"></script>
+<script>if ( !window.location.search.match(/print/) ) {
+    impress().init();
+}</script>
+
+</body>
+</html>
+
