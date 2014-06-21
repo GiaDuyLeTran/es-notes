@@ -62,6 +62,10 @@
 
         <h3>Reliability, redundancy, safety and security</h3>
         <p class="hl">Guaranteeing performance for all relevant definitions</p>
+
+        <div class="notes">
+            Take some time to talk through each of these in turn
+        </div>
     </div>
 
     <div class="step point" data-x='0' data-y='1225'>
@@ -96,6 +100,10 @@
         <h1>Acknowledgements</h1>
         <p>Some content inspired by, and built with referenece to, Uwe Zimmer's <strong>COMP4330: Real Time and Embedded Systems</strong></p>
         <p>Lab material developed with help from the Altera University Program</p>
+
+        <div class="notes">
+            Ask who in the class is taking or has taken COMP4330. They will recognize much of the material around RT, a little around sensors.
+        </div>
     </div>
 
     <div class="step" data-x='0' data-y='2725'>
@@ -103,6 +111,10 @@
         <p>The course is young</p>
         <p>Feedback gratefully received at any time during the course</p>
         <p>SELT at the end of Semester is <strong>really</strong> important</p>
+
+        <div class="notes">
+            The class cannot be run next year if fewer than 5 people complete SELT (quite apart from it being a useful tool for us.
+        </div>
     </div>
 
     <div class="step" data-x="1000" data-y="800">
@@ -121,6 +133,10 @@
 
         <h3>Final Exam</h3>
         <p class="hl">Problem-solving and applications</p>
+
+        <div class="notes">
+            Explain exactly what lectorial is: Lectures in which we will collaboratively solve posed problems in the space, including learning more in-depth material as required.  Equal parts learning new facts and applying the existing ones.
+        </div>
     </div>
 
     <div class="step" data-x='1000' data-y='1400'>
@@ -130,6 +146,8 @@
         <li>Lecture notes are primary reference</li>
         <li>Recommended reading and reference material linked from notes</li>
         </ul>
+
+        <div class="notes">Tell the students to take good notes and review the recordings. The "slides" by themselves are not an ideal reference.  Point out the "print" view of this page for note-taking.</div>
     </div>
 
     <div class="step" id="de2" data-x='1000' data-y='1900'>
@@ -145,6 +163,8 @@
         <li>LCD, PS2 Keyboard</li>
         </ul></div>
         <div style="float:right"><img src="ES00/de2.png" width="400px"/></div>
+
+        <div class="notes">Also included are video I/O, buttons, switches, LEDs, SD card, multiple memory types etc.  Talk a little about the Nios2 core and that softcores aren't generally useful in industry (slow, don't take advantage of the FGPA's flexibility) but are good in eduction. For example, we can turn processor features on and off and immediately see the effect on program execution.</div>
     </div>
 
     <!-- Major project -->
@@ -182,22 +202,27 @@
 
     <div class="step what" data-x='2050' data-y='-520' data-rotate-z="-60">
         <p>An electronic system within a larger device</p>
+        <div class="notes">Too general</div>
     </div>
 
     <div class="step what" data-x='2270' data-y='-300' data-rotate-z="-30">
         <p>A computational system that supports the primary functions of a device</p>
+        <div class="notes">Closer, but still general. Starting to talk about the role of ES in interacting with other systems</div>
     </div>
 
     <div class="step what" data-x='2350' data-y='0' data-rotate-z="0">
         <p>A computational system with tight constraints on size, power consumption and functional correctness</p>
+        <div class="notes">Probably a necessary condition, but not sufficient</div>
     </div>
 
     <div class="step what" data-x='2270' data-y='300' data-rotate-z="30">
         <p>A computational system without keyboard or mouse</p>
+        <div class="notes">An older definition that was really trying to say "any computer that isn't a desktop or laptop". This is no longer a good line esp with mobile etc</div>
     </div>
 
     <div class="step what" data-x='2050' data-y='520' data-rotate-z="60">
         <p>A computational system that you don't notice until it breaks</p>
+        <div class="notes">Fun defintion, but basically talking about the use of ES in service roles. Also hints at high reliability requirements</div>
     </div>
 
     <div class="step" id="charactersistics" data-x="2750" data-y="750" data-rotate-z="0">
@@ -206,7 +231,8 @@
 
     <div class="step what" data-x='3050' data-y='230' data-rotate-z="-60">
         <p>Small?</p>
-        <p class="shl">Boeing 787 Control Systems?</p>
+        <p class="shl">Are Boeing 787 control systems?</p>
+        <div class="notes">Also factory controls, data center monitoring etc</div>
     </div>
 
     <div class="step what" data-x='3270' data-y='450' data-rotate-z="-30">
@@ -226,7 +252,8 @@
 
     <div class="step what" data-x='3050' data-y='1270' data-rotate-z="60">
         <p>Low-level?</p>
-        <p class="shl">All software is, at some level</p>
+        <p class="shl">All software has, or runs on, a low level section</p>
+        <div class="notes"> So therefore not sufficient definition</div>
     </div>
 
     <div class="step" id="charactersistics2" data-x="3750" data-y="1500" data-rotate-z="0">
@@ -235,18 +262,22 @@
 
     <div class="step what" data-x='4050' data-y='980' data-rotate-z="-60">
         <p>Heavily concurrent and/or distributed</p>
+        <div class="notes">Not just multi-threaded, but make use of this in order to match the distributed and concurrent nature of the real world</div>
     </div>
 
     <div class="step what" data-x='4270' data-y='1200' data-rotate-z="-30">
         <p>Close to the end sensors/actuators</p>
+        <div class="notes">Close enough that they have to understand how they work</div>
     </div>
 
     <div class="step what" data-x='4350' data-y='1500' data-rotate-z="0">
         <p>Part of larger systems</p>
+        <div class="notes">Hence "embedded"</div>
     </div>
 
     <div class="step what" data-x='4270' data-y='1800' data-rotate-z="30">
         <p>Failure often catastrophic and may lead to loss of life, environmental damage, large-scale damage to the system etc.</p>
+        <div class="notes">Reliability etc</div>
     </div>
 
     <div class="step what" data-x='4050' data-y='2020' data-rotate-z="60">
@@ -264,6 +295,7 @@
 
     <div class="step" data-x='4700' data-y='2650' data-scale="0.75">
         <p class="bam">Real Time</p>
+        <div class="notes">This will be the first time you hear this term, but not the last!</div>
     </div>
 
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
