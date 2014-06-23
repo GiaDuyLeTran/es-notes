@@ -2,7 +2,11 @@
 import sys, re
 
 fin = sys.argv[1]
-fout = fin[:fin.rfind('.')] + '-lay.html'
+
+if len(sys.argv) > 2:
+	fout = sys.argv[2]
+else:
+	fout = fin[:fin.rfind('.')] + '-lay.html'
 
 xloc = 0
 yloc = 0
