@@ -1,0 +1,38 @@
+
+/* ES00 Introduction, slide specific styling */
+
+.what {
+    width:400px;
+}
+
+.what p {
+    text-indent:0px;
+}
+
+#de2 img {
+    border: 1px solid rgba(0, 0, 0, .3);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+}
+
+#whatis {
+    width:600px;
+}
+
+#charactersistics {
+    width:600px;
+}
+
+#charactersistics2 {
+    width:600px;
+}
+
+/* Intermediate overview slides leave past slides transparent
+ * and turn future slides opaque. The only problem is that
+ * ImpressJS marks slides as past iff the transition to them
+ * has completed, which means that out of order or fast traversals
+ * have patchy results */
+#over1 {display:none;}
+.impress-on-over1 .future{
+    opacity: 1.0;
+    cursor: pointer;
+}
