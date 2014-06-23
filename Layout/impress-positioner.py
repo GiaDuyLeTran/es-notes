@@ -87,3 +87,5 @@ for l in fdata:
 with open(fout, 'w') as fo:
 	fo.write("".join(fdata2))
 
+print "Layout processed {} to {}".format(fin, fout)
+
