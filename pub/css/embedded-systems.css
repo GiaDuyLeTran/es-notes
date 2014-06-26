@@ -12,7 +12,7 @@
     These 'slide' step styles were heavily inspired by HTML5 Slides:
     http://html5slides.googlecode.com/svn/trunk/styles.css
 */
-.slide, .point {
+.slide, .card, .point {
   display: block;
   width: 900px;
   height: 700px;
@@ -28,14 +28,21 @@
   line-height: 36px;
   letter-spacing: -1px; }
 
-.slide q, .point q {
+.slide q, .card q, .point q {
   display: block;
   font-size: 50px;
   line-height: 72px;
   margin-top: 100px; }
 
-.slide q strong, .point q strong {
+.slide q strong, .card q strong, .point q strong {
   white-space: nowrap; }
+
+/* Card element that displays contained data within a slide */
+.card {
+  width: auto;
+  height: auto;
+  padding: 20px 25px 20px 5px;
+  margin: 0px; }
 
 /* Box that makes a point. Like a small slide */
 .point {

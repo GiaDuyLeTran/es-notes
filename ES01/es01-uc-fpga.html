@@ -9,7 +9,7 @@
     <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
     <link href="css/anu-impressjs.css" rel="stylesheet" />
     <link href="css/embedded-systems.css" rel="stylesheet" />
-    <link href="css/es00.css" rel="stylesheet" />
+    <link href="css/es01.css" rel="stylesheet" />
 </head>
 
 <body class="impress-not-supported">
@@ -45,23 +45,29 @@
         </div>
     </div>
 
-    <div class="step" id="definitions" data-x="1000" data-y="0">
-    <div style="float:right">Microprocessor</div>
-    <div style="clear:both;float:right">v</div>
-    <div style="clear:right;float:left">ASIC/ASSP</div>
-    <div class="rarrow-m-h" style="float:left;width:100px;"></div>
-    <div style="float:left"><ul>
-        <li>Memory</li>
-        <li>Interfaces</li>
-        <li>Sensors</li>
-        <li>Controllers</li>
-    </ul></div>
-    <div style="float:left">-]</div>
-    <div style="float:left">+</div>
-    <div style="float:left">-]</div>
-    <div style="float:right">Microcontroller</div>
-    <div style="clear:both;float:right">v</div>
-    <div style="clear:both;float:right">SoC</div>
+    <div class="step" id="definitions" data-x="1200" data-y="0">
+        <div id="mp">Microprocessor</div>
+        <div class="darrow-m-h" id="d1"></div>
+        <div id="asic">ASIC/ASSP</div>
+        <div class="larrow-m-h" id="l1"></div>
+        <div class="card" id="ex"><ul>
+            <li>Memory</li>
+            <li>Interfaces</li>
+            <li>Sensors</li>
+            <li>Controllers</li>
+        </ul></div>
+        <div class="rarrow-m-h" id="r1"></div>
+        <div id="p1">&#59416;</div>
+        <div class="rarrow-m-h" id="r2"></div>
+        <div id="uc">Microcontroller</div>
+        <div class="darrow-m-h" id="d2"></div>
+        <div id="soc">SoC</div>
+        <div class="darrow-m-h" id="d3"></div>
+        <div id="fpga">FPGA</div>
+        <div class="rarrow-m-h" id="r3"></div>
+        <div id="p2">&#59416;</div>
+        <div class="rarrow-m-h" id="r4"></div>
+        <div id="psoc">PSoC</div>
     </div>
 
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
