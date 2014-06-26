@@ -10,6 +10,9 @@
     This includes particular methods of highlighting, slide/step specializations etc
 */
 
+@import 'compass/css3/transform';
+@import 'compass/css3/images';
+
 /* Colour palette */
 $highlight: #AA5712;
 $highlight-bg: #CCCCCC;
@@ -85,6 +88,28 @@ $highlightshadow: 1px 1px 2px $highlight;
     text-align: center;
     font-size:142px;
 }
+
+/* Up/Down/Left/Right arrows in black and highlight colour.
+ * The arrows are implemented as border-images so they can
+ * be nicely stretched to whatever length you wish.
+ * Trebly-nested:
+ * - Outer loops through sizes
+ * - Mid through colours
+ * - Inner through orientations */
+@each $s, $b, $x, $y in (s, 10px, 10, 16), (m, 15px, 30, 42), (l, 50px, 80, 95) {
+    @each $c in (h, b) {
+        @each $d, $angle in (r, 0deg), (l, 180deg), (u,-90deg), (d,90deg) {
+            .#{$d}arrow-#{$s}-#{$c} {
+                border: $b solid transparent;
+                padding: 0px;
+                margin: 5px 10px 5px 10px;
+                @include border-image(url(../images/arrow-#{$s}-#{$c}.png) $x $y stretch);
+                @include rotate($angle);
+            }
+        }
+    }
+}
+
 
 
 /* Standard tags */

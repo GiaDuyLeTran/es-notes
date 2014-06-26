@@ -60,6 +60,373 @@
   text-align: center;
   font-size: 142px; }
 
+/* Up/Down/Left/Right arrows in black and highlight colour.
+ * The arrows are implemented as border-images so they can
+ * be nicely stretched to whatever length you wish.
+ * Trebly-nested:
+ * - Outer loops through sizes
+ * - Mid through colours
+ * - Inner through orientations */
+.rarrow-s-h {
+  border: 10px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  border-image: url(../images/arrow-s-h.png) 10 16 stretch;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg); }
+
+.larrow-s-h {
+  border: 10px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  border-image: url(../images/arrow-s-h.png) 10 16 stretch;
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg); }
+
+.uarrow-s-h {
+  border: 10px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  border-image: url(../images/arrow-s-h.png) 10 16 stretch;
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg); }
+
+.darrow-s-h {
+  border: 10px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  border-image: url(../images/arrow-s-h.png) 10 16 stretch;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg); }
+
+.rarrow-s-b {
+  border: 10px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  border-image: url(../images/arrow-s-b.png) 10 16 stretch;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg); }
+
+.larrow-s-b {
+  border: 10px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  border-image: url(../images/arrow-s-b.png) 10 16 stretch;
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg); }
+
+.uarrow-s-b {
+  border: 10px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  border-image: url(../images/arrow-s-b.png) 10 16 stretch;
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg); }
+
+.darrow-s-b {
+  border: 10px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  border-image: url(../images/arrow-s-b.png) 10 16 stretch;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg); }
+
+.rarrow-m-h {
+  border: 15px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  border-image: url(../images/arrow-m-h.png) 30 42 stretch;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg); }
+
+.larrow-m-h {
+  border: 15px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  border-image: url(../images/arrow-m-h.png) 30 42 stretch;
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg); }
+
+.uarrow-m-h {
+  border: 15px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  border-image: url(../images/arrow-m-h.png) 30 42 stretch;
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg); }
+
+.darrow-m-h {
+  border: 15px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  border-image: url(../images/arrow-m-h.png) 30 42 stretch;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg); }
+
+.rarrow-m-b {
+  border: 15px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  border-image: url(../images/arrow-m-b.png) 30 42 stretch;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg); }
+
+.larrow-m-b {
+  border: 15px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  border-image: url(../images/arrow-m-b.png) 30 42 stretch;
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg); }
+
+.uarrow-m-b {
+  border: 15px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  border-image: url(../images/arrow-m-b.png) 30 42 stretch;
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg); }
+
+.darrow-m-b {
+  border: 15px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  border-image: url(../images/arrow-m-b.png) 30 42 stretch;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg); }
+
+.rarrow-l-h {
+  border: 50px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  border-image: url(../images/arrow-l-h.png) 80 95 stretch;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg); }
+
+.larrow-l-h {
+  border: 50px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  border-image: url(../images/arrow-l-h.png) 80 95 stretch;
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg); }
+
+.uarrow-l-h {
+  border: 50px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  border-image: url(../images/arrow-l-h.png) 80 95 stretch;
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg); }
+
+.darrow-l-h {
+  border: 50px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  border-image: url(../images/arrow-l-h.png) 80 95 stretch;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg); }
+
+.rarrow-l-b {
+  border: 50px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  border-image: url(../images/arrow-l-b.png) 80 95 stretch;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg); }
+
+.larrow-l-b {
+  border: 50px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  border-image: url(../images/arrow-l-b.png) 80 95 stretch;
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg); }
+
+.uarrow-l-b {
+  border: 50px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  border-image: url(../images/arrow-l-b.png) 80 95 stretch;
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg); }
+
+.darrow-l-b {
+  border: 50px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  border-image: url(../images/arrow-l-b.png) 80 95 stretch;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg); }
+
 /* Standard tags */
 b, strong {
   color: #aa5712;
