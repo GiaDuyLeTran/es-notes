@@ -1,4 +1,8 @@
 /* ES01 Recap, slide specific styling */
+/* Definitions slide is a big bunch of manually-laid out arrows
+ * and items that will subsequently be zoomed in on. This is the
+ * kind of layout that the positioner script can take care of at
+ * the slide level, but not at the object leve. TODO!*/
 #definitions {
   font-size: 42px; }
 
@@ -39,11 +43,11 @@
   width: 50px; }
 
 #definitions div#p1 {
-  font-family: fontello;
-  font-size: 80px;
   position: absolute;
   top: -125px;
-  left: 568px; }
+  left: 568px;
+  font-family: fontello;
+  font-size: 80px; }
 
 #definitions div#r2 {
   position: absolute;
@@ -53,8 +57,8 @@
 
 #definitions div#uc {
   position: absolute;
-  left: 780px;
-  top: -100px; }
+  top: -100px;
+  left: 780px; }
 
 #definitions div#d2 {
   position: absolute;
@@ -85,11 +89,11 @@
   width: 50px; }
 
 #definitions div#p2 {
-  font-family: fontello;
-  font-size: 80px;
   position: absolute;
   top: 260px;
-  left: 568px; }
+  left: 568px;
+  font-family: fontello;
+  font-size: 80px; }
 
 #definitions div#r4 {
   position: absolute;
@@ -99,8 +103,8 @@
 
 #definitions div#psoc {
   position: absolute;
-  left: 780px;
-  top: 290px; }
+  top: 290px;
+  left: 780px; }
 
 /* Intermediate overview slides leave past slides transparent
  * and turn future slides opaque. The only problem is that
