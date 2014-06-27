@@ -472,6 +472,7 @@ h1 {
   text-shadow: 1px 1px 2px #aa5712; }
 
 h2 {
+  color: #aa5712;
   font-size: 36px;
   text-indent: 20px;
   padding: 20px 0 10px; }
@@ -503,10 +504,19 @@ li > ul li:before {
 p {
   margin-bottom: 15px; }
 
+img {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background: white; }
+
 #title .logo {
   float: left;
   width: 200;
   vertical-align: middle; }
+
+#title img {
+  border: none;
+  box-shadow: none; }
 
 #title .headbox {
   float: right;

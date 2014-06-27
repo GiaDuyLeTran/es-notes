@@ -112,6 +112,47 @@
   font-size: 32px;
   line-height: 1.1; }
 
+/* - Central #definitions is visible for any sub-definition
+ * - All def slides are visible on the def-ov overview stop */
+.impress-on-definitions #definitions {
+  opacity: 0.6; }
+
+.impress-on-def-ov #definitions {
+  opacity: 1.0; }
+
+.impress-on-def-asic #definitions {
+  opacity: 0.6; }
+
+.impress-on-def-ov #def-asic {
+  opacity: 1.0; }
+
+.impress-on-def-up #definitions {
+  opacity: 0.6; }
+
+.impress-on-def-ov #def-up {
+  opacity: 1.0; }
+
+.impress-on-def-uc #definitions {
+  opacity: 0.6; }
+
+.impress-on-def-ov #def-uc {
+  opacity: 1.0; }
+
+.impress-on-def-fpga #definitions {
+  opacity: 0.6; }
+
+.impress-on-def-ov #def-fpga {
+  opacity: 1.0; }
+
+.impress-on-def-psoc #definitions {
+  opacity: 0.6; }
+
+.impress-on-def-ov #def-psoc {
+  opacity: 1.0; }
+
+.impress-on-class-comb #logic-classes {
+  opacity: 1.0; }
+
 /* Intermediate overview slides leave past slides transparent
  * and turn future slides opaque. The only problem is that
  * ImpressJS marks slides as past iff the transition to them
