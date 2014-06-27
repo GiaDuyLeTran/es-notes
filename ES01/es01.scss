@@ -2,15 +2,8 @@
 /* ES01 Recap, slide specific styling */
 @import 'compass/css3/opacity';
 
-/* These items are stolen from embedded-systems.scss. Really
- * everything should be refactored so that is an inclusion
- * to this and I don't have to copy (and sync) styles */
-$highlight: #AA5712;
-$highlight-bg: #CCCCCC;
-
-$smallshadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-$boxshadow: 0 2px 6px rgba(0, 0, 0, .1);
-$highlightshadow: 1px 1px 2px $highlight;
+@import 'anu-impress';
+@import 'embedded-systems';
 
 /* Definitions slide is a big bunch of manually-laid out arrows
  * and items that will subsequently be zoomed in on. This is the
