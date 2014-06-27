@@ -160,7 +160,11 @@
 
 <script src="js/impress.js"></script>
 <script src="js/impressConsole.js"></script>
-<script>if ( !window.location.search.match(/print/) ) {
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+if ( !window.location.search.match(/print/) ) {
     impress().init();
     impressConsole().init();
 }</script>

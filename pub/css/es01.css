@@ -665,6 +665,9 @@ body {
 .impress-on-overview .ov-link {
   display: none; }
 
+.impress-disabled .ov-link {
+  display: none; }
+
 /* Standard tags */
 b, strong {
   color: #aa5712;
@@ -763,6 +766,11 @@ img {
 #title .linkbox {
   margin-top: 150px;
   font-size: 16px; }
+
+/* If Impress is disabled then we're probably on the print page and
+ * don't want to have the print link still visible. */
+.impress-disabled #title .linkbox {
+  display: none; }
 
 #title h1 {
   margin-top: 250px; }
