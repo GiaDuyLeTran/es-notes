@@ -162,6 +162,9 @@ body {
 
     This includes particular methods of highlighting, slide/step specializations etc
 */
+/* Some of the fallout from using Sass directly rather than the
+ * Compass build toosl, we must manually grab their custom functions.
+ * Hideous, this will go away when I get my build system re-done. */
 /* Colour palette */
 /*
     These 'slide' step styles were heavily inspired by HTML5 Slides:
@@ -608,11 +611,10 @@ a {
   background: rgba(255, 255, 255, 0.5);
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
   border-radius: 0.2em;
-  -webkit-transition: 0.5s;
-  -moz-transition: 0.5s;
-  -ms-transition: 0.5s;
-  -o-transition: 0.5s;
-  transition: 0.5s; }
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s; }
 
 a:hover,
 a:focus {

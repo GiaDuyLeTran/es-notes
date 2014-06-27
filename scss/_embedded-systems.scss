@@ -10,8 +10,7 @@
     This includes particular methods of highlighting, slide/step specializations etc
 */
 
-@import 'compass/css3/transform';
-@import 'compass/css3/images';
+@import 'compass';
 
 /* Colour palette */
 $highlight: #AA5712;
@@ -138,11 +137,7 @@ a {
     text-shadow: $smallshadow;
     border-radius: 0.2em;
 
-    -webkit-transition: 0.5s;
-    -moz-transition:    0.5s;
-    -ms-transition:     0.5s;
-    -o-transition:      0.5s;
-    transition:         0.5s;
+    @include transition-duration(0.5s);
 }
 
 a:hover,
