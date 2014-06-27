@@ -130,7 +130,7 @@ $highlightshadow: 1px 1px 2px $highlight;
     left:5px;
     padding:5px;
     z-index: 99;
-    pointer-events: auto;
+    pointer-events: auto; /* Reqd to make non-impress elements clickable */
 }
 
 /* Standard tags */
