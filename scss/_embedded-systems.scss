@@ -133,6 +133,8 @@ $highlightshadow: 1px 1px 2px $highlight;
     pointer-events: auto; /* Reqd to make non-impress elements clickable */
 }
 
+.impress-on-overview .ov-link { display: none; }
+
 /* Standard tags */
 b, strong { color: $highlight; font-weight: bold }
 i, em { font-style: italic }

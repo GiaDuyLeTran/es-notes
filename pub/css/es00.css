@@ -662,6 +662,9 @@ body {
   pointer-events: auto;
   /* Reqd to make non-impress elements clickable */ }
 
+.impress-on-overview .ov-link {
+  display: none; }
+
 /* Standard tags */
 b, strong {
   color: #aa5712;
