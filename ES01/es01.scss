@@ -2,14 +2,26 @@
 /* ES01 Recap, slide specific styling */
 
 
+/* These items are stolen from embedded-systems.scss. Really
+ * everything should be refactored so that is an inclusion
+ * to this and I don't have to copy (and sync) styles */
+$highlight: #AA5712;
+$highlight-bg: #CCCCCC;
+
+$smallshadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+$boxshadow: 0 2px 6px rgba(0, 0, 0, .1);
+$highlightshadow: 1px 1px 2px $highlight;
+
+
+
 /* Definitions slide is a big bunch of manually-laid out arrows
  * and items that will subsequently be zoomed in on. This is the
  * kind of layout that the positioner script can take care of at
  * the slide level, but not at the object leve. TODO!*/
-#definitions { font-size:42px; }
+#definitions { font-size:42px; text-shadow: $highlightshadow }
 #definitions ul { font-size:24px; }
 
-#definitions div#mp   {position:absolute; top:-300px;left:450px; }
+#definitions div#mp   {position:absolute; top:-295px;left:480px; }
 #definitions div#d1   {position:absolute; top:-200px;left:550px; width:50px;}
 #definitions div#asic {position:absolute; top:-100px;left:-100px;}
 #definitions div#l1   {position:absolute; top:-85px; left:130px; width:50px;}
@@ -25,7 +37,7 @@
 #definitions div#r3   {position:absolute; top:300px; left:430px; width:50px;}
 #definitions div#p2   {position:absolute; top:260px; left:568px; font-family:fontello; font-size:80px;}
 #definitions div#r4   {position:absolute; top:300px; left:660px; width:50px;}
-#definitions div#psoc {position:absolute; top:290px; left:780px;}
+#definitions div#psoc {position:absolute; top:250px; left:780px; font-size:32px; line-height:1.1}
 
 
 /* Intermediate overview slides leave past slides transparent

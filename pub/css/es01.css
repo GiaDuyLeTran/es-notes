@@ -1,18 +1,22 @@
 /* ES01 Recap, slide specific styling */
+/* These items are stolen from embedded-systems.scss. Really
+ * everything should be refactored so that is an inclusion
+ * to this and I don't have to copy (and sync) styles */
 /* Definitions slide is a big bunch of manually-laid out arrows
  * and items that will subsequently be zoomed in on. This is the
  * kind of layout that the positioner script can take care of at
  * the slide level, but not at the object leve. TODO!*/
 #definitions {
-  font-size: 42px; }
+  font-size: 42px;
+  text-shadow: 1px 1px 2px #aa5712; }
 
 #definitions ul {
   font-size: 24px; }
 
 #definitions div#mp {
   position: absolute;
-  top: -300px;
-  left: 450px; }
+  top: -295px;
+  left: 480px; }
 
 #definitions div#d1 {
   position: absolute;
@@ -103,8 +107,10 @@
 
 #definitions div#psoc {
   position: absolute;
-  top: 290px;
-  left: 780px; }
+  top: 250px;
+  left: 780px;
+  font-size: 32px;
+  line-height: 1.1; }
 
 /* Intermediate overview slides leave past slides transparent
  * and turn future slides opaque. The only problem is that
