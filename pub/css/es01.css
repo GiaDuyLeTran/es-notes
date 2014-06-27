@@ -115,43 +115,56 @@
 /* - Central #definitions is visible for any sub-definition
  * - All def slides are visible on the def-ov overview stop */
 .impress-on-definitions #definitions {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
   opacity: 0.6; }
 
 .impress-on-def-ov #definitions {
-  opacity: 1.0; }
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1; }
 
 .impress-on-def-asic #definitions {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
   opacity: 0.6; }
 
 .impress-on-def-ov #def-asic {
-  opacity: 1.0; }
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1; }
 
 .impress-on-def-up #definitions {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
   opacity: 0.6; }
 
 .impress-on-def-ov #def-up {
-  opacity: 1.0; }
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1; }
 
 .impress-on-def-uc #definitions {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
   opacity: 0.6; }
 
 .impress-on-def-ov #def-uc {
-  opacity: 1.0; }
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1; }
 
 .impress-on-def-fpga #definitions {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
   opacity: 0.6; }
 
 .impress-on-def-ov #def-fpga {
-  opacity: 1.0; }
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1; }
 
 .impress-on-def-psoc #definitions {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
   opacity: 0.6; }
 
 .impress-on-def-ov #def-psoc {
-  opacity: 1.0; }
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1; }
 
 .impress-on-class-comb #logic-classes {
-  opacity: 1.0; }
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1; }
 
 /* Intermediate overview slides leave past slides transparent
  * and turn future slides opaque. The only problem is that

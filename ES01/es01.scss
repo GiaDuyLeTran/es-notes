@@ -1,6 +1,6 @@
 
 /* ES01 Recap, slide specific styling */
-
+@import 'compass/css3/opacity';
 
 /* These items are stolen from embedded-systems.scss. Really
  * everything should be refactored so that is an inclusion
@@ -40,11 +40,11 @@ $highlightshadow: 1px 1px 2px $highlight;
 /* - Central #definitions is visible for any sub-definition
  * - All def slides are visible on the def-ov overview stop */
 @each $def in (definitions, def-asic, def-up, def-uc, def-fpga, def-psoc) {
-    .impress-on-#{$def} #definitions { opacity: 0.6; }
-    .impress-on-def-ov ##{$def} { opacity: 1.0; }
+    .impress-on-#{$def} #definitions { @include opacity(0.6); }
+    .impress-on-def-ov ##{$def} { @include opacity(1.0); }
 }
 
-.impress-on-class-comb #logic-classes { opacity:1.0; }
+.impress-on-class-comb #logic-classes { @include opacity(1.0); }
 
 /* Intermediate overview slides leave past slides transparent
  * and turn future slides opaque. The only problem is that

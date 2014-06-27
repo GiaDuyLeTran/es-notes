@@ -5,7 +5,7 @@ sass --watch scss:pub/css &
 
 for iname in `find . -name 'ES*' -type d`; do
 	echo "Sass watching $iname"
-	sass --watch $iname:pub/css &
+	sass --load-path=scss --watch $iname:pub/css &
 done;
 
 # Start html layout watchers
