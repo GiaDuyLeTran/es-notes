@@ -1,5 +1,7 @@
 
 /* ES00 Introduction, slide specific styling */
+@import 'compass/css3/opacity';
+
 @import 'anu-impress';
 @import 'embedded-systems';
 
@@ -30,6 +32,6 @@
  * have patchy results */
 #over1 {display:none;}
 .impress-on-over1 .future{
-    opacity: 1.0;
+    @include opacity(1.0);
     cursor: pointer;
 }

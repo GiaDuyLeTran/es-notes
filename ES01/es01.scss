@@ -46,6 +46,6 @@
  * have patchy results */
 #over1 {display:none;}
 .impress-on-over1 .future{
-    opacity: 1.0;
+    @include opacity(1.0);
     cursor: pointer;
 }

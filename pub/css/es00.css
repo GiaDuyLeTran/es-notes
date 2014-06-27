@@ -89,6 +89,7 @@ body {
 
 .impress-enabled .step {
   margin: 0;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
   opacity: 0.3;
   -webkit-transition: opacity 1s;
   -moz-transition: opacity 1s;
@@ -97,6 +98,7 @@ body {
   transition: opacity 1s; }
 
 .impress-enabled .step.active {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1; }
 
 /*
@@ -113,6 +115,7 @@ body {
     `impress-on-` class.
 */
 .impress-on-overview .step {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
   cursor: pointer; }
 
@@ -722,5 +725,6 @@ img {
   display: none; }
 
 .impress-on-over1 .future {
-  opacity: 1.0;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
   cursor: pointer; }
