@@ -596,6 +596,15 @@ body {
   -o-transform: rotate(90deg);
   transform: rotate(90deg); }
 
+/* Overview link fixed to the top-left corner */
+.ov-link {
+  position: fixed;
+  top: 5px;
+  left: 5px;
+  padding: 5px;
+  z-index: 99;
+  pointer-events: auto; }
+
 /* Standard tags */
 b, strong {
   color: #aa5712;
@@ -627,6 +636,9 @@ h1 {
   padding: 10px 0 20px;
   text-align: center;
   text-shadow: 1px 1px 2px #aa5712; }
+
+h1.small {
+  font-size: 30px; }
 
 h2 {
   color: #aa5712;
