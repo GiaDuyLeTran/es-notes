@@ -153,8 +153,63 @@
     
     </div>
 
+    <div class="step" data-x='135' data-y='2740' data-scale="0.6">
+        <h1>Rules for combinatorial circuits</h1>
+        <ul><li>No feedback allowed</li>
+        <li>assign or always@(*) statements may be used</li>
+
+        <h2>assign</h2><div style="float:left"><ul>
+            <li>Compact</li>
+            <li>Used for simple wiring tasks</li>
+        </ul></div>
+        <div class="card" style="float:right;width:45%">assign reset_n = key[0];</div>
+        <div style="clear:both;"></div>
+        <h2>always</h2>
+        <div style="float:left">
+        <ul><li>Flexible</li>
+            <li>Leads in to Sequential Logic</li>
+            <li>Contains <b>&ldquo;Sensitivity List&rdquo;</b></li>
+        </ul></div>
+        <div class="card" style="float:right;width:45%">always @(*) reset_n = key[0];</div>
+    </div>
+
+    <div class="step point" data-x='135' data-y='3040' data-scale="0.6">
+        A Combinatorial sensitivity list may be <b>individual wires</b> or <b>‘*’</b>.  If do not lost a signal that is used as an input to the block, then the logic is no longer strictly combinatorial and may not synthesize as you expect.
+    </div>
+
+    <div class="step point" data-x='135' data-y='3290' data-scale="0.6">
+        Loops are <b>not</b> allowed <br/><br/>
+        <img class="bad" src="images/verilog/combinatorial-loop.png"/>
+    </div>
+
+    <div class="step" id="if" data-x='135' data-y='3590' data-scale="0.6">
+        <h1>if Statements</h1><center>
+        <img style="padding-top:20px;padding-bottom:85px" src="images/verilog/comb-if.png"/>
+        <img src="images/verilog/comb-if-schem.png"/></center>
+    </div>
+
+    <div class="step" id="if2" data-x='485' data-y='3590' data-scale="0.6">
+        <div style="float:right"><ul>
+        <li>A wire representing the outcome of the test</li>
+        <li>A multiplexor that selects the correct input signal</li></ul></div>
+    </div>
+
+    <div class="step point" data-x='135' data-y='3890' data-scale="0.6">
+        if Cases should be <b>Complete</b><br/><br/>
+        <img class="bad" src="images/verilog/comb-if-incomplete.png"/>
+    </div>
+
+    <div class="step" data-x='135' data-y='4140' data-scale="0.6">
+        <h1>case Statements</h1>
+        <p>General case of if statements</p>
+        <ul>
+        <li>A <b>bus</b> representing the outcome of the test</li>
+        <li>A multiplexor that selects the correct input signal</li></ul>
+        <p>Like if statements, they should be <b>complete</b> to avoid the generation of latches</p>
+    </div>
+
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
-	<div id="overview" class="step" data-x="900" data-y="958.0" data-scale="3.2">&nbsp</div>
+	<div id="overview" class="step" data-x="900" data-y="1813.0" data-scale="5.1">&nbsp</div>
 </div>
 
 

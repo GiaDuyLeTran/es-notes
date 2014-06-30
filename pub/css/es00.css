@@ -741,6 +741,9 @@ img {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   background: white; }
 
+img.bad {
+  box-shadow: 0px 0px 20px #ff5500; }
+
 #title .logo {
   float: left;
   width: 200;

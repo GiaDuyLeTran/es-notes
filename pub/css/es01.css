@@ -741,6 +741,9 @@ img {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   background: white; }
 
+img.bad {
+  box-shadow: 0px 0px 20px #ff5500; }
+
 #title .logo {
   float: left;
   width: 200;
@@ -940,6 +943,10 @@ img {
   opacity: 1; }
 
 .impress-on-class-comb #logic-classes {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1; }
+
+.impress-on-if2 #if {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1; }
 

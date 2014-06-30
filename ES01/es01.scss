@@ -41,6 +41,8 @@
 
 .impress-on-class-comb #logic-classes { @include opacity(1.0); }
 
+.impress-on-if2 #if { @include opacity(1.0); }
+
 /* Intermediate overview slides leave past slides transparent
  * and turn future slides opaque. The only problem is that
  * ImpressJS marks slides as past iff the transition to them
