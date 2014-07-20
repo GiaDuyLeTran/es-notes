@@ -16,6 +16,7 @@
 $highlight: #AA5712;
 $highlight-bg: #CCCCCC;
 $badhighlight: #FF5500;
+$codecolour:   rgb(50, 50, 50);
 
 $smallshadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 $boxshadow: 0 2px 6px rgba(0, 0, 0, .1);
@@ -45,18 +46,6 @@ $badshadow: 0px 0px 20px $badhighlight;
     font-size: 30px;
     line-height: 36px;
     letter-spacing: -1px;
-}
-
-.slide q {
-    display: block;
-    font-size: 50px;
-    line-height: 72px;
-
-    margin-top: 100px;
-}
-
-.slide q strong {
-    white-space: nowrap;
 }
 
 /* Card element that displays contained data within a slide */
@@ -102,6 +91,11 @@ $badshadow: 0px 0px 20px $badhighlight;
 .bam {
     text-align: center;
     font-size:142px;
+}
+
+.code {
+    font-family: Consolas;
+    color: $codecolour;
 }
 
 /* Up/Down/Left/Right arrows in black and highlight colour.
