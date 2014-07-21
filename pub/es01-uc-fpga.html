@@ -6,6 +6,7 @@
     <title>ENGN8537 Lecture 1: Microcontrollers and FPGAs</title>
 
     <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
     <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
     <link href="css/es01.css" rel="stylesheet" />
 </head>
@@ -126,7 +127,7 @@
 
     <div class="step" id="def-ov" data-x="1200" data-y="650" data-scale=1.1></div>
 
-    <div class="step" id="verilog1" data-x="500" data-y="1250" data-scale=1.0>
+    <div class="step" id="verilog1" data-x="0" data-y="800" data-scale=1.0>
         <h1>Verilog</h1>
         <ul>
             <li>Hardware Description Language <b>HDL</b></li>
@@ -136,70 +137,70 @@
         </ul>
     </div>
 
-    <div class="step point" data-x='500' data-y='1650'>
+    <div class="step point" data-x='0' data-y='1200'>
         If your Verilog isn’t working, try <b>sketching</b> the logic gates and registers yourself.  If you can’t make your Verilog look like good hardware, the synthesizer probably can’t either!
     </div>
 
-    <div class="step" id="logic-classes" data-x='500' data-y='2000'>
+    <div class="step" id="logic-classes" data-x="0" data-y="1500">
         <h1>Classes of Logic</h1>
-        <div style="float:left"><h1 class="small">Combinatorial</h2></div>
-        <div style="float:right"><h1 class="small">Sequential</h2></div>
+        <div style="float:left"><h1 class="small">Combinatorial</h1></div>
+        <div style="float:right"><h1 class="small">Sequential</h1></div>
     </div>
 
-    <div class="step" id="class-comb" data-x='135' data-y='2240' data-scale="0.6">
-    <div style="margin-top:80px;text-align:center"><img src="images/verilog/combinatorial.png" width="600px"/></div>
-    <div style="float:left;"><b>Assign</b> Style<br/><img style="padding-bottom:40px" src="images/verilog/combinatorial-assign.png" width="450px"/></div>
-    <div style="float:right"><b>Always</b> Style<br/><img style="padding-bottom:1px" src="images/verilog/combinatorial-always.png" width="450px"/></div>
+    <div class="step" id="class-comb" data-x="-365" data-y="1740" data-scale="0.6">
+        <div style="margin-top:80px;text-align:center"><img src="images/verilog/combinatorial.png" width="600px"/></div>
+        <div style="float:left;"><b class="code">assign</b> Style<br/><img style="padding-bottom:40px" src="images/verilog/combinatorial-assign.png" width="450px"/></div>
+        <div style="float:right"><b class="code">always</b> Style<br/><img style="padding-bottom:1px" src="images/verilog/combinatorial-always.png" width="450px"/></div>
     
     </div>
 
-    <div class="step" data-x='135' data-y='2740' data-scale="0.6">
+    <div class="step" data-x='-365' data-y='2240' data-scale="0.6">
         <h1>Rules for combinatorial circuits</h1>
         <ul><li>No feedback allowed</li>
-        <li>assign or always@(*) statements may be used</li>
+        <li><q class="code">assign</q> or <q class="code">always@(*)</q> statements may be used</li>
 
-        <h2>assign</h2><div style="float:left"><ul>
+        <h2 class="code">assign</h2><div style="float:left"><ul>
             <li>Compact</li>
             <li>Used for simple wiring tasks</li>
         </ul></div>
-        <div class="card" style="float:right;width:45%">assign reset_n = key[0];</div>
+        <div class="card code" style="float:right;width:45%">assign reset_n = key[0];</div>
         <div style="clear:both;"></div>
-        <h2>always</h2>
+        <h2 class="code">always</h2>
         <div style="float:left">
         <ul><li>Flexible</li>
             <li>Leads in to Sequential Logic</li>
             <li>Contains <b>&ldquo;Sensitivity List&rdquo;</b></li>
         </ul></div>
-        <div class="card" style="float:right;width:45%">always @(*) reset_n = key[0];</div>
+        <div class="card code" style="float:right;width:45%">always @(*) reset_n = key[0];</div>
     </div>
 
-    <div class="step point" data-x='135' data-y='3040' data-scale="0.6">
+    <div class="step point" data-x='-365' data-y='2540' data-scale="0.6">
         A Combinatorial sensitivity list may be <b>individual wires</b> or <b>‘*’</b>.  If do not lost a signal that is used as an input to the block, then the logic is no longer strictly combinatorial and may not synthesize as you expect.
     </div>
 
-    <div class="step point" data-x='135' data-y='3290' data-scale="0.6">
+    <div class="step point" data-x='-365' data-y='2790' data-scale="0.6">
         Loops are <b>not</b> allowed <br/><br/>
         <img class="bad" src="images/verilog/combinatorial-loop.png"/>
     </div>
 
-    <div class="step" id="if" data-x='135' data-y='3590' data-scale="0.6">
+    <div class="step" id="if" data-x='-365' data-y='3090' data-scale="0.6">
         <h1><q class="code">if</q> Statements</h1><center>
         <img style="padding-top:20px;padding-bottom:85px" src="images/verilog/comb-if.png"/>
         <img src="images/verilog/comb-if-schem.png"/></center>
     </div>
 
-    <div class="step" id="if2" data-x='485' data-y='3590' data-scale="0.6">
+    <div class="step" id="if2" data-x='-15' data-y='3090' data-scale="0.6">
         <div style="float:right"><ul>
         <li>A wire representing the outcome of the test</li>
         <li>A multiplexor that selects the correct input signal</li></ul></div>
     </div>
 
-    <div class="step point" data-x='135' data-y='3890' data-scale="0.6">
+    <div class="step point" data-x='-365' data-y='3390' data-scale="0.6">
         <q class="code">if</q> cases should be <b>Complete</b><br/><br/>
         <img class="bad" src="images/verilog/comb-if-incomplete.png"/>
     </div>
 
-    <div class="step" data-x='135' data-y='4140' data-scale="0.6">
+    <div class="step" data-x='-365' data-y='3640' data-scale="0.6">
         <h1><q class="code">case</q> Statements</h1>
         <p>General case of <q class="code">if</q> statements</p>
         <ul>
@@ -208,8 +209,240 @@
         <p>Like <q class="code">if</q> statements, they should be <b>complete</b> to avoid the generation of latches</p>
     </div>
 
+    <div class="step" id="class-seq" data-x="365" data-y="1740" data-scale="0.6">
+    <div style="float:left;"><ul>
+        <li>Has &ldquo;memory&rdquo; or &ldquo;state&rdquo;</li>
+        <li><b>D-type</b> flip-flop is the basic unit</li>
+    </ul></div>
+    <div style="float:right;"><img src="images/verilog/seq-d.png" width="400px"/></div>
+    </div>
+
+    <div class="step point" data-x='365' data-y='2040' data-scale="0.6">
+        <b>Sequential</b> means &ldquo;has state&rdquo;. <b>Synchronous</b> means &ldquo;uses a clock signal&rdquo;.  Most sequential circuits and synchronous and most synchronous circuits are sequential, however this is not always the case.
+    </div>
+
+    <div class="step" data-x='365' data-y='2340' data-scale="0.6">
+        <h1>Rules for sequential circuits</h1>
+        <div style="float:left">
+        <ul><li>Feedback <b>is</b> allowed</li>
+        <li>Non-blocking assignments used</li>
+        <li><q class="code">if</q>, <q class="code">case</q> need not be complete</li>
+        </div>
+
+        <div style="float:right;margin-top:20px;">
+        <div class="card code">if (a)<br/>&nbsp;&nbsp; b <= c;</div>
+        </div>
+    </div>
+
+    <div class="step" data-x='365' data-y='2640' data-scale="0.6">
+        <h1>System Clock</h1>
+        <div style="float:left;width:50%">Synchronous logic requires a clock signal. If the externally-supplied clock is too high, it can be divided. This should <b>not</b> be done using logic signals.</div>
+        <div class="card codesample bad" style="float:right">reg [1:0] my_clock;<br/>
+            always @(posedge clk) begin<br/>
+	            my_clock <= my_clock + 1;<br/>
+            end<br/>
+            <br/>
+            always @(posedge my_clock[1]) begin<br/>
+	            …<br/>
+            end
+        </div>
+    </div>
+
+    <div class="step point" data-x='965' data-y='2640' data-scale="0.6">
+        <p>Logic signals (wires, regs) are slow. Clock signals must be routed using special <b>clock lines</b> internal to the FPGA to avoid timing problems.</p>
+
+        <p>Clock division should be done using a state machine inside the always block, keeping only the main clock signal in the sensitivity list.</p>
+
+        <div class="notes">
+            In Altera devices, these are known as GCLKs. They are automatically used when using external clock pins. They <b>might</b> be automatically used if the synthesizer notices that you're using logic lines as clock signals. If the software does not notice, then you will have timing problems. This is investigated more in the labs.
+        </div>
+    </div>
+
+    <div class="step" data-x='965' data-y='3140' data-scale="0.6">
+        <h1>Clock Infrastructure</h1>
+        <div style="margin-top:40px;text-align:center"><img src="images/verilog/fpga-clocks.png" width="600px"/></div>
+
+        <div class="notes">4 Phase Locked Loops (PLL), feeding the GCLKs in the FPGA. These should be used for all custom clock rate generation. They are capable of increasing the frequency of the clock, not just decreasing like a divider or state machine could.</div>
+    </div>
+
+    <div class="step" data-x="1500" data-y="1500" data-scale="1.0">
+        <h1>State Machines</h1>
+        <div style="float:left"><b>Mealy</b> Machine<br/><img src="images/state-machines/mealy-machine.png" style="width:450px"/></div>
+        <div style="float:right"><b>Moore</b> Machine<br/><img src="images/state-machines/moore-machine.png" style="width:450px;padding-top:10px" /></div>
+
+        <div style="clear:both">We only consider <b>synchronous</b> state machines.</div>
+
+        <div class="notes">Asynchronous state machines are an interesting research topic but have not found widespread practical adoption due to issues with "races": Transitions through strange states due to issues of signal timing</div>
+    </div>
+
+    <div class="step" data-x='1500' data-y='2000' data-scale="0.6">
+        <h1>Transition Diagrams</h1>
+        <div style="text-align:center"><img src="images/state-machines/transitions.png" /></div>
+
+        <div class="notes">A Moore machine has the input as a transition and output as part of the state. A Mealy machine has both the input and output drawn on a transition (though the input is the cause of the transition, the output is an effect).</div>
+    </div>
+
+    <div class="step" data-x='1500' data-y='2400' data-scale="0.6">
+        <h1>FSM Design</h1>
+        <ol>
+        <li>Determine the inputs / outputs.</li>
+        <li>Determine the states and give them mnemonic names</li>
+        <li>Draw up a state diagram and a next state table</li>
+        <li>Render the inputs, outputs and states in binary format</li>
+        <li>Draw an excitation table</li>
+        <li>Draw an Output table</li>
+        <li>Implement transition and next-state logic.</li>
+        <li>Simulate your design and check for correct operation.</li>
+        <li>Check for potential practical problems (e.g. non-ideal effects).</li>
+        </ol>
+
+        <div class="notes">It is usually not important to manually minimise the implemented logic (e.g. Karnaugh maps), nor to worry about the exact form of the state representation (Gray code, one-hot, binary etc). The synthesizer will recognize your state machine logic and will implement the most efficient style of state machine it can.
+
+A corrolorary of this is that your code should not <b>depend</b> on any particular state representation, as this will limit the optimizations that the synthesizer can make.
+        </div>
+    </div>
+
+    <div class="step" id="def-up2" data-x="1500" data-y="300" data-scale="0.5">
+    <!-- Empty view step for another look at def-up -->
+    </div>
+
+    <div class="step" id="up-arch" data-x='3000' data-y='300' data-scale="1.0">
+        <h1>Microprocessor Architectures</h1>
+        <div style="float:left;width:33%"><h1 class="small" style="text-align:left">MU0</h1></div>
+        <div style="float:left;width:33%"><h1 class="small">AVR</h1></div>
+        <div style="float:left;width:33%"><h1 class="small" style="text-align:right">Nios2</h1></div>
+    </div>
+
+    <div class="step" id="mu0" data-x='2575' data-y='500' data-scale="0.5">
+        <div style="float:left">
+        <ul>
+        <li>Simple, Realistic</li>
+        <li>Two-cycle execution</li>
+        <li>Key components:<ul>
+            <li>ALU</li>
+            <li>Memory</li>
+            <li>Register (ACC)</li>
+            </ul></li>
+        </ul>
+        </div>
+        <div style="float:right">
+        <img src="images/micros/mu0.png" /><p>
+        <b>MU0</b> data path</p>
+        </div>
+
+        <div class="notes">
+            A realistic but simple processor which is capable of executing one instruction every two clock cycles.
+
+    We won’t be looking at this in labs, but the data path and control flows will be used in illustrating many of the more advanced topics in microprocessors over the coming lectures
+        </div>
+    </div>
+
+    <div class="step" data-x='2575' data-y='750' data-scale="0.5">
+        <h1>Instruction Timing</h1>
+        <div style="text-align:center">
+        <img src="images/micros/mu0-logic.png" /><p>
+        </div>
+
+        <div class="notes">
+        Timing is important to understand.  The processing of a single instruction is split in to two parts, one per clock cycle:  Fetch and Execute.
+
+Thus each instruction takes two clock cycles to complete.
+
+Actually there are four states with the two corresponding to memory accesses occurring on the falling edges, between the explicit states.  This is valid as MU0 is simple and runs slowly.  When we get to more complex systems, we’ll note that these extra states are made explicit themselves.
+        </div>
+    </div>
+
+
+    <div class="step" data-x='2575' data-y='1000' data-scale="0.5">
+        <h1>Fetch</h1>
+        <div style="float:left;width:60%">
+        <ul>
+            <li>Read Program Counter</li>
+            <li>Set up MEM for instruction access</li>
+            <li>Access happens on next falling edge</li>
+            <li>Postcondition: IR is loaded</li>
+        </ul>
+        </div>
+        <div style="float:right">
+        <img src="images/micros/mu0-fetch.png" /><p>
+        </div>
+
+        <div class="notes">
+            During the Fetch cycle, the Program Counter is wired in to the memory address, and the instruction at that location is loaded in to the Instruction Register.
+        </div>
+    </div>
+
+    <div class="step" data-x='2575' data-y='1300' data-scale="0.5">
+        <h1>Execute</h1>
+        <div style="float:left;width:60%">
+        <ul>
+            <li>Read IR</li>
+            <li>Set up ALU inputs</li>
+            <li>Computation happens combinatorially</li>
+            <li>Set up MEM for result write</li>
+            <li>Access happens on next falling edge</li>
+            <li>Postcondition: Instruction is Executed</li>
+        </ul>
+        </div>
+        <div style="float:right">
+        <img src="images/micros/mu0-execute.png" /><p>
+        </div>
+
+        <div class="notes">
+            The Execute phase is centred around the Arithmetic Logic Unit (ALU).  It takes two operands, one of which is always a register (either the Accumulator or the Program Counter depending on the operation).  The other is either a memory location whose address is coded in to the instruction, or some portion of the instruction itself.
+        </div>
+    </div>
+
+    <div class="step" data-x='2575' data-y='1650' data-scale="0.5">
+        <h1>AVR</h1>
+        <div style="float:left">
+        <ul>
+            <li>PC, MEM, IR, ALU like MU0</li>
+            <li>More registers</li>
+            <li>Split memory for data and program</li>
+        </ul>
+        </div>
+        <div style="float:right">
+        <img src="images/micros/mega8.png" style="width:300px" /><p>
+        </div>
+
+        <div class="notes">
+            This basic structure is very similar across all CPUs.  Here we see the CPU portion of the Atmel ATMega8 microcontroller.
+
+Program Counter, Instruction Register, ALU, Memory busses all pretty much the same.
+
+Differences: MU0 has one working register, ACC, Mega8 has 32 (6 of which can be paired in to 3 special registers, XYZ, of twice the size).  Different memory architecture, MU0 has a single memory to hold instructions and data, the AVR has two blocks labeled Program Flash and SRAM respectively.
+        </div>
+    </div>
+
+    <div class="step" data-x='2575' data-y='2000' data-scale="0.5">
+        <h1>Nios2</h1>
+        <div style="float:left">
+        Used as <b>soft core</b> in Altera FPGAs
+        <ul>
+            <li>PC, MEM, IR, ALU like MU0</li>
+            <li>More registers</li>
+            <li>Complex interrupt handling</li>
+            <li>Even more memory types</li>
+        </ul>
+        </div>
+        <div style="float:right">
+        <img src="images/micros/nios.png" style="width:500px" /><p>
+        </div>
+
+        <div class="notes">
+            The Nios2 core we will be using in labs is more complex again, but uses the same concepts still.
+
+Note the register sets, the ALU and the Program Controller (that includes the Program Counter, Instruction Register etc.).
+
+Most of the extra complexity here is to do with interrupts (not yet covered) or simply accessing many more types of memories.
+        </div>
+    </div>
+
+
+
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
-	<div id="overview" class="step" data-x="900" data-y="1813.0" data-scale="5.1">&nbsp</div>
+	<div id="overview" class="step" data-x="1682" data-y="1588.0" data-scale="4.6">&nbsp</div>
 </div>
 
 

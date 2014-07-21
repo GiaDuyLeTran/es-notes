@@ -39,7 +39,12 @@
 
 .impress-on-def-ov #definitions { @include opacity(1.0); }
 
+.impress-on-def-up2 #def-up { @include opacity(1.0); }
+
 .impress-on-class-comb #logic-classes { @include opacity(1.0); }
+.impress-on-class-seq #logic-classes { @include opacity(1.0); }
+
+.impress-on-mu0 #up-arch { @include opacity(1.0); }
 
 .impress-on-if2 #if { @include opacity(1.0); }
 

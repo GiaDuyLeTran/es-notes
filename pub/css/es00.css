@@ -276,9 +276,11 @@ body {
   text-align: center;
   font-size: 142px; }
 
-.code {
-  font-family: Consolas;
-  color: #323232; }
+.code, .codesample {
+  font-family: droid_sans_monoregular; }
+
+.bad {
+  box-shadow: 0px 0px 20px #ff5500; }
 
 /* Up/Down/Left/Right arrows in black and highlight colour.
  * The arrows are implemented as border-images so they can
@@ -710,23 +712,37 @@ h3 {
   padding: 20px 0 5px; }
 
 ol {
-  list-style-type: decimal; }
+  list-style-type: decimal;
+  counter-reset: item; }
 
 ul {
   list-style-type: none;
   text-indent: 1em; }
 
-li:before, li > ul li:before {
+ul li:before, li > ul li:before {
   font-family: "fontello";
   content: '\e803';
   float: left;
   width: 2em;
   vertical-align: baseline;
   color: #aa5712;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
   opacity: 0.8; }
 
 li > ul li:before {
-  margin-left: 2em; }
+  margin-left: 2em;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+  opacity: 0.5; }
+
+ol li {
+  display: block; }
+
+ol li:before, ol li > ul li:before, li > ul ol li:before {
+  content: counter(item) ". ";
+  counter-increment: item;
+  color: #aa5712;
+  font-weight: bold;
+  padding-right: 20px; }
 
 p {
   margin-bottom: 15px; }
@@ -735,9 +751,6 @@ img {
   border: 1px solid rgba(0, 0, 0, 0.3);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   background: white; }
-
-img.bad {
-  box-shadow: 0px 0px 20px #ff5500; }
 
 #title .logo {
   float: left;
