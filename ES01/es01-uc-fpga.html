@@ -163,7 +163,7 @@
             <li>Compact</li>
             <li>Used for simple wiring tasks</li>
         </ul></div>
-        <div class="card code" style="float:right;width:45%">assign reset_n = key[0];</div>
+        <div class="card codesample" style="float:right;width:45%">assign reset_n = key[0];</div>
         <div style="clear:both;"></div>
         <h2 class="code">always</h2>
         <div style="float:left">
@@ -171,7 +171,7 @@
             <li>Leads in to Sequential Logic</li>
             <li>Contains <b>&ldquo;Sensitivity List&rdquo;</b></li>
         </ul></div>
-        <div class="card code" style="float:right;width:45%">always @(*) reset_n = key[0];</div>
+        <div class="card codesample" style="float:right;width:45%">always @(*) reset_n = key[0];</div>
     </div>
 
     <div class="step point" data-x-rel="0" data-y-rel="300" data-scale="0.6">
@@ -265,7 +265,7 @@
         <div class="notes">4 Phase Locked Loops (PLL), feeding the GCLKs in the FPGA. These should be used for all custom clock rate generation. They are capable of increasing the frequency of the clock, not just decreasing like a divider or state machine could.</div>
     </div>
 
-    <div class="step" data-x="1500" data-y="1500" data-scale="1.0">
+    <div class="step" data-x="1700" data-y="1700" data-scale="1.0">
         <h1>State Machines</h1>
         <div style="float:left"><b>Mealy</b> Machine<br/><img src="images/state-machines/mealy-machine.png" style="width:450px"/></div>
         <div style="float:right"><b>Moore</b> Machine<br/><img src="images/state-machines/moore-machine.png" style="width:450px;padding-top:10px" /></div>
@@ -313,7 +313,7 @@ A corrolorary of this is that your code should not <b>depend</b> on any particul
         <div style="float:left;width:33%"><h1 class="small" style="text-align:right">Nios2</h1></div>
     </div>
 
-    <div class="step" id="mu0" data-x-rel="-425" data-y-rel="200" data-scale="0.5">
+    <div class="step" id="mu0" data-x-rel="-425" data-y-rel="200" data-scale="0.4">
         <div style="float:left">
         <ul>
         <li>Simple, Realistic</li>
@@ -337,7 +337,7 @@ A corrolorary of this is that your code should not <b>depend</b> on any particul
         </div>
     </div>
 
-    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.4">
         <h1>Instruction Timing</h1>
         <div style="text-align:center">
         <img src="images/micros/mu0-logic.png" /><p>
@@ -353,7 +353,7 @@ Actually there are four states with the two corresponding to memory accesses occ
     </div>
 
 
-    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.4">
         <h1>Fetch</h1>
         <div style="float:left;width:60%">
         <ul>
@@ -372,7 +372,7 @@ Actually there are four states with the two corresponding to memory accesses occ
         </div>
     </div>
 
-    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.4">
         <h1>Execute</h1>
         <div style="float:left;width:60%">
         <ul>
@@ -393,8 +393,7 @@ Actually there are four states with the two corresponding to memory accesses occ
         </div>
     </div>
 
-    <div class="step" data-x-rel="0" data-y-rel="350" data-scale="0.5">
-        <h1>AVR</h1>
+    <div class="step" id="avr" data-x="3000" data-y="475" data-scale="0.4">
         <div style="float:left">
         <ul>
             <li>PC, MEM, IR, ALU like MU0</li>
@@ -415,8 +414,7 @@ Differences: MU0 has one working register, ACC, Mega8 has 32 (6 of which can be 
         </div>
     </div>
 
-    <div class="step" data-x-rel="0" data-y-rel="350" data-scale="0.5">
-        <h1>Nios2</h1>
+    <div class="step" id="nios" data-x="3400" data-y="475" data-scale="0.4">
         <div style="float:left">
         Used as <b>soft core</b> in Altera FPGAs
         <ul>

@@ -279,6 +279,9 @@ body {
 .code, .codesample {
   font-family: droid_sans_monoregular; }
 
+.codesample {
+  font-size: 18px; }
+
 .bad {
   box-shadow: 0px 0px 20px #ff5500; }
 

@@ -163,7 +163,7 @@
             <li>Compact</li>
             <li>Used for simple wiring tasks</li>
         </ul></div>
-        <div class="card code" style="float:right;width:45%">assign reset_n = key[0];</div>
+        <div class="card codesample" style="float:right;width:45%">assign reset_n = key[0];</div>
         <div style="clear:both;"></div>
         <h2 class="code">always</h2>
         <div style="float:left">
@@ -171,7 +171,7 @@
             <li>Leads in to Sequential Logic</li>
             <li>Contains <b>&ldquo;Sensitivity List&rdquo;</b></li>
         </ul></div>
-        <div class="card code" style="float:right;width:45%">always @(*) reset_n = key[0];</div>
+        <div class="card codesample" style="float:right;width:45%">always @(*) reset_n = key[0];</div>
     </div>
 
     <div class="step point" data-x='-365' data-y='2540' data-scale="0.6">
@@ -265,7 +265,7 @@
         <div class="notes">4 Phase Locked Loops (PLL), feeding the GCLKs in the FPGA. These should be used for all custom clock rate generation. They are capable of increasing the frequency of the clock, not just decreasing like a divider or state machine could.</div>
     </div>
 
-    <div class="step" data-x="1500" data-y="1500" data-scale="1.0">
+    <div class="step" data-x="1700" data-y="1700" data-scale="1.0">
         <h1>State Machines</h1>
         <div style="float:left"><b>Mealy</b> Machine<br/><img src="images/state-machines/mealy-machine.png" style="width:450px"/></div>
         <div style="float:right"><b>Moore</b> Machine<br/><img src="images/state-machines/moore-machine.png" style="width:450px;padding-top:10px" /></div>
@@ -275,14 +275,14 @@
         <div class="notes">Asynchronous state machines are an interesting research topic but have not found widespread practical adoption due to issues with "races": Transitions through strange states due to issues of signal timing</div>
     </div>
 
-    <div class="step" data-x='1500' data-y='2000' data-scale="0.6">
+    <div class="step" data-x='1700' data-y='2200' data-scale="0.6">
         <h1>Transition Diagrams</h1>
         <div style="text-align:center"><img src="images/state-machines/transitions.png" /></div>
 
         <div class="notes">A Moore machine has the input as a transition and output as part of the state. A Mealy machine has both the input and output drawn on a transition (though the input is the cause of the transition, the output is an effect).</div>
     </div>
 
-    <div class="step" data-x='1500' data-y='2400' data-scale="0.6">
+    <div class="step" data-x='1700' data-y='2600' data-scale="0.6">
         <h1>FSM Design</h1>
         <ol>
         <li>Determine the inputs / outputs.</li>
@@ -313,7 +313,7 @@ A corrolorary of this is that your code should not <b>depend</b> on any particul
         <div style="float:left;width:33%"><h1 class="small" style="text-align:right">Nios2</h1></div>
     </div>
 
-    <div class="step" id="mu0" data-x='2575' data-y='500' data-scale="0.5">
+    <div class="step" id="mu0" data-x='2575' data-y='500' data-scale="0.4">
         <div style="float:left">
         <ul>
         <li>Simple, Realistic</li>
@@ -337,7 +337,7 @@ A corrolorary of this is that your code should not <b>depend</b> on any particul
         </div>
     </div>
 
-    <div class="step" data-x='2575' data-y='750' data-scale="0.5">
+    <div class="step" data-x='2575' data-y='750' data-scale="0.4">
         <h1>Instruction Timing</h1>
         <div style="text-align:center">
         <img src="images/micros/mu0-logic.png" /><p>
@@ -353,7 +353,7 @@ Actually there are four states with the two corresponding to memory accesses occ
     </div>
 
 
-    <div class="step" data-x='2575' data-y='1000' data-scale="0.5">
+    <div class="step" data-x='2575' data-y='1000' data-scale="0.4">
         <h1>Fetch</h1>
         <div style="float:left;width:60%">
         <ul>
@@ -372,7 +372,7 @@ Actually there are four states with the two corresponding to memory accesses occ
         </div>
     </div>
 
-    <div class="step" data-x='2575' data-y='1300' data-scale="0.5">
+    <div class="step" data-x='2575' data-y='1300' data-scale="0.4">
         <h1>Execute</h1>
         <div style="float:left;width:60%">
         <ul>
@@ -393,8 +393,7 @@ Actually there are four states with the two corresponding to memory accesses occ
         </div>
     </div>
 
-    <div class="step" data-x='2575' data-y='1650' data-scale="0.5">
-        <h1>AVR</h1>
+    <div class="step" id="avr" data-x="3000" data-y="475" data-scale="0.4">
         <div style="float:left">
         <ul>
             <li>PC, MEM, IR, ALU like MU0</li>
@@ -415,8 +414,7 @@ Differences: MU0 has one working register, ACC, Mega8 has 32 (6 of which can be 
         </div>
     </div>
 
-    <div class="step" data-x='2575' data-y='2000' data-scale="0.5">
-        <h1>Nios2</h1>
+    <div class="step" id="nios" data-x="3400" data-y="475" data-scale="0.4">
         <div style="float:left">
         Used as <b>soft core</b> in Altera FPGAs
         <ul>
@@ -442,7 +440,7 @@ Most of the extra complexity here is to do with interrupts (not yet covered) or 
 
 
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
-	<div id="overview" class="step" data-x="1682" data-y="1588.0" data-scale="4.6">&nbsp</div>
+	<div id="overview" class="step" data-x="1882" data-y="1588.0" data-scale="4.6">&nbsp</div>
 </div>
 
 
