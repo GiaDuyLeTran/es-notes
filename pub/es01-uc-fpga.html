@@ -157,13 +157,13 @@
     <div class="step" data-x='-365' data-y='2240' data-scale="0.6">
         <h1>Rules for combinatorial circuits</h1>
         <ul><li>No feedback allowed</li>
-        <li><q class="code">assign</q> or <q class="code">always@(*)</q> statements may be used</li>
+        <li><code>assign</code> or <code>always@(*)</code> statements may be used</li>
 
         <h2 class="code">assign</h2><div style="float:left"><ul>
             <li>Compact</li>
             <li>Used for simple wiring tasks</li>
         </ul></div>
-        <div class="card codesample" style="float:right;width:45%">assign reset_n = key[0];</div>
+        <div class="card" style="float:right;width:45%"><code class="prettyprint">assign reset_n = key[0];</code></div>
         <div style="clear:both;"></div>
         <h2 class="code">always</h2>
         <div style="float:left">
@@ -171,7 +171,7 @@
             <li>Leads in to Sequential Logic</li>
             <li>Contains <b>&ldquo;Sensitivity List&rdquo;</b></li>
         </ul></div>
-        <div class="card codesample" style="float:right;width:45%">always @(*) reset_n = key[0];</div>
+        <div class="card" style="float:right;width:45%"><code class="prettyprint">always @(*) reset_n = key[0];</code></div>
     </div>
 
     <div class="step point" data-x='-365' data-y='2540' data-scale="0.6">
@@ -184,7 +184,7 @@
     </div>
 
     <div class="step" id="if" data-x='-365' data-y='3090' data-scale="0.6">
-        <h1><q class="code">if</q> Statements</h1><center>
+        <h1><code>if</code> Statements</h1><center>
         <img style="padding-top:20px;padding-bottom:85px" src="images/verilog/comb-if.png"/>
         <img src="images/verilog/comb-if-schem.png"/></center>
     </div>
@@ -196,17 +196,17 @@
     </div>
 
     <div class="step point" data-x='-365' data-y='3390' data-scale="0.6">
-        <q class="code">if</q> cases should be <b>Complete</b><br/><br/>
+        <code>if</code> cases should be <b>Complete</b><br/><br/>
         <img class="bad" src="images/verilog/comb-if-incomplete.png"/>
     </div>
 
     <div class="step" data-x='-365' data-y='3640' data-scale="0.6">
-        <h1><q class="code">case</q> Statements</h1>
-        <p>General case of <q class="code">if</q> statements</p>
+        <h1><code>case</code> Statements</h1>
+        <p>General case of <code>if</code> statements</p>
         <ul>
         <li>A <b>bus</b> representing the outcome of the test</li>
         <li>A multiplexor that selects the correct input signal</li></ul>
-        <p>Like <q class="code">if</q> statements, they should be <b>complete</b> to avoid the generation of latches</p>
+        <p>Like <code>if</code> statements, they should be <b>complete</b> to avoid the generation of latches</p>
     </div>
 
     <div class="step" id="class-seq" data-x="365" data-y="1740" data-scale="0.6">
@@ -226,7 +226,7 @@
         <div style="float:left">
         <ul><li>Feedback <b>is</b> allowed</li>
         <li>Non-blocking assignments used</li>
-        <li><q class="code">if</q>, <q class="code">case</q> need not be complete</li>
+        <li><code>if</code>, <code>case</code> need not be complete</li>
         </div>
 
         <div style="float:right;margin-top:20px;">
@@ -237,15 +237,15 @@
     <div class="step" data-x='365' data-y='2640' data-scale="0.6">
         <h1>System Clock</h1>
         <div style="float:left;width:50%">Synchronous logic requires a clock signal. If the externally-supplied clock is too high, it can be divided. This should <b>not</b> be done using logic signals.</div>
-        <div class="card codesample bad" style="float:right">reg [1:0] my_clock;<br/>
-            always @(posedge clk) begin<br/>
-	            my_clock <= my_clock + 1;<br/>
-            end<br/>
-            <br/>
-            always @(posedge my_clock[1]) begin<br/>
-	            …<br/>
-            end
-        </div>
+        <div class="card bad" style="float:right"><pre class="prettyprint">
+reg [1:0] my_clock;
+always @(posedge clk) begin
+    my_clock <= my_clock + 1;
+end
+
+always @(posedge my_clock[1]) begin
+    …
+end</pre></div>
     </div>
 
     <div class="step point" data-x='965' data-y='2640' data-scale="0.6">
@@ -446,6 +446,7 @@ Most of the extra complexity here is to do with interrupts (not yet covered) or 
 
 <script src="js/impress.js"></script>
 <script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/run_prettify.js?lang=verilog"></script>
 <script>
 // Call Impress even if it won't be initialized so we at least
 // get .impress-disabled set up and testable from CSS

@@ -92,11 +92,13 @@ $badshadow: 0px 0px 20px $badhighlight;
     font-size:142px;
 }
 
+/* Code class, typically used in headers etc */
 .code {
     font-family: droid_sans_monoregular;
 }
 
-.codesample {
+/* Regular or syntax-highlighted code snippets (not individual words) */
+.codesample, .prettyprint {
     @extend .code;
     font-size: 18px;
 }
@@ -231,6 +233,15 @@ img {
     border: 1px solid rgba(0, 0, 0, .3);
     box-shadow: $boxshadow;
     background: white;
+}
+
+code {
+    @extend .code;
+}
+
+pre {
+    @extend .codesample;
+    border-style:none;
 }
 
 #title .logo {

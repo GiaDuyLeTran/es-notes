@@ -276,10 +276,12 @@ body {
   text-align: center;
   font-size: 142px; }
 
-.code, .codesample {
+/* Code class, typically used in headers etc */
+.code, .codesample, pre, .prettyprint, code {
   font-family: droid_sans_monoregular; }
 
-.codesample {
+/* Regular or syntax-highlighted code snippets (not individual words) */
+.codesample, pre, .prettyprint {
   font-size: 18px; }
 
 .bad {
@@ -754,6 +756,9 @@ img {
   border: 1px solid rgba(0, 0, 0, 0.3);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   background: white; }
+
+pre {
+  border-style: none; }
 
 #title .logo {
   float: left;
