@@ -8,6 +8,7 @@
     <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
     <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
     <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
     <link href="css/es01.css" rel="stylesheet" />
 </head>
 
@@ -237,7 +238,7 @@
     <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.6">
         <h1>System Clock</h1>
         <div style="float:left;width:50%">Synchronous logic requires a clock signal. If the externally-supplied clock is too high, it can be divided. This should <b>not</b> be done using logic signals.</div>
-        <div class="card bad" style="float:right"><pre class="prettyprint">
+        <div class="card bad" style="float:right"><pre class="prettyprint lang-verilog">
 reg [1:0] my_clock;
 always @(posedge clk) begin
     my_clock <= my_clock + 1;
@@ -447,11 +448,13 @@ Most of the extra complexity here is to do with interrupts (not yet covered) or 
 
 <script src="js/impress.js"></script>
 <script src="js/impressConsole.js"></script>
-<script src="js/google-code-prettify/run_prettify.js?lang=verilog"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
 <script>
 // Call Impress even if it won't be initialized so we at least
 // get .impress-disabled set up and testable from CSS
 impress()
+prettyPrint()
 if ( !window.location.search.match(/print/) ) {
     impress().init();
     impressConsole().init();
