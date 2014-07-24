@@ -150,8 +150,26 @@
 
     <div class="step" id="class-comb" data-x="-365" data-y="1740" data-scale="0.6">
         <div style="margin-top:80px;text-align:center"><img src="images/verilog/combinatorial.png" width="600px"/></div>
-        <div style="float:left;"><b class="code">assign</b> Style<br/><img style="padding-bottom:40px" src="images/verilog/combinatorial-assign.png" width="450px"/></div>
-        <div style="float:right"><b class="code">always</b> Style<br/><img style="padding-bottom:1px" src="images/verilog/combinatorial-always.png" width="450px"/></div>
+        <div style="float:left;"><b class="code">assign</b> Style<br/><pre class="card prettyprint lang-verilog">
+module Module_Name (input wire [3:0] InVar1,
+                    input wire [3:0] InVar2,
+                    output wire [3:0] OutVar1,
+                    output wire OutVar2);
+    assign OutVar1 = InVar1^InVar2;
+    assign OutVar2 = &InVar2;
+endmodule
+</pre></div>
+        <div style="float:right"><b class="code">always</b> Style<br/><pre class="card prettyprint lang-verilog">
+module Module_Name (input wire [3:0] InVar1,
+                    input wire [3:0] InVar2,
+                    output wire [3:0] OutVar1,
+                    output wire OutVar2);
+    always &(*) begin
+        OutVar1 = InVar1^InVar2;
+        OutVar2 = &InVar2;
+    end
+endmodule
+</pre></div>
     
     </div>
 
@@ -164,7 +182,7 @@
             <li>Compact</li>
             <li>Used for simple wiring tasks</li>
         </ul></div>
-        <div class="card" style="float:right;width:45%"><code class="prettyprint">assign reset_n = key[0];</code></div>
+        <div class="card" style="float:right;width:45%"><code class="prettyprint lang-verilog">assign reset_n = key[0];</code></div>
         <div style="clear:both;"></div>
         <h2 class="code">always</h2>
         <div style="float:left">
@@ -172,7 +190,7 @@
             <li>Leads in to Sequential Logic</li>
             <li>Contains <b>&ldquo;Sensitivity List&rdquo;</b></li>
         </ul></div>
-        <div class="card" style="float:right;width:45%"><code class="prettyprint">always @(*) reset_n = key[0];</code></div>
+        <div class="card" style="float:right;width:45%"><code class="prettyprint lang-verilog">always @(*) reset_n = key[0];</code></div>
     </div>
 
     <div class="step point" data-x='-365' data-y='2540' data-scale="0.6">
@@ -180,14 +198,29 @@
     </div>
 
     <div class="step point" data-x='-365' data-y='2790' data-scale="0.6">
-        Loops are <b>not</b> allowed <br/><br/>
-        <img class="bad" src="images/verilog/combinatorial-loop.png"/>
+        Loops are <b>not</b> allowed <br/><br/><pre class="prettyprint lang-verilog bad">
+assign X = Y | Z;
+assign Y = X ^ W;</pre>
     </div>
 
     <div class="step" id="if" data-x='-365' data-y='3090' data-scale="0.6">
-        <h1><code>if</code> Statements</h1><center>
-        <img style="padding-top:20px;padding-bottom:85px" src="images/verilog/comb-if.png"/>
-        <img src="images/verilog/comb-if-schem.png"/></center>
+        <h1><code>if</code> Statements</h1>
+        <div class="card" style="float:left;height:370px;margin-right:30px"><pre class="prettyprint lang-verilog">
+module Module_Name (input wire [3:0] InVar1,
+                    input wire [3:0] InVar2,
+                    output wire [3:0] OutVar1,
+                    output wire OutVar2);
+    always &(*) begin
+        OutVar2 = &InVar2;
+        if (&InVar2) begin
+            OutVar1 = InVar1;
+        end else begin
+            OutVar1 = InVar2;
+        end
+    end
+endmodule
+</pre></div>
+        <div style="float:left"><img style="height:400px" src="images/verilog/comb-if-schem.png"/></div>
     </div>
 
     <div class="step" id="if2" data-x='-15' data-y='3090' data-scale="0.6">
@@ -198,7 +231,14 @@
 
     <div class="step point" data-x='-365' data-y='3390' data-scale="0.6">
         <code>if</code> cases should be <b>Complete</b><br/><br/>
-        <img class="bad" src="images/verilog/comb-if-incomplete.png"/>
+        <pre class="bad prettyprint lang-verilog">
+always @(*) begin
+    if (&InVar2) begin
+        OutVar1 = InVar2;
+        OutVar2 = &InVar2;
+    end
+end
+</pre>
     </div>
 
     <div class="step" data-x='-365' data-y='3640' data-scale="0.6">
@@ -231,7 +271,9 @@
         </div>
 
         <div style="float:right;margin-top:20px;">
-        <div class="card code">if (a)<br/>&nbsp;&nbsp; b <= c;</div>
+        <div class="card"><pre class="prettyprint lang-verilog">
+if (a)
+    b <= c;</pre></div>
         </div>
     </div>
 

@@ -277,12 +277,17 @@ body {
   font-size: 142px; }
 
 /* Code class, typically used in headers etc */
-.code, .codesample, pre, .prettyprint, code {
+.code, .codesample, .prettyprint, code {
   font-family: droid_sans_monoregular; }
 
 /* Regular or syntax-highlighted code snippets (not individual words) */
-.codesample, pre, .prettyprint {
-  font-size: 18px; }
+.codesample, .prettyprint {
+  font-size: 16px; }
+
+pre.prettyprint {
+  line-height: 150%;
+  text-align: left;
+  padding: 10px; }
 
 .bad {
   box-shadow: 0px 0px 20px #ff5500; }
