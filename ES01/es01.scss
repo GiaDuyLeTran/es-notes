@@ -5,6 +5,17 @@
 @import 'anu-impress';
 @import 'embedded-systems';
 
+#title h1 {
+    margin-top: 250px;
+}
+
+#title h2 {
+    text-align:right;
+    padding-top:50px;
+    padding-right:40px;
+}
+
+
 /* Definitions slide is a big bunch of manually-laid out arrows
  * and items that will subsequently be zoomed in on. This is the
  * kind of layout that the positioner script can take care of at

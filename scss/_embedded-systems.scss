@@ -241,6 +241,12 @@ img {
     background: white;
 }
 
+img.naked {
+    border:none;
+    box-shadow:none;
+    background: none;
+}
+
 code {
     @extend .code;
 }
@@ -284,16 +290,6 @@ pre {
 /* If Impress is disabled then we're probably on the print page and
  * don't want to have the print link still visible. */
 .impress-disabled #title .linkbox { display: none; }
-
-#title h1 {
-    margin-top: 250px;
-}
-
-#title h2 {
-    text-align:right;
-    padding-top:50px;
-    padding-right:40px;
-}
 
 #title p {
     margin: 0px;

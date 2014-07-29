@@ -5,6 +5,17 @@
 @import 'anu-impress';
 @import 'embedded-systems';
 
+#title h1 {
+    margin-top: 250px;
+}
+
+#title h2 {
+    text-align:right;
+    padding-top:50px;
+    padding-right:40px;
+}
+
+
 .what {
     width:400px;
 }
