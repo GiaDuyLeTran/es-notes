@@ -28,3 +28,28 @@
 #arch #act { position:absolute; top:350px; left:900px; }
 #arch #ui { position:absolute; top:700px; left:100px; }
 
+#over1 { display: none;}
+#over2 { display: none;}
+#over3 { display: none;}
+
+@each $slide in (arch, soft) {
+    .impress-on-over1 ##{$slide} { @include opacity(1.0) }
+}
+
+@each $slide in (environ, user, business, toolchain) {
+    .impress-on-over1 ##{$slide} { @include opacity(0.0) }
+}
+
+@each $slide in (arch, soft, environ, user) {
+    .impress-on-over2 ##{$slide} { @include opacity(1.0) }
+}
+
+@each $slide in (business, toolchain) {
+    .impress-on-over2 ##{$slide} { @include opacity(0.0) }
+}
+
+@each $slide in (arch, soft, environ, user, business, toolchain) {
+    .impress-on-over3 ##{$slide} { @include opacity(1.0) }
+}
+
+
