@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 2: Embedded Systems Architecture</title>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es02.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div class="titlebox">
+            <h2>Embedded Systems</h2>
+            <h1>Architecture</h1>
+        </div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes">
+            Lesson Goals:
+            <ol>
+                <li>TODO</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="step" id="arch" data-x="1500" data-y="1500">
+        <div id="dummy" >&nbsp;</div>
+        <img src="images/fairphone/fairphone.png" id="fp" />
+
+        <h1 class="small" id="proc">Processor</h1>
+        <h1 class="small" id="power">Power</h1>
+        <h1 class="small" id="periph">Peripherals</h1>
+        <h1 class="small" id="mem">Memories</h1>
+        <h1 class="small" id="comms">Communications</h1>
+        <h1 class="small" id="sens">Sensors</h1>
+        <h1 class="small" id="act">Actuators</h1>
+        <h1 class="small" id="ui">UI</h1>
+
+        <div class="notes">The architecture of an Embedded System is often thought to contain
+hardware and hardware interfaces only. Certainly this is the portion of
+the Embedded System that is typically given to Electronic Engineers to
+design.
+Embedded Systems must interact closely with their environment, so the
+correct definition and specification of interfaces is certainly of great
+importance.
+
+Image Credits: CC-BY-SA: Fairphone.org</div>
+    </div>
+
+    <div class="step" id="soft" data-x-rel="-800" data-y-rel="-250" data-scale="0.6">
+        <img class="naked" src="images/architecture/sw-arch.png"/>
+        <div class="notes">
+Embedded Systems typically have stricter constraints on power
+consumption, space, performance any many other attributes that can’t
+be described by the hardware alone.
+The software stack forms an integral part of the overall systems
+architecture and must certainly be considered when designing the
+system.
+        </div>
+    </div>
+
+    <div class="step" id="sw-hw-over" data-x-rel="500" data-y-rel="250" data-scale="1.3">
+    <!-- dummy -->
+    </div>
+
+    <div class="step" id="environ" data-x-rel="800" data-y-rel="-500" data-scale="1.0">
+        <h1>Environment</h1>
+    </div>
+
+    <div class="step" id="user" data-x-rel="-1000" data-y-rel="1000" data-scale="1.0">
+        <h1>User</h1>
+    </div>
+
+    <div class="step" id="mid-over" data-x-rel="300" data-y-rel="-500" data-scale="1.6">
+    <!-- dummy -->
+    </div>
+
+    <div class="step" id="business" data-x-rel="-450" data-y-rel="200" data-scale="1.0">
+        <div class="listcard" style="width:500px"><ul>
+        <li>Reliability Specification</li>
+        <li>Development Strategy</li>
+        <li>Testing Strategy</li>
+        <li>Marketing Strategy</li>
+        </ul></div>
+        <div class="notes">
+The tight constraints surrounding Embedded Systems don’t stop at
+physical parameters.
+The successful design of an Embedded System has to note the fact
+that such systems are commodities, but also that they are rarely sold
+as a final product.
+An Embedded System architecture has to recognize the interfaces
+between the system and the business processes around it, not just the
+physical processes.
+        </div>
+
+    </div>
+
+    <div class="step" id="toolchain" data-x-rel="-600" data-y-rel="-500" data-scale="1.0">
+        <div class="listcard" style="width:500px"><ul>
+        <li>Development Environment</li>
+        <li>Toolchain</li>
+        <li>Development Workflow</li>
+        <li>Testbench</li>
+        </ul></div>
+        <div class="notes">
+These business processes include budgets and lead times and
+therefore come back and affect the choice of development system as
+well.
+        </div>
+
+    </div>
+
+    <div class="step" id="end-over" data-x-rel="700" data-y-rel="200" data-scale="1.8">
+    <!-- dummy -->
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step"/>
+
+</div>
+
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+

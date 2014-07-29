@@ -1,0 +1,30 @@
+
+/* ES01 Recap, slide specific styling */
+@import 'compass/css3/opacity';
+
+@import 'anu-impress';
+@import 'embedded-systems';
+
+#title h1 {
+    padding-top:50px;
+}
+
+#title h2 {
+    text-align:left;
+    padding-right:40px;
+    margin-top: 200px;
+}
+
+#arch #dummy { height:900px }
+#arch #fp { position:absolute; top:200px; left:200px; width:600px;}
+#arch #proc { position:absolute; top:200px; left:0px; }
+
+#arch #power { position:absolute; top:500px; left:900px; }
+#arch #periph { position:absolute; top:100px; left:500px; }
+#arch #mem { position:absolute; top:400px; left:0px; }
+
+#arch #comms { position:absolute; top:800px; left:500px; }
+#arch #sens { position:absolute; top:250px; left:900px; }
+#arch #act { position:absolute; top:350px; left:900px; }
+#arch #ui { position:absolute; top:700px; left:100px; }
+
