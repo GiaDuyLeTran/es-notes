@@ -62,6 +62,22 @@ $badshadow: 0px 0px 20px $badhighlight;
     padding: 20px 25px 20px 5px;
 }
 
+/* Really the above should inherit from this.. */
+.simplecard {
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, .3);
+    border-radius: 10px;
+    box-shadow: $boxshadow;
+    padding: 15px 20px 15px 20px;
+}
+
+.rightbox {
+    @extend .simplecard;
+    color: $highlight;
+    text-align:right;
+    font-weight: bold;
+}
+
 /* Box that makes a point. Like a small slide */
 .point {
     @extend .slide;
@@ -191,6 +207,12 @@ h3 {
     font-size: 28px;
     text-indent: 0px;
     padding: 20px 0 5px;
+    color: $highlight;
+    font-weight: bold;
+}
+
+.card h3 {
+    text-align: center;
 }
 
 ol {

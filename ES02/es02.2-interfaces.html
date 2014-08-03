@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 2.1: Embedded Systems Interfaces</title>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es02-1.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div class="titlebox">
+            <h2>Embedded Systems</h2>
+            <h1>Interfaces</h1>
+        </div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes">
+            Lesson Goals:
+            <ol>
+                <li>TODO</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="step" id="design" data-x="1000" data-y="0">
+        <h1>System Design</h1>
+        <ol>
+        <li>Identify <b>Functions</b></li>
+        <li>Identify <b>Interfaces</b></li>
+        <li>Create a Functional Architecture</li>
+        <li>Assign functions to interacting elements</li>
+        <li>Repeat for each element until every one is individually <b>realizable</b></li>
+        </ol>
+
+        <div class="notes">Embedded Systems are designed like all systems.</div>
+    </div>
+
+    <div class="step" id="design2" data-x-rel="-220" data-y-rel="10" data-scale="0.4">
+    <div style="float:right">
+    Outside the scope of this course.<br/><br/>
+    In scope!</div>
+
+        <div class="notes">Most of you will have come across the notion of specifying a system in terms of its functions during the Systems Project, System Design or otherwise in the course of your degree. It isn’t unique to Embedded Systems and is outside the scope of this course.</div>
+    </div>
+
+    <div class="step" data-x="2000" data-y="0">
+        <h1>Standards</h1>
+        <center><img src="images/architecture/iface1.png"/></center>
+
+        <div class="notes">Don't reinvent the wheel. Know your standards. These include both general-purpose and market-specific standards.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="600">
+        <div class="simplecard" style="float:left;width:400px;height:500px">
+        <h3>Market-Specific Standards</h3>
+        <ul><li>Consumer Electronics</li>
+            <li>Medical</li>
+            <li>Automation & Control</li>
+            <li>Networking & Comms</li>
+            <li>Automotive</li>
+            <li>Aerospace & Defence</li>
+            <li>Office Automation</li></ul></div>
+        <div class="simplecard" style="float:right;width:400px;height:500px">
+        <h3>General Standards</h3>
+        <ul><li>Networking</li>
+            <li>Programming Language</li>
+            <li>Security</li>
+            <li>Quality Assurance</li></ul></div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="600">
+        <h2>Example: &ldquo;Smart&rdquo; TV</h2>
+        <div class="simplecard" style="float:left;width:400px;height:500px">
+        <h3>Market-Specific Standards</h3>
+        <ul><li>Digital Video Broadcasting (DVB)</li>
+            <li>Java TV</li>
+            <li>Home audio/video interoperability (HAVi)</li>
+            <li>Digital Audio Video Council (DAVIC)</li>
+            <li>High Definition Multimedia Interface (HDMI)</li>
+            <li>Infrared Data Association (IrDA)</li></ul></div>
+        <div class="simplecard" style="float:right;width:400px;height:500px">
+        <h3>General Standards</h3>
+        <ul><li>Hypertext Transfer Protocol (HTTP)</li>
+            <li>Post Office Protocol (POP3)</li>
+            <li>Internet Message Access Protocol (IMAP)</li>
+            <li>Simple Mail Transport Protocol (SMTP)</li>
+            <li>Networking (TCP/UDP/IP/Ethernet/802.11)</li>
+            <li>Java</li>
+            <li>POSIX</li></ul></div>
+
+        <div class="notes">Systems interfaces includes things you would expect, the box has to be able to receive the digital video signal, a remote control signal and output some standard format for display on a Television (DVB, HDMI, IrDA).
+The device might have functions outside its core role, such as a web interface (HTTP) or email notifications (SMTP) which in turn build on top of other standards (Ethernet/TCP/UDP/IP/802.11)
+The systems interfaces also have to cover interfaces to the software as well. The ability for your Embedded System to run the target software package is just as important as any other aspect of interfacing.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="700">
+        <h1>Interfaces  <>  Conventions</h1>
+        <center><img src="images/architecture/uiface.png"/></center>
+        <div class="notes">Clearly most interfaces in a typical Embedded System interfaces can be implemented against a known standard. This usually speeds up development and improves reliability as reference implementations and test benches are often parts of the standard
+themselves and not something that has to be implemented from scratch.
+If there isn’t an applicable standard, there are often at least standard conventions. Graphical User Interfaces are an example – the notion of icons and windows as interaction metaphors has proven to scale from the Apple computers of old to the latest touchscreen enabled devices.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="700">
+        <h1>When Not to Standardize</h1>
+        <div class="simplecard" style="float:left;width:400px;height:250px">
+        <h3>Market Forces</h3>
+        <ul><li>Lock your ecosystem</li>
+            <li>Time to market</li></ul></div>
+        <div class="simplecard" style="float:right;width:400px;height:250px">
+        <h3>Technical Forces</h3>
+        <ul><li>No suitable standard</li>
+            <li>Device limitations</li>
+            <li>Special/specific use</li></ul></div>
+
+        <div class="notes">When not to standardize: When the boss tells you not to! The most
+typical case for not adhering to some standard protocol is that the market forces are such that interfaces must remain proprietary.
+The use of proprietary standards is decreasing as companies realize that interoperability is generally desirable after all, but also that if you close an interface there are plenty of people out there interested in opening it back up. The Microsoft SMB file sharing protocol is one such example, where Andrew Tridgell (now at the ANU) reverse engineered the protocol from scratch, was sued by Microsoft but prevailed in the courts. Simply, it’s often not worth the extra time required to lock down an interface.
+Time to market can perhaps be improved by not adhering to a standard in some cases. The risk often increases though.
+There can be technical reasons not to standardize, but fewer than you might think. Any device-specific interfaces will at least generally be built on top of commonly specified ones.
+</div>
+    </div>
+
+    <div class="step" data-x="3200" data-y="0">
+        <h1>Network Interfaces</h1>
+        <div style="float:left">
+            <h3>Peer-to-Peer</h3>
+            <img src="images/architecture/p2p.png" style="width:450px"/>
+        </div>
+        <div style="float:left">
+            <h3>Client/Server</h3>
+            <img src="images/architecture/server.png" style="width:450px;padding-bottom:66px;padding-top:40px;"/>
+        </div>
+        <div class="notes">Network interfaces extend the Embedded System architecture beyond the
+physical system itself. The devices may be connected in a Client/Server fashion or a Peer-to-Peer manor.
+
+These are extremes where every device can talk to every other (P2P) or every device can only talk to one (C/S). There are intermediates such as Mesh networks where each device can talk to a subset of others.
+
+This simple distinction is useful for most standards though.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="700">
+        <h1>OSI Model</h1>
+        <center><img src="images/architecture/osi1.png" style="width:800px"/></center>
+
+        <div class="notes">
+        Within each device, the network stack can be defined in terms of the 7-layer OSI Model.
+        </div>
+    </div>
+
+    <div class="step" data-x-rel="-120" data-y-rel="-103" data-scale="0.3">
+        <div style="text-align:right">The data the end application wants transported</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="40" data-scale="0.3">
+        <div style="text-align:right">Data is formatted correctly (e.g. Endianness)</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="50" data-scale="0.3">
+        <div style="text-align:right">...</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="100" data-scale="0.3">
+        <div style="text-align:right">...</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="40" data-scale="0.3">
+        <div style="text-align:right">Data is routed between <b>logical</b> machines</div>
+        <div class="notes">e.g. Usually a transferrable address, e.g. IP address</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="40" data-scale="0.3">
+        <div style="text-align:right">Data is routed between <b>physical</b> machines</div>
+        <div class="notes">Using an address fixed to the machine, or interface in the machine (e.g. MAC address)</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="85" data-scale="0.3">
+        <div style="text-align:right">Physically modulates something to transfer the data</div>
+    </div>
+
+    <div class="step" data-x-rel="120" data-y-rel="400" data-scale="1.0">
+        <h1>TCP/IP Model</h1>
+        <center><img src="images/architecture/osi2.png" style="width:800px"/></center>
+
+        <div class="notes">
+        The full OSI model is rarely implemented by seven individual pieces of code. Most implementations will combine levels. TCP/IP, or the "internet stack" if you like, implements only four levels.
+
+The application is responsible for data formatting and session tracking.
+
+Transport is done by TCP or friends (e.g. UDP).
+
+Logical addressing (network layer) is done by IP.
+
+Network access, including physical routing, is done by the network card</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="600" data-scale="1.0">
+        <h1>Bluetooth Model</h1>
+        <center><img src="images/architecture/osi3.png" style="width:800px"/></center>
+
+        <div class="notes">
+        Bluetooth groups layers for standardization. The Application Group is specified by service (audio device, data device etc).  The Middleware group is often TCP/IP, though this is overkill as Bluetooth doesn't/can't use many of the full features of this stack.  The transport protocol group is the part that would commonly be thought of as "Bluetooth": The wireless stuff.
+
+This is an example of a protocol at a low level also forcing some structure on the laters above. We will see this pattern again in future lectures.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="600" data-scale="1.0">
+        <h1>Physical Layer</h1>
+        <center><img src="images/architecture/osi4.png" style="width:800px"/></center>
+
+        <div class="notes">The top six layers can be software (though they may be hardware).  The bottom layer, the physical layer, must be hardware.
+
+This makes it the most interesting to Electronic Engineers!</div>
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step"/>
+
+</div>
+
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+

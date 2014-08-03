@@ -1,4 +1,4 @@
-/* ES00 Introduction, slide specific styling */
+/* ES01 Recap, slide specific styling */
 /*
     Styling common to all ANU-type usage of Impress JS.
 
@@ -823,37 +823,9 @@ pre {
   margin: 0px; }
 
 #title h1 {
-  margin-top: 250px; }
+  padding-top: 50px; }
 
 #title h2 {
-  text-align: right;
-  padding-top: 50px;
-  padding-right: 40px; }
-
-.what {
-  width: 400px; }
-
-.what p {
-  text-indent: 0px; }
-
-#whatis {
-  width: 600px; }
-
-#charactersistics {
-  width: 600px; }
-
-#charactersistics2 {
-  width: 600px; }
-
-/* Intermediate overview slides leave past slides transparent
- * and turn future slides opaque. The only problem is that
- * ImpressJS marks slides as past iff the transition to them
- * has completed, which means that out of order or fast traversals
- * have patchy results */
-#over1 {
-  display: none; }
-
-.impress-on-over1 .future {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
-  opacity: 1;
-  cursor: pointer; }
+  text-align: left;
+  padding-right: 40px;
+  margin-top: 200px; }

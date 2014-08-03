@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 2.3: Embedded Systems Software Interfaces</title>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es02-3.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="500">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div class="titlebox">
+            <h2>Embedded Systems</h2>
+            <h1>Software Interfaces</h1>
+        </div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes">
+            Lesson Goals:
+            <ol>
+                <li>TODO</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="step" data-x="500" data-y="-366" data-scale="0.5">
+        <h1>Operating Environment</h1>
+        <ul><li>Operating System</li>
+            <li>Libraries</li>
+            <li>Runtime</li></ul>
+        <div class="notes">Must consider size, complexity, driver availability etc</div>
+    </div>
+
+    <div class="step point" data-x-rel="500" data-y-rel="0" data-scale="0.5">
+        <h2>Very Important</h2>
+        We will have a whole module later in the course.
+    </div>
+
+
+    <div class="step" data-x="866" data-y="0" data-scale="0.5">
+        <h1>Memory Requirements</h1>
+        <ul><li>RAM/Flash usage</li>
+            <li>Volatility requirements</li>
+            <li>Speed/Latency requirements</li></ul>
+        <div class="notes">Will be covered in more depth in the sequel</div>
+    </div>
+
+    <div class="step" id="memblocks" data-x-rel="450" data-y-rel="0" data-scale="0.5">
+        <div class="rightbox" style="width:200px" id="m-cache">L1 Cache<br/>L2 Cache<br/>L3&elips;</div>
+        <div class="rightbox" style="width:200px" id="m-ram">RAM</div>
+        <div class="rightbox" style="width:200px" id="m-flash">Flash</div>
+        <div class="rightbox" style="width:200px" id="m-hdd">Hard Drive</div>
+        <div class="rightbox" style="width:200px" id="m-cloud">Network/Cloud</div>
+    </div>
+
+    <div class="step" id="cache" data-x-rel="-100" data-y-rel="-70" data-scale="0.15">
+        <div style="float:right;width:500px">
+        <ul><li>Fast access (cycles)</li>
+            <li>Tight coupling</li>
+            <li>Small capacity (MB)</li>
+            <li>Implemented as RAM</li></ul></div>
+
+        <div class="notes">
+Most modern CPUs keep recently-accessed data cached in a small amount of memory tightly coupled to the CPU itself. Code rarely controls the cache itself, but can be optimized for good
+cache performance. L1 Cache is typically accessed in 1-2 CPU cycles while lower level caches are proportionally slower.
+
+In multi-core chips, the lower levels of cache may be shared between cores. This increases
+complexity somewhat as the cache has to remain ‘coherent’ across all cores; that is, because cache
+data is a copy of RAM data, it exists in at least two places at one and every core must ensure it
+accesses the most recent copy.</div>
+    </div>
+
+    <div class="step" id="ram" data-x-rel="0" data-y-rel="55" data-scale="0.15">
+        <div style="float:right;width:500px;">
+        <ul><li>Static or Dynamic</li>
+            <li>Medium capacity (GB)</li>
+            <li>Medium access (100's of cycles)</li></ul></div>
+
+        <div class="notes">
+RAM is what we typically think of when we think of memory. In an Embedded System, some base amount is required for program variables and the rest may be used for buffering, trading off cost
+against throughput.
+Larger RAM devices (such as Dynamic RAM) require code to execute in order to be initialized.
+This causes a “chicken and egg” problem; code needs RAM to execute, but the RAM needs some
+code to have executed. If a device is designed to use Dynamic RAM, it will typically also include a small amount of Static RAM internal to the device for the sole purpose of supporting this initial execution.
+        </div>
+    </div>
+
+    <div class="step" id="flash" data-x-rel="0" data-y-rel="33" data-scale="0.15">
+        <div style="float:right;width:500px;">
+        <ul><li>Non-volatile</li>
+            <li>Large capacity (10s/100s of GB)</li>
+            <li>Slow access (1000's of cycles)</li>
+            <li>Finite lifetime</li></ul></div>
+
+        <div class="notes">
+Flash memory is slowly replacing hard drives as the standard for local, non-volatile memory. It is typically a few orders of magnitude slower than RAM and several orders of magnitude slower than a CPU cache. Flash can only be written a finite number of times before it wears out, so much of the technology behind dealing with this type of memory goes in to avoiding, detecting and/or correcting errors. Premium flash devices include Error Correcting Codes, ECC, which are special portions of memory that contain enough information to not just detect, but even fix 1, 2 or several-bit errors.
+        </div>
+    </div>
+
+    <div class="step point" data-x-rel="150" data-y-rel="0" data-scale="0.15">
+        <h1>Wear Levelling</h1>
+        Flash lifetime is extended by <b>wear levelling</b>. The algorithm chosen dramatically affects device lifetime.
+
+        <div class="notes">Modern flash memory cards such as SD cards may cheat with their wear leveling algorithms. The FAT filesystem that is typically used on such cards writes data across the card in something approaching a round-robin fashion – in essence it does its own wear leveling. The exception to this is the File Allocation Table block which is written every time any other piece of the card is written. Given that the FAT gets written many more times than any other piece, the memory may choose to only wear level the section of the card where it thinks the FAT will sit. This means that using a filesystem other than FAT on an SD card may reduce its lifespan 10s or 100s of times!</div>
+    </div>
+
+    <div class="step" id="hdd" data-x-rel="-200" data-y-rel="34" data-scale="0.15">
+        <div style="float:right;width:500px;">
+        <ul><li>Non-volatile</li>
+            <li>Very Large capacity (1000s of GB)</li>
+            <li>Very Slow access (10,000's of cycles)</li>
+            <li>Non-deterministic access times</li></ul></div>
+
+        <div class="notes">
+Hard Drives, or magnetic storage generally, have been around almost as long as computers themselves.
+They are still the de-facto standard for high volume, non-volatile storage. They are not often used in Embedded Systems as they are relatively power-hungry and fragile, at least when they are spinning. They also have non-deterministic response time as the magnetic heads need to physically move over the surface of the disk with each new request.
+        </div>
+    </div>
+
+    <div class="step" id="cloud" data-x-rel="0" data-y-rel="33" data-scale="0.15">
+        <div style="float:right;width:500px;">
+        <ul><li>High Reliability</li>
+            <li>Very Large capacity (+1000s of GB)</li>
+            <li>Very Slow access (1,000,000 cycles)</li>
+            <li>Non-deterministic access times</li></ul></div>
+
+        <div class="notes">
+Network storage is becoming more fashionable as markets become less about the Embedded Device itself and more about the service it can offer. Having the service state data live externally to the system itself streamlines upgrades and can drive down system costs by centralizing much more of the system than would traditionally be the case.
+Network storage has the obvious drawbacks though – the network is a weak link, both in terms of uptime and reliability, but also in terms of security.
+        </div>
+    </div>
+
+
+    <div class="step" data-x="1000" data-y="500" data-scale="0.5">
+        <h1>Programming Language</h1>
+        <ul><li>Library/Driver availability</li>
+            <li>Runtime support</li></ul>
+        <div class="notes">...</div>
+    </div>
+
+    <div class="step" data-x="866" data-y="1000" data-scale="0.5">
+        <h1>Speed Requirements</h1>
+        <ul><li>Thoughput</li>
+            <li><b>Average</b>/<b>Expected</b> latency</li></ul>
+        <div class="notes">...</div>
+    </div>
+
+    <div class="step" data-x="500" data-y="1366" data-scale="0.5">
+        <h1>Real-Time Requirements</h1>
+        <ul><li>Absolute Latency</li>
+            <li>Inter-system Synchronization</li></ul>
+        <div class="notes">...</div>
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step"/>
+
+</div>
+
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+

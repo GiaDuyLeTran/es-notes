@@ -253,6 +253,19 @@ body {
 .listcard {
   padding: 20px 25px 20px 5px; }
 
+/* Really the above should inherit from this.. */
+.simplecard, .rightbox {
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px 20px 15px 20px; }
+
+.rightbox {
+  color: #aa5712;
+  text-align: right;
+  font-weight: bold; }
+
 /* Box that makes a point. Like a small slide */
 .point {
   width: 600px;
@@ -719,7 +732,12 @@ h2 {
 h3 {
   font-size: 28px;
   text-indent: 0px;
-  padding: 20px 0 5px; }
+  padding: 20px 0 5px;
+  color: #aa5712;
+  font-weight: bold; }
+
+.card h3, .listcard h3 {
+  text-align: center; }
 
 ol {
   list-style-type: decimal;
