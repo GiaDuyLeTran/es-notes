@@ -31,7 +31,8 @@ div#notes {
   overflow-x: hidden;
   overflow-y: auto;
   height: 95%;
-  padding-left: 10px; }
+  padding-left: 10px;
+  white-space: pre-wrap; }
 
 div#notes p {
   margin-top: 0; }

@@ -37,6 +37,7 @@ div#notes {
     overflow-y: auto;
     height: 95%;
     padding-left: 10px;
+    white-space: pre-wrap;
 }
 
 div#notes p {
