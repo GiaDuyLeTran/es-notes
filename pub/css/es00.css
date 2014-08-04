@@ -685,6 +685,12 @@ pre.prettyprint {
 .impress-console .ov-link {
   display: none; }
 
+.impress-on-overview .ov-link {
+  display: none; }
+
+.impress-disabled .ov-link {
+  display: none; }
+
 /* Overview link fixed to the top-left corner */
 .notes-link {
   position: fixed;
@@ -698,10 +704,10 @@ pre.prettyprint {
 .impress-console .notes-link {
   display: none; }
 
-.impress-on-overview .ov-link {
+.impress-on-overview .notes-link {
   display: none; }
 
-.impress-disabled .ov-link {
+.impress-disabled .notes-link {
   display: none; }
 
 /* Standard tags */

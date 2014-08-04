@@ -1,0 +1,21 @@
+
+/* ES03 Recap, slide specific styling */
+@import 'compass/css3/opacity';
+
+@import 'anu-impress';
+@import 'embedded-systems';
+
+#title h1 {
+    padding-top:50px;
+}
+
+#title h2 {
+    text-align:left;
+    padding-right:40px;
+    margin-top: 200px;
+}
+
+.impress-on-hyb1 #hyb-title { @include opacity(1.0) }
+.impress-on-hyb2 #hyb-title { @include opacity(1.0) }
+
+
