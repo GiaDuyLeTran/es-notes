@@ -201,27 +201,82 @@ The compiler is responsible for most optimizations and generation of platform-sp
 Dynamic libraries (DLLs in Windows-speak, SOs in Linux) have their symbols left unresolved at Link time. The final memory locations for shared symbols are only resolved when the executable is run. This increases start up times but sharing code between executables can reduce overall size.</div>
     </div>
 
-    <div class="step" data-x='1366' data-y='1140' data-scale="0.5">
+    <div class="step" data-x='1846' data-y='740' data-scale="0.2">
+        <h1>Dynamic Linker Example</h1>
+        <pre class="card prettyprint">
+#include "stdio.h"
+
+int main(int argc, char** argv)
+{
+    printf("Hello World");
+    return 0;
+}
+        </pre>
+    </div>
+
+    <div class="step" data-x='1846' data-y='840' data-scale="0.2">
+        <h2>What's in stdio.h</h2>
+        <pre class="card prettyprint">
++: grep printf /usr/include/stdio.h
+extern int fprintf (FILE *__restrict __stream,
+extern int printf (const char *__restrict __format, ...);
+extern int sprintf (char *__restrict __s,
+extern int vfprintf (FILE *__restrict __s, const char *__restrict __format,
+extern int vprintf (const char *__restrict __format, _G_va_list __arg);
+&hellip;
+        </pre>
+        <p>Not code, just a definition</p>
+    </div>
+
+    <div class="step" data-x='1846' data-y='940' data-scale="0.2">
+        <h2>Symbols in the Binary</h2>
+        <pre class="card prettyprint">
++~: readelf -s
+
+Symbol table '.dynsym' contains 4 entries:
+   Num:    Value          Size Type    Bind   Vis      Ndx Name
+     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND 
+     1: 0000000000000000     0 FUNC    GLOBAL DEFAULT  UND printf@GLIBC_2.2.5 (2)
+     2: 0000000000000000     0 FUNC    GLOBAL DEFAULT  UND __libc_start_main@GLIBC_2.2.5 (2)
+     3: 0000000000000000     0 NOTYPE  WEAK   DEFAULT  UND __gmon_start__
+        </pre>
+        <p><code>printf</code> is undefined and has no address</p>
+    </div>
+
+    <div class="step" data-x='1846' data-y='1040' data-scale="0.2">
+        <h2>Symbols in the Library</h2>
+        <pre class="card prettyprint">
++~/dev/scratch: readelf -s /lib/x86_64-linux-gnu/libc.so.6 | grep printf
+   &hellip;
+   596: 00000000000546b0   161 FUNC    GLOBAL DEFAULT   12 printf@@GLIBC_2.2.5
+   &hellip;
+        </pre>
+        <p><code>printf</code> is a global symbol with an address here.</p>
+        <p>Running the binary will cause the library to be <b>dynamically</b> loaded and the address of <code>printf</code> will be filled in.
+    </div>
+
+
+    <div class="step" data-x='1666' data-y='1340' data-scale="0.5">
         <h1>JIT/Intepretted</h1>
         <center><img class="naked" src="images/software-interfaces/int-jit.png" /></center>
         <div class="notes">Just-in-time (JIT) compiled code has two processes, one on done before-hand and one done while the program runs. The intermediate representation is called &ldquo;Byte Code&rdquo;</div>
     </div>
 
-    <div class="step" data-x='1306' data-y='1210' data-scale="0.2">
+    <div class="step" data-x='1606' data-y='1410' data-scale="0.2">
             <p><b>Compiler:</b> Source Code to &ldquo;virtual&rdquo; Assembly (Bytecode)</p>
             <p>Bytecode is like assembly, but not tied to a particular architecture.</p>
         <div class="notes">Bytecode can be run on multiple machines/architectures. It can't run by itself though, it requires runtime support on the target machine.</div>
     </div>
 
-    <div class="step" data-x='1506' data-y='1120' data-scale="0.2">
+    <div class="step" data-x='1806' data-y='1320' data-scale="0.2">
             <p><b>JIT:</b> Compiles the BC to the platform's Assembly then executes it directly</p>
     </div>
 
-    <div class="step" data-x='1506' data-y='1225' data-scale="0.2">
+    <div class="step" data-x='1806' data-y='1425' data-scale="0.2">
             <p><b>Interpretted:</b> Parses the BC to find what action to perform, then calls a function to perform the operation.</p>
     </div>
 
-    <div class="step" data-x='1706' data-y='1165' data-scale="0.2">
+    <div class="step" data-x='2006' data-y='1365' data-scale="0.2">
         <div class="simplecard" style="width:400px;float:left">
         <h3>JIT</h3>
         <ul><li>Slow Compilation</li>
@@ -234,7 +289,7 @@ Dynamic libraries (DLLs in Windows-speak, SOs in Linux) have their symbols left 
 The platform itself is also usually in the best position to determine which optimizations to apply, so the overhead of JIT compilation may be reclaimed through smart application of code optimization.</div>
     </div>
     
-    <div class="step" data-x='1706' data-y='1165' data-scale="0.2">
+    <div class="step" data-x='2006' data-y='1365' data-scale="0.2">
         <div class="simplecard" style="width:400px;float:right">
         <h3>Interpretted</h3>
         <ul><li>Fast Parse</li>
@@ -247,7 +302,7 @@ The platform itself is also usually in the best position to determine which opti
 JIT compilers are widely recognized as the future of this kind of technology and are slowly replacing run-time interpreters. One exception is on obscure architectures as Virtual Machines are typically written entirely in C and can be compiled for anything supported by that compiler. JIT compilers have to be written, at least partially, specifically for a target architecture as it has to know which machine instructions to output.</div>
     </div>
 
-    <div class="step" data-x='2106' data-y='1015' data-scale="0.5">
+    <div class="step" data-x='2406' data-y='1215' data-scale="0.5">
         <h1>Languages</h1>
         <div class="simplecard" style="width:400px;float:left">
             <h3>Compiled</h3>
@@ -340,7 +395,7 @@ The overhead need not be low so long as it's predictable.  The scheduling can be
 
 
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
-	<div id="overview" class="step" data-x="1053" data-y="590.76" data-scale="2.5">&nbsp</div>
+	<div id="overview" class="step" data-x="1203" data-y="578.76" data-scale="2.7">&nbsp</div>
 </div>
 
 
