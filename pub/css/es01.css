@@ -682,6 +682,22 @@ pre.prettyprint {
   pointer-events: auto;
   /* Reqd to make non-impress elements clickable */ }
 
+.impress-console .ov-link {
+  display: none; }
+
+/* Overview link fixed to the top-left corner */
+.notes-link {
+  position: fixed;
+  top: 5px;
+  left: 80px;
+  padding: 5px;
+  z-index: 99;
+  pointer-events: auto;
+  /* Reqd to make non-impress elements clickable */ }
+
+.impress-console .notes-link {
+  display: none; }
+
 .impress-on-overview .ov-link {
   display: none; }
 
