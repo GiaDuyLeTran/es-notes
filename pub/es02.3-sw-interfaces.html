@@ -84,8 +84,7 @@
             <li>Implemented as RAM</li></ul></div>
 
         <div class="notes">
-Most modern CPUs keep recently-accessed data cached in a small amount of memory tightly coupled to the CPU itself. Code rarely controls the cache itself, but can be optimized for good
-cache performance. L1 Cache is typically accessed in 1-2 CPU cycles while lower level caches are proportionally slower.
+Most modern CPUs keep recently-accessed data cached in a small amount of memory tightly coupled to the CPU itself. Code rarely controls the cache itself, but can be optimized for good cache performance. L1 Cache is typically accessed in 1-2 CPU cycles while lower level caches are proportionally slower.
 
 In multi-core chips, the lower levels of cache may be shared between cores. This increases
 complexity somewhat as the cache has to remain ‘coherent’ across all cores; that is, because cache
@@ -100,11 +99,10 @@ accesses the most recent copy.</div>
             <li>Medium access (100's of cycles)</li></ul></div>
 
         <div class="notes">
-RAM is what we typically think of when we think of memory. In an Embedded System, some base amount is required for program variables and the rest may be used for buffering, trading off cost
-against throughput.
+RAM is what we typically think of when we think of memory. In an Embedded System, some base amount is required for program variables and the rest may be used for buffering, trading off cost against throughput.
+
 Larger RAM devices (such as Dynamic RAM) require code to execute in order to be initialized.
-This causes a “chicken and egg” problem; code needs RAM to execute, but the RAM needs some
-code to have executed. If a device is designed to use Dynamic RAM, it will typically also include a small amount of Static RAM internal to the device for the sole purpose of supporting this initial execution.
+This causes a “chicken and egg” problem; code needs RAM to execute, but the RAM needs some code to have executed. If a device is designed to use Dynamic RAM, it will typically also include a small amount of Static RAM internal to the device for the sole purpose of supporting this initial execution.
         </div>
     </div>
 
@@ -124,7 +122,9 @@ Flash memory is slowly replacing hard drives as the standard for local, non-vola
         <h1>Wear Levelling</h1>
         Flash lifetime is extended by <b>wear levelling</b>. The algorithm chosen dramatically affects device lifetime.
 
-        <div class="notes">Modern flash memory cards such as SD cards may cheat with their wear leveling algorithms. The FAT filesystem that is typically used on such cards writes data across the card in something approaching a round-robin fashion – in essence it does its own wear leveling. The exception to this is the File Allocation Table block which is written every time any other piece of the card is written. Given that the FAT gets written many more times than any other piece, the memory may choose to only wear level the section of the card where it thinks the FAT will sit. This means that using a filesystem other than FAT on an SD card may reduce its lifespan 10s or 100s of times!</div>
+        <div class="notes">Modern flash memory cards such as SD cards may cheat with their wear leveling algorithms. The FAT filesystem that is typically used on such cards writes data across the card in something approaching a round-robin fashion – in essence it does its own wear leveling. The exception to this is the File Allocation Table block which is written every time any other piece of the card is written.
+
+Given that the FAT gets written many more times than any other piece, the memory may choose to only wear level the section of the card where it thinks the FAT will sit. This means that using a filesystem other than FAT on an SD card may reduce its lifespan 10s or 100s of times!</div>
     </div>
 
     <div class="step" id="hdd" data-x='1350' data-y='552' data-scale="0.15">
@@ -135,8 +135,7 @@ Flash memory is slowly replacing hard drives as the standard for local, non-vola
             <li>Non-deterministic access times</li></ul></div>
 
         <div class="notes">
-Hard Drives, or magnetic storage generally, have been around almost as long as computers themselves.
-They are still the de-facto standard for high volume, non-volatile storage. They are not often used in Embedded Systems as they are relatively power-hungry and fragile, at least when they are spinning. They also have non-deterministic response time as the magnetic heads need to physically move over the surface of the disk with each new request.
+Hard Drives, or magnetic storage generally, have been around almost as long as computers themselves. They are still the de-facto standard for high volume, non-volatile storage. They are not often used in Embedded Systems as they are relatively power-hungry and fragile, at least when they are spinning. They also have non-deterministic response time as the magnetic heads need to physically move over the surface of the disk with each new request.
         </div>
     </div>
 
@@ -149,6 +148,7 @@ They are still the de-facto standard for high volume, non-volatile storage. They
 
         <div class="notes">
 Network storage is becoming more fashionable as markets become less about the Embedded Device itself and more about the service it can offer. Having the service state data live externally to the system itself streamlines upgrades and can drive down system costs by centralizing much more of the system than would traditionally be the case.
+
 Network storage has the obvious drawbacks though – the network is a weak link, both in terms of uptime and reliability, but also in terms of security.
         </div>
     </div>
@@ -158,9 +158,8 @@ Network storage has the obvious drawbacks though – the network is a weak link,
         <h1>Programming Language</h1>
         <ul><li>Library/Driver availability</li>
             <li>Runtime support</li></ul>
-        <div class="notes">The choice of programming language(s) is perhaps the most
-fundamental software architecture choice.
-A balance must be struck between features, efficiency, reliability, time to market etc.
+        <div class="notes">The choice of programming language(s) is perhaps the most fundamental software architecture choice. A balance must be struck between features, efficiency, reliability, time to market etc.
+
 One of the key points that distinguishes programming languages from each other are whether they are precompiled, Just-in-Time compiled or Interpreted. These three options place restrictions on the locations in which a language may be used and what may be accomplished with code written in that language.</div>
     </div>
 
@@ -175,7 +174,10 @@ One of the key points that distinguishes programming languages from each other a
             <p><b>Compiler:</b> Source Code to Assembly</p>
             <p><b>Assembler:</b> Assembly to Binary. Does not resolve symbols.</p>
             <p>Compiler and Assembler are specific to a particular platform.</p>
-        <div class="notes">The compiler takes source code and generates machine language assembly mnemonics (written instructions such as MOV, ADD). The assembler takes this assembly, along with any that has been manually written and generates the binary object files. References to memory locations remain in symbolic form – the object file doesn’t yet know where in memory everything is going to end up. The compiler and assembler are typically invoked with a single instruction, the intermediate assembly mnemonics are stored in a temporary file and removed upon successful generation of the object file.
+        <div class="notes">The compiler takes source code and generates machine language assembly mnemonics (written instructions such as MOV, ADD). The assembler takes this assembly, along with any that has been manually written and generates the binary object files. References to memory locations remain in symbolic form – the object file doesn’t yet know where in memory everything is going to end up.
+
+The compiler and assembler are typically invoked with a single instruction, the intermediate assembly mnemonics are stored in a temporary file and removed upon successful generation of the object file.
+
 The compiler is responsible for most optimizations and generation of platform-specific code. When choosing hardware, it must be selected to be compatible with the target compiler.</div>
     </div>
 
@@ -194,6 +196,7 @@ The compiler is responsible for most optimizations and generation of platform-sp
         <p>Statically linked binaries are faster to load and require no external files on the target. Dynamically linked libraries are smaller and allow libraries to be shared.</p></div>
 
         <div class="notes">If static libraries are used, all symbols in the executable are resolved and no other item is required for that binary to be executed. This is typically the case for Embedded Systems.
+
 Dynamic libraries (DLLs in Windows-speak, SOs in Linux) have their symbols left unresolved at Link time. The final memory locations for shared symbols are only resolved when the executable is run. This increases start up times but sharing code between executables can reduce overall size.</div>
     </div>
 
@@ -238,8 +241,9 @@ The platform itself is also usually in the best position to determine which opti
             <li>Some Optimization</li>
             <li>VM easy to port</li></ul>
         </div>
-        <div class="notes">Interpreted code has the same portability advantages as JIT code but
-because the code is run in a completely controlled and isolated fashion (inside a Virtual Machine), there is the possibility for increased security. JIT compilers are widely recognized as the future of this kind of technology and are slowly replacing run-time interpreters. One exception is on obscure architectures as Virtual Machines are typically written entirely in C and can be compiled for anything supported by that compiler. JIT compilers have to be written, at least partially, specifically for a target architecture as it has to know which machine instructions to output.</div>
+        <div class="notes">Interpreted code has the same portability advantages as JIT code but because the code is run in a completely controlled and isolated fashion (inside a Virtual Machine), there is the possibility for increased security.
+
+JIT compilers are widely recognized as the future of this kind of technology and are slowly replacing run-time interpreters. One exception is on obscure architectures as Virtual Machines are typically written entirely in C and can be compiled for anything supported by that compiler. JIT compilers have to be written, at least partially, specifically for a target architecture as it has to know which machine instructions to output.</div>
     </div>
 
     <div class="step" data-x='2106' data-y='1015' data-scale="0.5">
@@ -261,8 +265,13 @@ because the code is run in a completely controlled and isolated fashion (inside 
             <p>New Languages, portability required.</p>
         </div>
 
-        <div class="notes">Precompiled languages: C, C++, ADA etc. Typically older, more
-established languages but still very commonly used in Embedded Systems. Much low-level code such as the Linux Kernel are written in precompiled languages as there isn’t necessarily any platform upon which the JIT compiler or Virtual Machine can run. JIT languages: Java, .NET, Dalvik since Android 2.2, Python, Javascript in some browsers. Most modern languages were either designed to be interpreted but have subsequently had JIT compilers written, or were designed for JIT execution from the start. Interpreted languages: Typically older versions of the JIT languages above.</div>
+        <div class="notes">Precompiled languages: C, C++, ADA etc. Typically older, more established languages but still very commonly used in Embedded Systems.
+
+Much low-level code such as the Linux Kernel are written in precompiled languages as there isn’t necessarily any platform upon which the JIT compiler or Virtual Machine can run.
+
+JIT languages: Java, .NET, Dalvik since Android 2.2, Python, Javascript in some browsers. Most modern languages were either designed to be interpreted but have subsequently had JIT compilers written, or were designed for JIT execution from the start.
+
+Interpreted languages: Typically older versions of the JIT languages above.</div>
     </div>
 
     <div class="step" data-x="500" data-y="1366" data-scale="0.5">
