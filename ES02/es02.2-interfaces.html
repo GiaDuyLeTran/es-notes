@@ -114,15 +114,17 @@
             <li>POSIX</li></ul></div>
 
         <div class="notes">Systems interfaces includes things you would expect, the box has to be able to receive the digital video signal, a remote control signal and output some standard format for display on a Television (DVB, HDMI, IrDA).
-The device might have functions outside its core role, such as a web interface (HTTP) or email notifications (SMTP) which in turn build on top of other standards (Ethernet/TCP/UDP/IP/802.11)
+
+The device might have functions outside its core role, such as a web interface (HTTP) or email notifications (SMTP) which in turn build on top of other standards (Ethernet/TCP/UDP/IP/802.11).
+
 The systems interfaces also have to cover interfaces to the software as well. The ability for your Embedded System to run the target software package is just as important as any other aspect of interfacing.</div>
     </div>
 
     <div class="step" data-x-rel="0" data-y-rel="700">
         <h1>Interfaces  <>  Conventions</h1>
         <center><img src="images/architecture/uiface.png"/></center>
-        <div class="notes">Clearly most interfaces in a typical Embedded System interfaces can be implemented against a known standard. This usually speeds up development and improves reliability as reference implementations and test benches are often parts of the standard
-themselves and not something that has to be implemented from scratch.
+        <div class="notes">Clearly most interfaces in a typical Embedded System interfaces can be implemented against a known standard. This usually speeds up development and improves reliability as reference implementations and test benches are often parts of the standard themselves and not something that has to be implemented from scratch.
+
 If there isn’t an applicable standard, there are often at least standard conventions. Graphical User Interfaces are an example – the notion of icons and windows as interaction metaphors has proven to scale from the Apple computers of old to the latest touchscreen enabled devices.</div>
     </div>
 
@@ -138,11 +140,11 @@ If there isn’t an applicable standard, there are often at least standard conve
             <li>Device limitations</li>
             <li>Special/specific use</li></ul></div>
 
-        <div class="notes">When not to standardize: When the boss tells you not to! The most
-typical case for not adhering to some standard protocol is that the market forces are such that interfaces must remain proprietary.
+        <div class="notes">When not to standardize: When the boss tells you not to! The most typical case for not adhering to some standard protocol is that the market forces are such that interfaces must remain proprietary.
+
 The use of proprietary standards is decreasing as companies realize that interoperability is generally desirable after all, but also that if you close an interface there are plenty of people out there interested in opening it back up. The Microsoft SMB file sharing protocol is one such example, where Andrew Tridgell (now at the ANU) reverse engineered the protocol from scratch, was sued by Microsoft but prevailed in the courts. Simply, it’s often not worth the extra time required to lock down an interface.
-Time to market can perhaps be improved by not adhering to a standard in some cases. The risk often increases though.
-There can be technical reasons not to standardize, but fewer than you might think. Any device-specific interfaces will at least generally be built on top of commonly specified ones.
+
+Time to market can perhaps be improved by not adhering to a standard in some cases. The risk often increases though. There can be technical reasons not to standardize, but fewer than you might think. Any device-specific interfaces will at least generally be built on top of commonly specified ones.
 </div>
     </div>
 
@@ -156,8 +158,7 @@ There can be technical reasons not to standardize, but fewer than you might thin
             <h3>Client/Server</h3>
             <img src="images/architecture/server.png" style="width:450px;padding-bottom:66px;padding-top:40px;"/>
         </div>
-        <div class="notes">Network interfaces extend the Embedded System architecture beyond the
-physical system itself. The devices may be connected in a Client/Server fashion or a Peer-to-Peer manor.
+        <div class="notes">Network interfaces extend the Embedded System architecture beyond the physical system itself. The devices may be connected in a Client/Server fashion or a Peer-to-Peer manor.
 
 These are extremes where every device can talk to every other (P2P) or every device can only talk to one (C/S). There are intermediates such as Mesh networks where each device can talk to a subset of others.
 
