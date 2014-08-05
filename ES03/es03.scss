@@ -12,8 +12,17 @@
 #title h2 {
     text-align:left;
     padding-right:40px;
-    margin-top: 200px;
 }
+
+#title #say {
+    margin-top: 150px;
+    text-align:right;
+    font-size:10px;
+    text-shadow:none;
+    color: rgba(0,0,0,0.3);
+    letter-spacing:initial;
+}
+
 
 .impress-on-hyb1 #hyb-title { @include opacity(1.0) }
 .impress-on-hyb2 #hyb-title { @include opacity(1.0) }

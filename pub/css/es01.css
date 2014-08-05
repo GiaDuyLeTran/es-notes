@@ -844,6 +844,14 @@ pre {
 #title p {
   margin: 0px; }
 
+@media print {
+  .notes {
+    display: block;
+    clear: both;
+    border: 1px solid black;
+    margin-top: 50px;
+    padding: 20px;
+    font-size: 12px; } }
 #title h1 {
   margin-top: 250px; }
 

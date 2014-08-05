@@ -1,4 +1,4 @@
-/* ES01 Recap, slide specific styling */
+/* ES03 Recap, slide specific styling */
 /*
     Styling common to all ANU-type usage of Impress JS.
 
@@ -857,16 +857,20 @@ pre {
 
 #title h2 {
   text-align: left;
-  padding-right: 40px;
-  margin-top: 40px; }
+  padding-right: 40px; }
 
-#say, #say2 {
-  margin-top: 140px;
+#title #say {
+  margin-top: 150px;
   text-align: right;
   font-size: 10px;
   text-shadow: none;
   color: rgba(0, 0, 0, 0.3);
   letter-spacing: initial; }
 
-#say2 {
-  margin-top: 30px; }
+.impress-on-hyb1 #hyb-title {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1; }
+
+.impress-on-hyb2 #hyb-title {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1; }

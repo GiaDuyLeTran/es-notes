@@ -55,7 +55,7 @@ Before the 1970s, all computers were of CISC type. Memory was the supremely limi
 Memory is now relatively cheap and the focus has moved to performance. This favours the RISC style as simpler instructions are faster to execute</div>
     </div>
 
-    <div class="step" data-x-rel="300" data-y-rel="100" data-scale="0.5">
+    <div class="step" data-x='1200' data-y='-100' data-scale="0.5">
         <h2>CISC characterized by</h2>
         <ul><li>Complex Addressing modes</li>
             <li>Instructions span multiple (and variable) words</li>
@@ -65,7 +65,7 @@ Memory is now relatively cheap and the focus has moved to performance. This favo
             <li>Small program sizes</li></ul>
     </div>
 
-    <div class="step" data-x-rel="-300" data-y-rel="200" data-scale="0.5">
+    <div class="step" data-x='900' data-y='100' data-scale="0.5">
         <h1>RISC</h1>
         <ul><li>Efficient implementations</li>
             <li>Larger program sizes</li>
@@ -73,7 +73,7 @@ Memory is now relatively cheap and the focus has moved to performance. This favo
     </div>
 
 
-    <div class="step" data-x-rel="300" data-y-rel="100" data-scale="0.5">
+    <div class="step" data-x='1200' data-y='200' data-scale="0.5">
         <h2>RISC characterized by</h2>
         <ul><li>Simple addressing modes</li>
             <li>Single word, fixed length instructions</li>
@@ -84,11 +84,11 @@ Memory is now relatively cheap and the focus has moved to performance. This favo
             <li>More instructions are required to implement functionality</li></ul>
     </div>
 
-    <div class="step" id="hyb-title" data-x-rel="500" data-y-rel="-250" data-scale="0.5">
+    <div class="step" id="hyb-title" data-x='1700' data-y='-50' data-scale="0.5">
         <h1>Hybrid Designs</h1>
     </div>
 
-    <div class="step" id="hyb1" data-x-rel="0" data-y-rel="100" data-scale="0.5">
+    <div class="step" id="hyb1" data-x='1700' data-y='50' data-scale="0.5">
         <div class="simplecard" style="width:400px;height:200px;float:left">
         <h3>Complex Action</h3>
         <p>RISC instructions becoming more complex. May require hardware accelerators.</p>
@@ -99,7 +99,7 @@ industry has been slowly incorporating more and more CISC-style functionality in
 This only works if the newly introduced instructions are still fast to execute. A simple example of this is single-instruction floating point operations which, by any definition, are complex operations but may be supported by dedicated FPU hardware to keep the speed up and make them fit the RISC paradigm.</div>
     </div>
     
-    <div class="step" id="hyb2" data-x-rel="0" data-y-rel="0" data-scale="0.5">
+    <div class="step" id="hyb2" data-x='1700' data-y='50' data-scale="0.5">
         <div class="simplecard" style="width:400px;height:200px;float:right">
         <h3>Decomposition</h3>
         <p>Splitting complex instructions in to simple ones before execution.</p>
@@ -124,7 +124,7 @@ This is done through “microinstructions” (aka microoperations, uops). The pr
         </div>
     </div>
 
-    <div class="step" data-x-rel="400" data-y-rel="50" data-scale="0.5">
+    <div class="step" data-x='1300' data-y='650' data-scale="0.5">
         <h2>Canonical RISC</h2>
         <div class="rightbox" style="width:200px">Fetch</div>
         <div class="rightbox" style="width:200px">Decode</div>
@@ -133,28 +133,28 @@ This is done through “microinstructions” (aka microoperations, uops). The pr
         <div class="rightbox" style="width:200px">Writeback</div>
     </div>
 
-    <div class="step" data-x-rel="-90" data-y-rel="-45" data-scale="0.2">
+    <div class="step" data-x='1210' data-y='605' data-scale="0.2">
         <div style="float:right;width:500px"><p>Get the instruction out of memory</p></div>
     </div>
 
-    <div class="step" data-x-rel="0" data-y-rel="33" data-scale="0.2">
+    <div class="step" data-x='1210' data-y='638' data-scale="0.2">
         <div style="float:right;width:500px"><p>Break the instruction down to determine required registers and functional units. Read registers.</p></div>
     </div>
 
-    <div class="step" data-x-rel="0" data-y-rel="35" data-scale="0.2">
+    <div class="step" data-x='1210' data-y='673' data-scale="0.2">
         <div style="float:right;width:500px"><p>Execute the instruction</p></div>
     </div>
 
-    <div class="step" data-x-rel="0" data-y-rel="33" data-scale="0.2">
+    <div class="step" data-x='1210' data-y='706' data-scale="0.2">
         <div style="float:right;width:500px"><p>Perform memory operations</p></div>
     </div>
 
-    <div class="step" data-x-rel="0" data-y-rel="33" data-scale="0.2">
+    <div class="step" data-x='1210' data-y='739' data-scale="0.2">
         <div style="float:right;width:500px"><p>Write results to the destination register</p></div>
     </div>
 
 
-    <div style="width:500px" class="step" data-x-rel="400" data-y-rel="-100" data-scale="0.5">
+    <div style="width:500px" class="step" data-x='1610' data-y='639' data-scale="0.5">
         <h1>Add</h1>
         <pre class="card prettyprint">ADD r2, r2, r3    # r2 = r2 + r3</pre>
         <p/>
@@ -165,7 +165,7 @@ This is done through “microinstructions” (aka microoperations, uops). The pr
         <p><b>Writeback:</b> Write result to r2</p>
     </div>
 
-    <div style="width:500px" class="step" data-x-rel="300" data-y-rel="0" data-scale="0.5">
+    <div style="width:500px" class="step" data-x='1910' data-y='639' data-scale="0.5">
         <h1>Load</h1>
         <pre class="card prettyprint">LD r2, r3 # r2 = MEM[r3]</pre>
         <p/>
@@ -176,7 +176,7 @@ This is done through “microinstructions” (aka microoperations, uops). The pr
         <p><b>Writeback:</b> Write value to r2</p>
     </div>
 
-    <div style="width:500px" class="step" data-x-rel="300" data-y-rel="0" data-scale="0.5">
+    <div style="width:500px" class="step" data-x='2210' data-y='639' data-scale="0.5">
         <h1>Store</h1>
         <pre class="card prettyprint">ST r2, r3 # MEM[r2] = r3</pre>
         <p/>
@@ -198,7 +198,7 @@ Why keep the ME or WB stages for instructions that don’t need them? Because ke
 the same as each each other, they can be pipelined and the overall utilization increases significantly.</div>
     </div>
 
-    <div class="step" data-x-rel="600" data-y-rel="0" data-scale="0.5">
+    <div class="step" data-x='1500' data-y='1100' data-scale="0.5">
         <h2>Data Hazard</h2>
         <div style="float:left;padding-right:20px;">
             <pre style="margin-top:10px" class="card prettyprint">ADD r2, r3, #100</pre>
@@ -211,7 +211,7 @@ the same as each each other, they can be pipelined and the overall utilization i
         <div class="notes">The Decode stage is where data from the register file is loaded in to the ALU, but what if the output of one instruction is the input for the subsequent one? In the above example, the SUB instruction has to stall at the decode stage for three extra clock cycles before the write back of the ADD has updated the register.</div>
     </div>
 
-    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+    <div class="step" data-x='1500' data-y='1300' data-scale="0.5">
         <h2>Operand Forwarding</h2>
         <div style="float:left;padding-right:20px;">
             <pre style="margin-top:10px" class="card prettyprint">ADD r2, r3, #100</pre>
@@ -226,7 +226,7 @@ the same as each each other, they can be pipelined and the overall utilization i
 This is a hardware solution, but if the hardware budget it tight, there’s a software solution: Get the compiler to re-order instructions and make sure the dependent instructions are never in the pipeline together. You don’t get the result faster, but at least you don’t waste the intermediate cycles.</div>
     </div>
 
-    <div class="step" data-x-rel="500" data-y-rel="-200" data-scale="0.5">
+    <div class="step" data-x='2000' data-y='1100' data-scale="0.5">
         <h2>Memory Delays</h2>
         <div style="float:left;padding-right:20px;">
             <pre style="margin-top:10px" class="card prettyprint">LD r2, r3</pre>
@@ -241,7 +241,7 @@ This is a hardware solution, but if the hardware budget it tight, there’s a so
 We will talk about this more when we talk about caches later in the lecture.</div>
     </div>
 
-    <div class="step" data-x-rel="500" data-y-rel="0" data-scale="0.5">
+    <div class="step" data-x='2500' data-y='1100' data-scale="0.5">
         <h2>Branch Delays</h2>
         <div style="float:left;padding-right:20px;">
             <div style="margin-top:60px" class="simplecard">Branch Instruction</div>
@@ -258,7 +258,7 @@ In the example above, the branch condition is tested at Execute time so the deco
     </div>
 
 
-    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+    <div class="step" data-x='2500' data-y='1300' data-scale="0.5">
         <h2>Branch Delay Mitigation</h2>
         <ul><li>Branch Delay Slot</li>
             <li>Branch Prediction</li>
@@ -272,7 +272,7 @@ Lastly, most compilers will try and work out which branch is going to be taken m
     </div>
 
 
-    <div class="step point" data-x-rel="500" data-y-rel="-200" data-scale="0.5">
+    <div class="step point" data-x='3000' data-y='1100' data-scale="0.5">
         <h1>Pipeline Depth</h1>
         Deep pipelines can improve throughput but all the previous hazards increase in frequency and severity.
         <div class="notes">The five-stage model for instruction execution, or something close, is often found implemented in RISC processors however it isn’t the only type of pipeline.
@@ -294,8 +294,7 @@ Processors can exploit this in order to process more than one instruction per cl
     </div>
 
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
-    <div id="overview" class="step"/>
-
+	<div id="overview" class="step" data-x="1500" data-y="690.0" data-scale="3.2">&nbsp</div>
 </div>
 
 
