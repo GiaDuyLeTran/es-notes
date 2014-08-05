@@ -38,12 +38,6 @@
         <div class="linkbox">
             <a href="?print">print view</a>
         </div>
-        <div class="notes">
-            Lesson Goals:
-            <ol>
-                <li>TODO</li>
-            </ol>
-        </div>
     </div>
 
     <div class="step" id="deftitle" data-x="1200" data-y="0">
@@ -201,6 +195,7 @@ endmodule
         Loops are <b>not</b> allowed <br/><br/><pre class="prettyprint lang-verilog bad">
 assign X = Y | Z;
 assign Y = X ^ W;</pre>
+        <div class="notes">WRONG! Such structures must be implemented in sequential form (if they're really what you want)</div>
     </div>
 
     <div class="step" id="if" data-x='-365' data-y='3090' data-scale="0.6">
@@ -239,6 +234,7 @@ always @(*) begin
     end
 end
 </pre>
+        <div class="notes">WRONG! You must include an 'else' statement here.</div>
     </div>
 
     <div class="step" data-x='-365' data-y='3640' data-scale="0.6">
@@ -289,6 +285,7 @@ end
 always @(posedge my_clock[1]) begin
     …
 end</pre></div>
+        <div class="notes">Be careful with this type of divider, see later slides.</div>
     </div>
 
     <div class="step point" data-x='965' data-y='2640' data-scale="0.6">
@@ -346,7 +343,6 @@ A corrolorary of this is that your code should not <b>depend</b> on any particul
     </div>
 
     <div class="step" id="def-up2" data-x="1500" data-y="300" data-scale="0.5">
-    <!-- Empty view step for another look at def-up -->
     </div>
 
     <div class="step" id="up-arch" data-x='3000' data-y='300' data-scale="1.0">
@@ -481,9 +477,10 @@ Most of the extra complexity here is to do with interrupts (not yet covered) or 
     </div>
 
 
-
-    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+<!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
 	<div id="overview" class="step" data-x="1882" data-y="1588.0" data-scale="4.6">&nbsp</div>
+
+
 </div>
 
 
