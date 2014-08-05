@@ -64,14 +64,14 @@
         <div class="notes">Most of you will have come across the notion of specifying a system in terms of its functions during the Systems Project, System Design or otherwise in the course of your degree. It isn’t unique to Embedded Systems and is outside the scope of this course.</div>
     </div>
 
-    <div class="step" data-x="2000" data-y="0">
+    <div class="step" data-x="1700" data-y="0" data-scale="0.5">
         <h1>Standards</h1>
         <center><img src="images/architecture/iface1.png"/></center>
 
         <div class="notes">Don't reinvent the wheel. Know your standards. These include both general-purpose and market-specific standards.</div>
     </div>
 
-    <div class="step" data-x='2000' data-y='600'>
+    <div class="step" data-x='1700' data-y='300' data-scale="0.5">
         <div class="simplecard" style="float:left;width:400px;height:500px">
         <h3>Market-Specific Standards</h3>
         <ul><li>Consumer Electronics</li>
@@ -89,7 +89,7 @@
             <li>Quality Assurance</li></ul></div>
     </div>
 
-    <div class="step" data-x='2000' data-y='1200'>
+    <div class="step" data-x='1700' data-y='600' data-scale="0.5">
         <h2>Example: &ldquo;Smart&rdquo; TV</h2>
         <div class="simplecard" style="float:left;width:400px;height:500px">
         <h3>Market-Specific Standards</h3>
@@ -116,7 +116,7 @@ The device might have functions outside its core role, such as a web interface (
 The systems interfaces also have to cover interfaces to the software as well. The ability for your Embedded System to run the target software package is just as important as any other aspect of interfacing.</div>
     </div>
 
-    <div class="step" data-x='2000' data-y='1900'>
+    <div class="step" data-x='1700' data-y='950' data-scale="0.5">
         <h1>Interfaces  <>  Conventions</h1>
         <center><img src="images/architecture/uiface.png"/></center>
         <div class="notes">Clearly most interfaces in a typical Embedded System interfaces can be implemented against a known standard. This usually speeds up development and improves reliability as reference implementations and test benches are often parts of the standard themselves and not something that has to be implemented from scratch.
@@ -124,7 +124,7 @@ The systems interfaces also have to cover interfaces to the software as well. Th
 If there isn’t an applicable standard, there are often at least standard conventions. Graphical User Interfaces are an example – the notion of icons and windows as interaction metaphors has proven to scale from the Apple computers of old to the latest touchscreen enabled devices.</div>
     </div>
 
-    <div class="step" data-x='2000' data-y='2600'>
+    <div class="step" data-x='1700' data-y='1300' data-scale="0.5">
         <h1>When Not to Standardize</h1>
         <div class="simplecard" style="float:left;width:400px;height:250px">
         <h3>Market Forces</h3>
@@ -144,7 +144,7 @@ Time to market can perhaps be improved by not adhering to a standard in some cas
 </div>
     </div>
 
-    <div class="step" data-x="3200" data-y="0">
+    <div class="step" data-x="2400" data-y="0" data-scale="0.5">
         <h1>Network Interfaces</h1>
         <div style="float:left">
             <h3>Peer-to-Peer</h3>
@@ -161,7 +161,7 @@ These are extremes where every device can talk to every other (P2P) or every dev
 This simple distinction is useful for most standards though.</div>
     </div>
 
-    <div class="step" data-x='3200' data-y='700'>
+    <div class="step" data-x='2400' data-y='350' data-scale="0.5">
         <h1>OSI Model</h1>
         <center><img src="images/architecture/osi1.png" style="width:800px"/></center>
 
@@ -170,37 +170,37 @@ This simple distinction is useful for most standards though.</div>
         </div>
     </div>
 
-    <div class="step" data-x='3080' data-y='597' data-scale="0.3">
-        <div style="text-align:right">The data the end application wants transported</div>
+    <div class="step" data-x='2340' data-y='298' data-scale="0.15">
+        <div style="float:right">The data the end application wants transported</div>
     </div>
 
-    <div class="step" data-x='3080' data-y='637' data-scale="0.3">
-        <div style="text-align:right">Data is formatted correctly (e.g. Endianness)</div>
+    <div class="step" data-x='2340' data-y='318' data-scale="0.15">
+        <div style="float:right">Data is formatted correctly (e.g. Endianness)</div>
     </div>
 
-    <div class="step" data-x='3080' data-y='687' data-scale="0.3">
-        <div style="text-align:right">...</div>
+    <div class="step" data-x='2340' data-y='343' data-scale="0.15">
+        <div style="float:right">Inter-host communication, session management.</div>
     </div>
 
-    <div class="step" data-x='3080' data-y='787' data-scale="0.3">
-        <div style="text-align:right">...</div>
+    <div class="step" data-x='2340' data-y='393' data-scale="0.15">
+        <div style="float:right">Reliable delivery of packets in a network</div>
     </div>
 
-    <div class="step" data-x='3080' data-y='827' data-scale="0.3">
-        <div style="text-align:right">Data is routed between <b>logical</b> machines</div>
+    <div class="step" data-x='2340' data-y='413' data-scale="0.15">
+        <div style="float:right">Data is routed between <b>logical</b> machines</div>
         <div class="notes">e.g. Usually a transferrable address, e.g. IP address</div>
     </div>
 
-    <div class="step" data-x='3080' data-y='867' data-scale="0.3">
-        <div style="text-align:right">Data is routed between <b>physical</b> machines</div>
+    <div class="step" data-x='2340' data-y='433' data-scale="0.15">
+        <div style="float:right">Data is routed between <b>physical</b> machines or devices</div>
         <div class="notes">Using an address fixed to the machine, or interface in the machine (e.g. MAC address)</div>
     </div>
 
-    <div class="step" data-x='3080' data-y='952' data-scale="0.3">
-        <div style="text-align:right">Physically modulates something to transfer the data</div>
+    <div class="step" data-x='2340' data-y='476' data-scale="0.15">
+        <div style="float:right">Physically modulates something to transfer the data</div>
     </div>
 
-    <div class="step" data-x='3200' data-y='1352' data-scale="1.0">
+    <div class="step" data-x='2400' data-y='676' data-scale="0.5">
         <h1>TCP/IP Model</h1>
         <center><img src="images/architecture/osi2.png" style="width:800px"/></center>
 
@@ -216,7 +216,7 @@ Logical addressing (network layer) is done by IP.
 Network access, including physical routing, is done by the network card</div>
     </div>
 
-    <div class="step" data-x='3200' data-y='1952' data-scale="1.0">
+    <div class="step" data-x='2400' data-y='976' data-scale="0.5">
         <h1>Bluetooth Model</h1>
         <center><img src="images/architecture/osi3.png" style="width:800px"/></center>
 
@@ -226,7 +226,7 @@ Network access, including physical routing, is done by the network card</div>
 This is an example of a protocol at a low level also forcing some structure on the laters above. We will see this pattern again in future lectures.</div>
     </div>
 
-    <div class="step" data-x='3200' data-y='2552' data-scale="1.0">
+    <div class="step" data-x='2400' data-y='1276' data-scale="0.5">
         <h1>Physical Layer</h1>
         <center><img src="images/architecture/osi4.png" style="width:800px"/></center>
 
@@ -236,7 +236,7 @@ This makes it the most interesting to Electronic Engineers!</div>
     </div>
 
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
-	<div id="overview" class="step" data-x="1600" data-y="1120.0" data-scale="3.6">&nbsp</div>
+	<div id="overview" class="step" data-x="1200" data-y="514.0" data-scale="2.7">&nbsp</div>
 </div>
 
 
