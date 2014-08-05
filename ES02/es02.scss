@@ -6,13 +6,27 @@
 @import 'embedded-systems';
 
 #title h1 {
-    padding-top:50px;
+    padding-top:40px;
 }
 
 #title h2 {
     text-align:left;
     padding-right:40px;
-    margin-top: 200px;
+    margin-top: 30px;
+}
+
+#say {
+    margin-top: 140px;
+    text-align:right;
+    font-size:10px;
+    text-shadow:none;
+    color: rgba(0,0,0,0.3);
+    letter-spacing:initial;
+}
+
+#say2 {
+    @extend #say;
+    margin-top:30px;
 }
 
 #arch #dummy { height:900px }
