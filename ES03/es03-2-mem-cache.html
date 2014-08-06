@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 3.2: Processor Memory and Cache</title>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es03-2.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="500">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say">The air is clean. The water is clean. Even the dirt is clean! Bowling averages are way up. Minigolf scores are way down. And we have more excellent</div>
+        <div class="titlebox">
+            <h2>Memory and</h2>
+            <h1>Cache</h1>
+        </div>
+        <div id="say2">than any other planet we communicate with. I'm telling you, this place is great!<br/>Ah, but don't worry: it'll all make sense. I'm a professional.</div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+    </div>
+
+    <div class="step" data-x="900" data-y="0" data-scale="0.5">
+        <h1>Cache</h1>
+        <div style="float:left">
+        <div class="rightbox" style="width:200px" id="m-cache">L1 Cache<br/>L2 Cache<br/>L3&hellip;</div>
+        <div class="rightbox" style="width:200px" id="m-ram">RAM</div>
+        <div class="rightbox" style="width:200px" id="m-flash">Flash</div>
+        <div class="rightbox" style="width:200px" id="m-hdd">Hard Drive</div>
+        <div class="rightbox" style="width:200px" id="m-cloud">Network/Cloud</div>
+        </div>
+        <div style="float:left;width:600px;padding-left:40px">
+        <p><b>Cache</b> is a verb and noun: You cache data in a cache.</p>
+        <p>To cache means to store away or hide.</p>
+        <p>Cache in a processor stores copies of data from RAM for fast future use.</p>
+        </div>
+
+        <div class="notes">Recall the memory hierarchy presented in the last lecture. Each level may be used to cache the level above it. To cache means to store for future use. Confusingly, RAM data is cached in a cache called Cache!
+
+Hard drive contents can also be cached, this time in normal RAM. This is why if you have lots of programs open your computer it suddenly slows down: You’ve run out of real RAM and you’re now using ‘fake RAM’ on the hard drive which is much slower.
+
+This is also called ‘swap’.</div>
+    </div>
+
+    <div class="step point" data-x-rel="500" data-y-rel="0" data-scale="0.5">
+        Cache is amazingly small, just a few kB to a few MB.
+        <div class="notes">The fastest type of memory is the Cache memory inside the processor itself. We will discuss memories lower in the hierarchy later in the course, but today we concern ourselves only with Cache.
+
+It is almost unimaginably small by today’s standards: A few kB in L1 through to 8-24MB in L2/3</div>
+    </div>
+
+    <div class="step" data-x-rel="500" data-y-rel="-150" data-scale="0.5">
+        <div style="float:left"><img src="images/processor/cache1.png" style="width:700px"/></div>
+        <div style="float:left;width:180px;padding-left:20px;"><h3>i7 Quad</h3>
+            <b>L1</b>: 32kB x 2<br/><b>L2</b>: 256kB<br/><b>L3</b>: 8MB</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <div style="float:left"><img src="images/processor/cache2.png" style="width:700px"/></div>
+        <div style="float:left;width:180px;padding-left:20px;"><h3>Xeon Octo</h3>
+            <b>L1</b>: 32kB x 2<br/><b>L2</b>: 256kB<br/><b>L3</b>: 24MB</div>
+    </div>
+
+    <div class="step" data-x="900" data-y="500" data-scale="0.5">
+        <h1>Locality of Reference</h1>
+        <span style="text-align:center">
+        <p>Most time spent accessing a small subset of total memory.</p>
+        <p>Future access are likely to be <b>near</b> past accesses.</p></span>
+        <div class="notes">Cache works on a principle called locality of reference. Analysis of computer programs shows that most of their time is spent accessing a small subset of their overall memory. This might be due to, for example, loops, small handlers for common events, a core set of functions that call each other etc. The actual mechanism that causes locality of reference isn’t important, however the effects are.</div>
+    </div>
+
+    <div class="step point" data-x-rel="300" data-y-rel="0" data-scale="0.3">
+        <h3>Note</h3>
+        We will focus on Instruction Cache. Data Cache exists and works on similar principles
+    </div>
+
+    <div class="step" data-x-rel="-475" data-y-rel="150" data-scale="0.3">
+        <div class="dlarrow-l-h" style="width:100px;float:right;"></div>
+        <div style="clear:both;text-align:center;padding-bottom:50px">
+        <h1>Temporal Locality</h1>
+        Instruction that has just been executed is likely to be required again soon.
+        </div>
+        <div class="drarrow-l-h" style="width:100px;float:right;"></div>
+    </div>
+
+    <div class="step" data-x-rel="350" data-y-rel="0" data-scale="0.3">
+        <div class="drarrow-l-h" style="width:100px;float:left"></div>
+        <div style="clear:both;text-align:center;padding-bottom:50px">
+        <h1>Spacial Locality</h1>
+        Instructions close to that executing are likely to be required soon.
+        </div>
+        <div class="dlarrow-l-h" style="width:100px;float:left"></div>
+        <div class="notes">Instructions typically live in main memory, which can take several clock cycles to access. Pipelined processors require that their instructions arrive in a single clock cycle, and Superscalar processors may look to fetch several instructions per cycle.
+
+The only way to keep modern processors fed with instructions is to have a tightly coupled, small and fast set of memory in which the instructions most likely to be executed next are found. Such memory is called the Instruction Cache. There is also a data cache that works on a similar principle, however we will focus on the Instruction Cache in examples.</div>
+    </div>
+
+    <div class="step" data-x-rel="-175" data-y-rel="150" data-scale="0.5">
+        <h2>Principle of Caching</h2>
+        <div style="float:left;width:700px;padding-right:50px;">When an instruction is fetched from memory, also fetch several of the ones near it.</div><div style="float:left"><b>Spatial</b></div>
+        <div style="clear:both;float:left;width:700px;padding-right:50px">Keep these instructions near the CPU for as long as possible (until that cache space is required for something new).</div><div style="float:left"><b>Temporal</b></div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>Terminology</h2>
+        <p><b>Cache Line</b>: A space in the cache to which a block of instructions may be loaded.</p>
+        <p><b>Line Size</b>: The number of instructions fetched a time.  Usually around 64 bytes (16 instructions on a 32-bit machine).</p>
+        <p><b>Cache Hit</b>: When the processor needs a new instruction and finds it in the cache</p>
+        <p><b>Cache Miss</b>: When the processor must fetch the new instruction and neighbours from main memory, repopulating a cache line.</p>
+        <p><b>Eviction</b>: The data currently in a cache line is removed to make space for new data.</p>
+    </div>
+
+    <div class="step" data-x="1700" data-y="600" data-scale="0.5">
+        <h1>Direct Cache</h1>
+        <center><img class="naked" src="images/processor/direct-cache.png"/></center>
+        <div class="notes">The cache is, of course, smaller than main memory so some algorithm has to be used to map a main memory location to a cache line. The simplest algorithm is called Direct Mapping. In this scheme, each memory block is stored in a cache line of the same address modulo the cache size. For example, a cache of 128 blocks will store memory block 134 in cache line number 6. DM Caches are simple but there may be contention even when the cache isn’t full.</div>
+    </div>
+
+    <div class="step" data-x-rel="500" data-y-rel="0" data-scale="0.5">
+        <h1>Associative Cache</h1>
+        <center><img class="naked" src="images/processor/assoc-cache.png"/></center>
+        <div class="notes">An Associative Mapping is the most flexible cache arrangement in which any memory location can be stored in any cache location. If the cache isn’t full, each new memory block can just take an empty slot. If the cache is full, the cache line to evict is chosen typically using a Least Recently Used algorithm. Complexity comes from finding where in the cache a particular memory block has been put when it is next needed.</div>
+    </div>
+
+
+    <div class="step" data-x-rel="-250" data-y-rel="300" data-scale="0.5">
+        <div class="drarrow-m-h" style="float:left;width:100px;margin-top:100px;margin-bottom:50px"></div>
+        <div class="dlarrow-m-h" style="float:right;width:100px;margin-top:100px;margin-bottom:50px"></div>
+        <div style="clear:both">
+        <h1>Set Associative Cache</h1>
+        <center><img class="naked" src="images/processor/set-cache.png"/></center>
+        </div>
+
+        <div class="notes">Almost all modern caches are Set Associative. These combine the best features of each of the previous methods, as each memory location “short lists” a set of cache lines based upon its address modulo the number of sets, then the entry to evict from the set is chosen by an LRU algorithm as with an Associative cache.</div>
+    </div>
+
+    <div class="step" id="write" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h1>Writing</h1>
+    </div>
+
+    <div class="step" id="write1" data-x-rel="0" data-y-rel="150" data-scale="0.5">
+        <div class="simplecard" style="width:400px;height:400px;float:left">
+        <h3>Writethrough</h3>
+        <p>New value is written to both the cache and the main memory locations at once.</p>
+        <ul><li>Writes only the changed value</li>
+            <li>Writes every time that value is changed</li></ul>
+        </div>
+        <div class="notes">Cache strategies discussed previously assume a read access, but what happens for a write?
+
+If the memory is in Cache, what should a write do: Write-back or Writethrough? In a write-through cache, a write to a memory location in Cache will write the new value to the cache line and the memory location.</div>
+    </div>
+    
+    <div class="step" id="write2" data-x-rel="0" data-y-rel="0" data-scale="0.5">
+        <div class="simplecard" style="width:400px;height:400px;float:right">
+        <h3>Writeback</h3>
+        <p>New value is written only to the cache. Main memory is updated when the cache line is evicted.</p>
+        <ul><li>Writes all values in the line, even if only one has changed</li>
+            <li>Writes only once, even if a value has changed several times</li></ul>
+        </div>
+        <div class="notes">Write-back writes the new value to cache and marks it dirty; it is then written to main memory only when the line is evicted.
+
+Write-through generates unnecessary writes if the memory location is written several times in sequence. Write-back generates unnecessary writes if only one location in the cache is changed, as the whole line must be written back.</div>
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step"/>
+
+</div>
+
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+
