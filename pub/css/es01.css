@@ -251,7 +251,7 @@ body {
 
 /* Cards that contain only lists have different padding requirements */
 .listcard {
-  padding: 20px 25px 20px 5px; }
+  padding: 20px 25px 20px 30px; }
 
 /* Really the above should inherit from this.. */
 .simplecard, .rightbox {
@@ -372,6 +372,36 @@ pre.prettyprint {
   -o-transform: rotate(90deg);
   transform: rotate(90deg); }
 
+.drarrow-s-h {
+  border: 10px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  border-image: url(../images/arrow-s-h.png) 10 16 stretch;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg); }
+
+.dlarrow-s-h {
+  border: 10px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-s-h.png) 10 16 stretch), fill));
+  border-image: url(../images/arrow-s-h.png) 10 16 stretch;
+  -webkit-transform: rotate(135deg);
+  -moz-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  -o-transform: rotate(135deg);
+  transform: rotate(135deg); }
+
 .rarrow-s-b {
   border: 10px solid transparent;
   padding: 0px;
@@ -431,6 +461,36 @@ pre.prettyprint {
   -ms-transform: rotate(90deg);
   -o-transform: rotate(90deg);
   transform: rotate(90deg); }
+
+.drarrow-s-b {
+  border: 10px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  border-image: url(../images/arrow-s-b.png) 10 16 stretch;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg); }
+
+.dlarrow-s-b {
+  border: 10px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-s-b.png) 10 16 stretch), fill));
+  border-image: url(../images/arrow-s-b.png) 10 16 stretch;
+  -webkit-transform: rotate(135deg);
+  -moz-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  -o-transform: rotate(135deg);
+  transform: rotate(135deg); }
 
 .rarrow-m-h {
   border: 15px solid transparent;
@@ -492,6 +552,36 @@ pre.prettyprint {
   -o-transform: rotate(90deg);
   transform: rotate(90deg); }
 
+.drarrow-m-h {
+  border: 15px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  border-image: url(../images/arrow-m-h.png) 30 42 stretch;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg); }
+
+.dlarrow-m-h {
+  border: 15px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-m-h.png) 30 42 stretch), fill));
+  border-image: url(../images/arrow-m-h.png) 30 42 stretch;
+  -webkit-transform: rotate(135deg);
+  -moz-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  -o-transform: rotate(135deg);
+  transform: rotate(135deg); }
+
 .rarrow-m-b {
   border: 15px solid transparent;
   padding: 0px;
@@ -551,6 +641,36 @@ pre.prettyprint {
   -ms-transform: rotate(90deg);
   -o-transform: rotate(90deg);
   transform: rotate(90deg); }
+
+.drarrow-m-b {
+  border: 15px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  border-image: url(../images/arrow-m-b.png) 30 42 stretch;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg); }
+
+.dlarrow-m-b {
+  border: 15px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-m-b.png) 30 42 stretch), fill));
+  border-image: url(../images/arrow-m-b.png) 30 42 stretch;
+  -webkit-transform: rotate(135deg);
+  -moz-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  -o-transform: rotate(135deg);
+  transform: rotate(135deg); }
 
 .rarrow-l-h {
   border: 50px solid transparent;
@@ -612,6 +732,36 @@ pre.prettyprint {
   -o-transform: rotate(90deg);
   transform: rotate(90deg); }
 
+.drarrow-l-h {
+  border: 50px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  border-image: url(../images/arrow-l-h.png) 80 95 stretch;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg); }
+
+.dlarrow-l-h {
+  border: 50px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-l-h.png) 80 95 stretch), fill));
+  border-image: url(../images/arrow-l-h.png) 80 95 stretch;
+  -webkit-transform: rotate(135deg);
+  -moz-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  -o-transform: rotate(135deg);
+  transform: rotate(135deg); }
+
 .rarrow-l-b {
   border: 50px solid transparent;
   padding: 0px;
@@ -671,6 +821,36 @@ pre.prettyprint {
   -ms-transform: rotate(90deg);
   -o-transform: rotate(90deg);
   transform: rotate(90deg); }
+
+.drarrow-l-b {
+  border: 50px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  border-image: url(../images/arrow-l-b.png) 80 95 stretch;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg); }
+
+.dlarrow-l-b {
+  border: 50px solid transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  -moz-border-image: -moz(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  -webkit-border-image: -owg(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  -webkit-border-image: -webkit(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  -o-border-image: -o(reject(-compass-list(url(../images/arrow-l-b.png) 80 95 stretch), fill));
+  border-image: url(../images/arrow-l-b.png) 80 95 stretch;
+  -webkit-transform: rotate(135deg);
+  -moz-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  -o-transform: rotate(135deg);
+  transform: rotate(135deg); }
 
 /* Overview link fixed to the top-left corner */
 .ov-link {
@@ -767,7 +947,8 @@ ol {
 
 ul {
   list-style-type: none;
-  text-indent: 1em; }
+  padding-left: 2em;
+  text-indent: -2em; }
 
 ul li:before, li > ul li:before {
   font-family: "fontello";
