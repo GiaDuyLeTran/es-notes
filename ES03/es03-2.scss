@@ -36,3 +36,8 @@
     background: $highlight;
     color: rgba(0,0,0,0.8);
 }
+
+
+.impress-on-write1 #write { @include opacity(1.0) }
+.impress-on-write2 #write { @include opacity(1.0) }
+

@@ -158,7 +158,8 @@ The only way to keep modern processors fed with instructions is to have a tightl
     </div>
 
     <div class="step" id="write" data-x-rel="0" data-y-rel="300" data-scale="0.5">
-        <h1>Writing</h1>
+        <h1>Cached Writing</h1>
+        <div class="notes">Cache strategies discussed previously assume a read access, but what happens for a write?</div>
     </div>
 
     <div class="step" id="write1" data-x-rel="0" data-y-rel="150" data-scale="0.5">
@@ -168,9 +169,7 @@ The only way to keep modern processors fed with instructions is to have a tightl
         <ul><li>Writes only the changed value</li>
             <li>Writes every time that value is changed</li></ul>
         </div>
-        <div class="notes">Cache strategies discussed previously assume a read access, but what happens for a write?
-
-If the memory is in Cache, what should a write do: Write-back or Writethrough? In a write-through cache, a write to a memory location in Cache will write the new value to the cache line and the memory location.</div>
+        <div class="notes">If the memory is in Cache, what should a write do: Write-back or Writethrough? In a write-through cache, a write to a memory location in Cache will write the new value to the cache line and the memory location.</div>
     </div>
     
     <div class="step" id="write2" data-x-rel="0" data-y-rel="0" data-scale="0.5">
@@ -183,6 +182,28 @@ If the memory is in Cache, what should a write do: Write-back or Writethrough? I
         <div class="notes">Write-back writes the new value to cache and marks it dirty; it is then written to main memory only when the line is evicted.
 
 Write-through generates unnecessary writes if the memory location is written several times in sequence. Write-back generates unnecessary writes if only one location in the cache is changed, as the whole line must be written back.</div>
+    </div>
+
+    <div class="step" data-x="2600" data-y="1000" data-scale="0.5">
+        <h1>DMA</h1>
+        <center><img class="naked" src="images/processor/dma.png"/></center>
+        <div class="notes">Direct Memory Access (DMA) is a technique used when large amounts of data need to be moved between peripherals and memory without any intermediate processing. Instead of requiring a processor load/store cycle, the data may be moved around without processor intervention.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+        <h2>Cache Coherency</h2>
+        <p>DMA bypasses the processor and therefore the cache.</p>
+        <p>If the processor and DMA controller are using the same memory location, they may see different values</p>
+        <p>With some exceptions, memory used for DMA must be <b>uncached</b>.
+        <div class="notes">What’s the interaction between DMA and caches?
+
+Because the memory has multiple masters (writers), information kept in cache can’t easily be the source or destination of a DMA transfer. Typically memory reserved for DMA transfers will be marked as uncached and will be much slower to access from the CPU.</div>
+    </div>
+
+    <div class="step point" data-x-rel="450" data-y-rel="0" data-scale="0.5">
+<b>Cache Coherency</b> is a problem when ever there are multiple memory masters, such as if you have a multi-core CPU.
+<br/>
+Any data that is accessed by more than one CPU can’t feel the full benefit of being cached.
     </div>
 
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->

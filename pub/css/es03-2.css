@@ -1059,3 +1059,11 @@ pre {
 #m-cache {
   background: #aa5712;
   color: rgba(0, 0, 0, 0.8); }
+
+.impress-on-write1 #write {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1; }
+
+.impress-on-write2 #write {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1; }
