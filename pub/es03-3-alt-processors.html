@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 3: Embedded Processors</title>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es03-3.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="500">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say">You know I haven't eaten since 6 o'clock this morning, and that was half a cream cheese bagel.<br/>And it wasn't even real cream cheese, it was light cream cheese! Now you want me to run off and do</div>
+        <div class="titlebox">
+            <h1>Alternative Processor</h1>
+            <h2>Architecture</h2>
+        </div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+    </div>
+
+    <div class="step" data-x="900" data-y="-200" data-scale="0.5">
+        <h1>Pipelining</h1>
+        <center><img class="naked" src="images/processor/pipe1.png"></center>
+        <div class="notes">Recall from last week’s lecture: We observed that a single instruction on a RISC machine goes through a number of stages as it is executed. Each step takes one clock cycle and uses a different piece of hardware: The instruction is shifted through the CPU much like a part on a factory assembly line.
+
+Then, because each step takes different hardware, multiple instructions may be overlapped to improve throughput. This is called pipelining, each instruction takes the same amount of time to run however there are more being executed at any given time so throughput is improved</div>
+    </div>
+
+    <div class="step" data-x='1400' data-y='-200' data-scale="0.5">
+        <h1>Superscalar</h1>
+        <center><img class="naked" src="images/processor/superscalar.png"></center>
+        <div class="notes">We further noted that many different instructions have different requirements at the execute phase. For example, the instruction set may prevent any single instruction both using the ALU and having a memory access (like many RISC machines). By doubling the “width” of the other stages (i.e. allowing them to operate on two instructions at once), instructions may be executed completely in parallel with minimal duplication of hardware. This is an example of Superscalar design.</div>
+    </div>
+
+    <div class="step" data-x='900' data-y='300' data-scale="0.5">
+        <h1>ARM Cortex A8</h1>
+        <center><img src="images/processor/arm-a8-pipeline.png" style="padding:20px" /></center>
+        <div class="notes">The ARM Cortex A8 Interger Pipeline is an example of a superscalar processor. This still logically performs the five canonical RISC operations however for the sake of speed, some of those operations are further split in to smaller pieces.
+
+It also contains other logic blocks that are outside the scope of this course: A Bus Interface Unit (BIU) is responsible for memory accesses, including level 2 and 3 cache (level 1 is built in to the pipeline directly).
+
+The NEON core is a logically-separate processor that is responsible for SIMD and stream processing of graphics and media. We will visit stream processors later in the lecture.
+
+The Trace Port is a debugging aid.</div>
+    </div>
+
+    <div class="step" data-x='1400' data-y='300' data-scale="0.5">
+        <center><img src="images/processor/arm-a8-fetch.png" style="padding:20px" /></center>
+        <div class="notes">Fetch takes three clock cycles (three pipeline stages).
+
+The target address is first calculated in the Address Generator Unit (AGU).
+
+Next, the memory access is done (RAM).  The rest of the acronyms during the F1 stage are specific pieces of logic to deal with accelerating types of accesses. These include Branch Prediction (the Branch Taken Buffer, BTB), trying to guess what data may be needed for a given instruction (Global History Buffer, GHB) or quickly accessing the return address of a function (Return Stack, RS).  Understanding the operation of these blocks is <b>not</b> required for this course.
+
+The instruction is written to a queue, ready to be processed. Note that the output of this stage is <b>two</b> instructions. This is to do with the superscalar architecture - an A8 core can process up to two instructions per clock cycle.
+
+Decode takes five clock cycles. We will not go in to any more detail regarding those steps.</div>
+    </div>
+    
+    <div class="step" data-x='1900' data-y='300' data-scale="0.5">
+        <center><img src="images/processor/arm-a8-exec.png" style="padding:20px" /></center>
+        <div class="notes">The Execute block has three separate pipelines, each taking five clock cycles to complete.
+
+Note that despite having three pipelines, only two can be executed completely in parallel (only two instructions can come in per clock cycle).
+
+In this diagram, the Memory access that is part of our canonical RISC structure is the lower path - potentially executed in parallel with the Execute phase (upper two pipelines).
+
+Each pipeline has its own Writeback step.
+
+As such, these five stages here encompass <b>three</b> of the five canonical RISC execution phases.
+
+Things to note:<ul>
+<li>Only one multiply can be done at a time, though two additions/subtractions/logical operations/etc. can be</li>
+<li>The two ALU pipelines contain a branch predictor (BP) update step (why doesn't the multiply path? Or the Load/Store path?)</li></div>
+    </div>
+
+    <div class="step" data-x="900" data-y="800" data-scale="0.5">
+        <h1>SIMD</h1>
+        <p>ARM A8 can execute <b>two</b> independent arithmetic instructions at once; it is Superscalar.</p>
+        <p><b>Super</b>: More than one instruction per clock cycle</p>
+        <p><b>Scalar</b>: One piece of data per instruction</p>
+        <p>Is there such thing as <b>Vector</b> execution: More than one piece of data per instruction?</p>
+        <div class="card" style="text-align:center"><b>SIMD</b>: Single Instruction, Multiple Data.</div>
+        <div class="notes">In the A8 example, two additions (say) can be done at a time but it requires two instructions.
+
+Pushing further, what if several registers could be loaded with inputs and a single instruction issued to perform an operation on all of them at once? This is called Single Instruction Multiple Data (SIMD) or Vector Execution (as opposed to [super]scalar execution). Most modern processors can perform some SIMD operations.
+
+Some material and graphics in this section inspired by the Cell Programming Tutorial: https://www.kernel.org/pub/linux/kernel/people/geoff/cell/ps3-linux-docs/CellProgrammingTutorial/</div>
+    </div>
+
+    <div class="step" data-x='1400' data-y='800' data-scale="0.5">
+        <h1>Vector Registers</h1>
+        <b>Vector Registers</b> may be any size, but they can be partitioned in different ways. SIMD instructions take vectors as inputs.
+        <div style="padding-top:50px"><img class="naked" src="images/processor/vector-reg.png" /></div>
+
+        <div class="notes">It is possible to do SIMD within a slightly modified ALU: For example, a 32-bit ALU may be able to be programmed to do four independent 8-bit operations at once, rather than a single 32-bit one. More commonly though, the processor is augmented with special “vector” registers that are much bigger than the usual.
+
+These vector regs are typically 128-bits long. As such, the a SIMD processor can typically execute 16 8-bit operations at once, down to
+two 64-bit operations. Bigger vectors are of course possible however memory bandwidth becomes an increasingly large issue. No good being able to execute quickly if there’s no data.</div>
+    </div>
+
+    <div class="step" data-x='1900' data-y='800' data-scale="0.5">
+        <h1>Addition</h1>
+        <div style="float:left"><h2>Scalar</h2><img class="naked" src="images/processor/scalar-add.png"/></div>
+        <div style="float:right"><h2>Vector</h2><img class="naked" src="images/processor/vector-add.png"/></div>
+
+        <div class="notes">Once the data is loaded in to the (vector of) registers, it can be operated on in a single instruction. The same operation must be applied to all elements (addition in this case).</div>
+    </div>
+
+    <div class="step" data-x='2400' data-y='800' data-scale="0.5">
+        <h1>Pixel Brightness</h1>
+        <center><img class="naked" src="images/processor/rgb-permute.png" />
+                <img class="naked" src="images/processor/rgb-calc.png" style="padding-top:100px" /></center>
+
+        <div class="notes">In order for this to work, the data has to be presented correctly in the input vectors. If the data is not natively available in the correct format, it may be more expensive to do the transformation then use a vector operation than just using a standard sequence of scalar operations. For example, a brightness computation for a pixel requires an implementation of the following equation:
+
+Y = R * 0.29891 + G * 0.58661 + B * 0.11448
+
+The different weightings reflect the fact that our eyes are much more sensitive to green than the other colours.
+
+The problem is that pixel data is usually arranged as RGBRGBRGBRGB where as a vector operation would require it to be arranged as RRRRGGGGBBBB. This is called element permutation and is common enough that it is often vector accelerated as well.
+
+If we have a Multiple-and-Accumulate (MAC, see the A8 example above) instruction then the whole operation for all four pixels above can be completed in four clock cycles.
+
+In scalar operations, still assuming a (scalar) MAC instruction, it would take 12.</div>
+    </div>
+
+    <div class="step" data-x='2900' data-y='800' data-scale="0.5">
+        <h1>Vectorized <code>for</code> Loop</h1>
+        <center><div class="simplecard" style="width:300px;"><pre class="prettyprint">
+for (i=0; i&lt;N; i++;)
+    A[i] = B[i] + C[i];
+</pre></div></center>
+
+<div style="width:400px;float:left"><h2>Scalar</h2><pre class="simplecard prettyprint">
+LOOP: Load B[i]
+      Load C[i]
+      Add
+      Store A[i]
+      i = i + 1
+      if i&lt;N Goto LOOP 
+</pre></div>
+
+<div style="width:400px;float:right"><h2>Vector</h2><pre class="simplecard prettyprint">
+LOOP: LoadVect.L B[i]
+      LoadVect.L C[i]
+      AddVect.L
+      StoreVect.L A[i]
+      i = i + L
+      if i&lt;N Goto LOOP 
+</pre></div>
+
+        <div class="notes">Vectorized code looks almost exactly the same as scalar code. Vector instructions will usually have a suffix indicating how many elements they operate on, but otherwise act the same.
+
+In the for loop example, the same number of instructions are used however the loop simply executes fewer times.</div>
+    </div>
+
+    <div class="step" data-x="900" data-y="1300" data-scale="0.5">
+        <h1>Stream Processing</h1>
+        <p><b>Vector</b> processing applies the same operation to multiple pieces of data.</p>
+        <p><b>Stream</b> processing applies multiple operations to the same piece of data.</p>
+
+        <div class="notes">Vector operations can be thought of as extending data operations “sideways”, allowing more things to be done with a single instruction. What about extending the operations “lengthways”; allowing a single instruction to describe multiple operations on the same data? This is called Stream Processing.
+
+It is a common paradigm in fields from computer vision to networking - anywhere data undergoes significant but consistant transformation.</div>
+    </div>
+
+    <div class="step" data-x='1400' data-y='1300' data-scale="0.5">
+        <h1>Stereo Vision</h1>
+        <center><img src="images/processor/strmprogmodel.jpg" style="padding:20px" /></center>
+
+        <p><b>Stream</b>: The sequence of data.</p>
+        <p><b>Kernel</b>: The sequence of instructions to apply to the stream.</p>
+
+        <div class="notes">Kernels can be connected in sequence to form longer chains. They can also combine previous streams.
+
+In this example, the stream initial streams are the sequences of pixels from each camera. The convolution kernels take these pixel streams as input and output. The Sum of Absolute Differences (SAD) kernel takes two pixel streams as input and provides a single stream of depth values as output.
+
+Image courtesy of the Imaging Project, Stanford. http://cva.stanford.edu/projects/imagine/project</div>
+    </div>
+
+    <div class="step" data-x='1800' data-y='1300' data-scale="0.5">
+        <h1>Imagine Processor</h1>
+        <center><img src="images/processor/imagine_block.gif" /></center>
+
+        <div class="notes">Stream Processing has had limited success commercially, though it forms a key component of the Graphics Processing Units we will see later. One interesting stream processor is the Stanford Imagine Storm-1 Processor, built circa 2002.
+
+It has eight ALU Clusters, each of which can implement several simple kernels in a stream. The clusters can further be chained together to form longer streams.</div>
+    </div>
+
+    <div class="step" data-x='1800' data-y='1500' data-scale="0.5">
+        <h2>ALU Clusters</h2>
+        <center><img src="images/processor/im_cluster.gif" /></center>
+        <div class="notes">These ALU Clusters are the base unit of programming in the Storm-1 architecture. They contain six ALUs, some control and storage elements. Each ALU Cluster can implement a simple Kernel or be chained with other clusters for more complex kernels (kernels with more "steps").
+
+The ALU Clusters are programmed and fed by a separate microcontroller. This also sets up the routing between the cluster and the Streaming Register File (SRF), which contains all input and output data.</div>
+    </div>
+
+    <div class="step" data-x='2300' data-y='1400' data-scale="0.5">
+        <center><img src="images/processor/storm1-die.jpg" /></center>
+
+        <div class="notes">Stream processors have large memory bandwidth requirements. That’s the down side of being able to process
+data quickly!
+
+In the Imagine Storm-1 processor, you can clearly see the 8 ALU Clusters on the right, everything on the left is memory interfacing and registers.
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+	<div id="overview" class="step" data-x="1450" data-y="694.0" data-scale="3.1">&nbsp</div>
+</div>
+
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+
