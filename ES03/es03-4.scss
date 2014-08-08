@@ -1,0 +1,43 @@
+
+/* ES03 Recap, slide specific styling */
+@import 'compass/css3/opacity';
+
+@import 'anu-impress';
+@import 'embedded-systems';
+
+#title h1 {
+    padding-top:50px;
+}
+
+#title h2 {
+    text-align:left;
+    padding-right:40px;
+}
+
+#title #say {
+    margin-top: 150px;
+    text-align:right;
+    font-size:10px;
+    text-shadow:none;
+    color: rgba(0,0,0,0.3);
+    letter-spacing:initial;
+}
+
+#title #say2 {
+    margin-top: 30px;
+    text-align:right;
+    font-size:10px;
+    text-shadow:none;
+    color: rgba(0,0,0,0.3);
+    letter-spacing:initial;
+}
+
+#title .linkbox {
+    margin-top: 100px;
+}
+
+#gpu-mt, #gpu-sp, #gpu-sfu, #gpu-dp {
+    width:600px;
+}
+
+

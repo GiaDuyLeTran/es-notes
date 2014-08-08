@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 3: Embedded Processors</title>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es03-4.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="500">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say">I had the video game company take your</div>
+        <div class="titlebox">
+            <h2>Alternative Processors:</h2>
+            <h1>Graphics Processing Units</h1>
+        </div>
+        <div id="say2">away because I love you.<br/>It's like the time you took away the credit card from me when I was ordering all those porcelain babies.</div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+    </div>
+
+    <div class="step" data-x="0" data-y="1200" data-scale="0.5">
+        <center><img class="naked" src="images/processor/6600GT_GPU.jpg"></center>
+        <div class="notes">"6600GT GPU" by Berkut - Own work. Licensed under Creative Commons Attribution-Share Alike 3.0 via Wikimedia Commons - http://commons.wikimedia.org/wiki/File:6600GT_GPU.jpg#mediaviewer/File:6600GT_GPU.jpg</div>
+
+        <div class="notes">We have seen SIMD architectures that allow multiple pieces of data to be processed simply with one instruction. We have then seen Stream processors that allow one piece of data to be processed with several instructions in turn. Putting this all together, we get a processor that can perform multiple instructions on multiple data at once.
+
+The canonical example of where this is useful is in graphics processing: The operations will be rendering, shading, texturing; across lots of vertex, triangle, image or pixel data.</div>
+    </div>
+
+    <div class="step" data-x="900" data-y="0" data-scale="0.5">
+        <div style="float:left;padding-right:50px;"><img src="images/processor/gpu-pipe1.png" class="naked"/></div>
+        <div style="float:left"><img src="images/processor/gpu-ex1.png" style="width:700px"/></div>
+        <div class="notes">Originally GPUs didn’t have much to do: Turn vertices in to visible triangles, turn triangles in to pixels. Each of these used its own specialised hardware</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <div style="float:left;padding-right:50px;"><img src="images/processor/gpu-pipe2.png" class="naked"/></div>
+        <div style="float:left"><img src="images/processor/gpu-ex2.png" style="width:700px"/></div>
+        <div class="notes">As things evolved, more hardware was added to put textures on triangles, filtering and anti-aliasing. Pixel operations were extended to simplify reflections, shadows.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+        <div style="float:left;"><h2>Geometry Heavy</h2><img src="images/processor/gpu-geo.png" style="width:425px"/></div>
+        <div style="float:right"><h2>Pixel Heavy</h2><img src="images/processor/gpu-pixel.png" style="width:425px"/></div>
+        <div class="notes">It was observed that with this complex sequence of operations, it wasn’t likely that all the hardware modules would be used equally. As such, hardware was often sitting idle, wasted.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="500" data-scale="0.5">
+        <h1>GPU</h1>
+        <center><img src="images/processor/gpu-block.png" style="width:1000px" /></center>
+        <div class="notes">Specialised hardware has been replaced with more generic hardware, able to be reconfigured to perform whatever types of graphical operations are required. The following example is from a modern NVidia card and uses their terminology, but the concepts are equally applicable to other brands.
+
+Contains
+<ul>
+    <li>Memory Interfaces</li>
+    <li>CPU Interfaces</li>
+    <li>Workload Distribution</li>
+    <li>Lots of Stream Multiprocessors</li></ul></div>
+    </div>
+
+    <div class="step" id="sm" data-x-rel="0" data-y-rel="400" data-scale="0.5">
+        <h1>Stream Multiprocessors</h1>
+        <div style="float:left">
+            <h3>Contain:</h3>
+            <ul><li>Stream Processor cores</li>
+            <li>Special Function Units</li>
+            <li>Caches</li>
+            <li>Memory</li>
+            <li>Double-precision hardware</li>
+            <li>Multi-Instruction Issue</li></div>
+        <div style="float:right"><img src="images/processor/gpu-sm.png" /></div>
+
+        <div class="notes">A Stream Multiprocessor (SM) here is roughly equivalent to a Stream Processor from the previous lectures in that it can perform a sequence of operations on incoming data. Modern SMs are more powerful than the stream concept before as they aren’t strictly linear, they may throw away data chunks halfway through, perform conditional operations, split and merge streams internally etc. In terms of graphical operations, these may be things like only rendering pixels that are actually visible.
+
+An SM contains Stream Processors (SPs) which are more limited than the previous definition - each one can perform only a single operation.</div>
+    </div>
+
+    <div class="step" id="gpu-mt" data-x-rel="290" data-y-rel="-100" data-scale="0.2">
+        <h2>Multithreaded Issue</h2>
+        Scheduler for multiple threads. Ensures high SM/SP utilization.
+        <div class="notes">Acts as a scheduler, allowing multiple threads to be ready to run on an SM; each one getting a turn in a defined order (e.g. round-robin). A new thread may run if an old one has completed or if it is blocked (e.g. waiting for memory).
+
+Analogous to running multiple programs on your PC at once.</div>
+    </div>
+
+    <div class="step" id="gpu-sp" data-x-rel="0" data-y-rel="80" data-scale="0.2">
+        <h2>Stream Processor</h2>
+        Contains an ALU and a Floating Point Unit. Can be wired to other SP, SFU, DP etc to form Kernel.
+        <div class="notes">Don't get confused between nVidia's defintion of Stream Processor and our definition from the previous lecture.</div>
+    </div>
+
+    <div class="step" id="gpu-sfu" data-x-rel="0" data-y-rel="125" data-scale="0.2">
+        <h2>Special Function Unit</h2>
+        Performs particular operations such as Square Root, Logarithm.
+        <div class="notes">SFU Operations are expensive enough to warrant their own acceleration (as opposed to being implemented as a sequence of other operations). They are not, however common enough to warrant being added to every SP.
+
+These operations include Square Root, Logarithm, Trig operations etc.</div>
+    </div>
+
+    <div class="step" id="gpu-dp" data-x-rel="0" data-y-rel="35" data-scale="0.2">
+        <h2>Double-Precision Unit</h2>
+        All other calculations done in Single Precision.
+        <div class="notes">For pixel operations, this is more than enough. For scientific computer applications of GPUs it can be a problem.</div>
+    </div>
+
+    <div class="step" data-x-rel="150" data-y-rel="-520" data-scale="0.3">
+            <h2>Similar To:</h2>
+            <h3>Superscalar</h3>
+            <p>Can execute multiple different instructions at once, e.g. down different SM blocks</p>
+            <h3>Vector</h3>
+            <p>Can apply the same operation to different sets of data at once</p>
+            <h3>Stream Processing</h3>
+            <p>Can apply a sequence of operations to the same data, not just a single instruction</p>
+
+            <div class="notes">Superscalar processors can typically only execute two or so instructions in parallel, a GPU can execute hundreds or thousands, so it isn't a completely fair comparison.
+
+When performing a Vector calculation on a GPU, it may be split back in to scalar components and each scalar given its own SP, but the outcome is the same: A single operation applied to multiple data at the same time.</div>
+    </div>
+
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step"/>
+
+</div>
+
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+
