@@ -1,13 +1,17 @@
 
-<div data-x="1000">
-<div data-x-rel="500">
+<div data-x="1000" data-y="0">
+<div data-x-rel="500" data-y-rel="0">
 fu
 <div bar>
-	<div data-x-rel="250">
-<div data-y-rel="333">
+	<div data-x-rel="250" data-y-rel="0">
+<div data-y-rel="333" data-x-rel="0">
 
 <div id="test" data-x="50" data-y="50">
 <div data-x-rel="test:50" data-y-rel="test:-50">
 
 	<div id="overview" class="step" stuffff/>
 
+<div id="test2" data-x="0" data-y="0">
+<div data-x-rel="_test2:50" data-y-rel="_test2:-50">
+<div data-x-rel="_test2:50" data-y-rel="_test2:0" data-rotate="90">
+<div data-x-rel="_test2:50" data-y-rel="_test2:0" data-rotate="45">

@@ -16,63 +16,100 @@ xmax = 1
 ymin = 0
 ymax = 1
 
-x_pos = {}
-y_pos = {}
+x_pos = {'' : 0}
+y_pos = {'' : 0}
 
-def parse_pos_x(term, rel=False, id=None):
-	global xloc, xmin, xmax
+def parse_pos(term, dic, id=None):
+
+	rot = False
+	parent = None
 
 	p = term.split(':')
+
 	if len(p) == 1:
 		n = int(p[0])
 	elif len(p) == 2:
-		if p[0] not in x_pos:
+		if p[0].startswith('_'):
+			rot = True
+			p[0] = p[0][1:]
+
+		parent = p[0]
+		if parent not in dic:
 			print "No step {} for relative position".format(p[0])
 			exit(-1)
 
-		n = x_pos[p[0]] + int(p[1])
+		n = dic[parent] + int(p[1])
 	else:
 		print "Invalid position specifier {}".format(term)
 		exit(-1)
 
-	if rel:
-		n += xloc
+	return n, rot, parent
+
+
+def update_pos(x, y, id=None, rel=False):
+	global xloc, xmin, xmax, yloc, ymin, ymax, x_pos, y_pos
 
 	if id is not None:
-		x_pos[id] = n
+		x_pos[id] = x
 
-	xloc = n
+	xloc = x
 
 	xmin = min(xmin, xloc)
 	xmax = max(xmax, xloc)
 
-
-def parse_pos_y(term, rel=False, id=None):
-	global yloc, ymin, ymax
-
-	p = term.split(':')
-	if len(p) == 1:
-		n = int(p[0])
-	elif len(p) == 2:
-		if p[0] not in y_pos:
-			print "No step {} for relative position".format(p[0])
-			exit(-1)
-
-		n = y_pos[p[0]] + int(p[1])
-	else:
-		print "Invalid position specifier {}".format(term)
-		exit(-1)
-
-	if rel:
-		n += yloc
-
 	if id is not None:
-		y_pos[id] = n
+		y_pos[id] = y
 
-	yloc = n
+	yloc = y
 
 	ymin = min(ymin, yloc)
 	ymax = max(ymax, yloc)
+
+def process_absolute(l, id, angle):
+	xm = re.search('data-x=.([\-0-9]*).',l)
+	ym = re.search('data-y=.([\-0-9]*).',l)
+	if xm is None or ym is None:
+		if not xm and ym:
+			print("WARN: only one of data-x, data-y found in {}".format(l))
+		return False
+
+	x, d1, d2 = parse_pos(xm.group(1), x_pos, id)
+	y, d1, d2 = parse_pos(ym.group(1), y_pos, id)
+
+	update_pos(x, y, id)
+
+	return True
+
+def process_relative(l, id, angle):
+	from math import sin, cos, radians
+	xm = re.search('data-x-rel=.([_a-zA-Z:\-0-9]*).',l)
+	ym = re.search('data-y-rel=.([_a-zA-Z:\-0-9]*).',l)
+	if xm is None or ym is None:
+		if not xm and ym:
+			print("WARN: only one of data-x-rel, data-y-rel found in {}".format(l))
+		return False
+
+	xt, rx, parent = parse_pos(xm.group(1), x_pos, id)
+	yt, ry, parent = parse_pos(ym.group(1), y_pos, id)
+
+	angle = radians(angle)
+
+	if rx or ry:
+		x =   xt * cos(angle) + yt * sin(angle)
+		y = - xt * sin(angle) + yt * cos(angle)
+	else:
+		x, y = xt, yt
+
+	if parent:
+		x += x_pos[parent]
+		y += y_pos[parent]
+	else:
+		x += xloc
+		y += yloc
+
+	update_pos(x, y, id)
+
+	return True
 
 def process1(l):
 
@@ -84,33 +121,24 @@ def process1(l):
 	else:
 		id = None
 
-	# Track current X position
-	xm = re.search('data-x=.([\-0-9]*).',l)
-	if xm is not None:
-		parse_pos_x(xm.group(1), False, id)
+	angm = re.search('data-rotate=.([\-0-9]*).', l)
+	if angm is not None:
+		angle = float(angm.group(1))
+	else:
+		angle = 0
 
-	xm = re.search('data-x-rel=.([a-zA-Z:\-0-9]*).',l)
-	if xm is not None:
-		parse_pos_x(xm.group(1), True, id)
-		need_rewrite = True
+	process_absolute(l, id, angle)
 
-	# Track current Y position
-	xm = re.search('data-y=.([\-0-9]*).',l)
-	if xm is not None:
-		parse_pos_y(xm.group(1), False, id)
+	need_rewrite = process_relative(l, id, angle)
 
-	xm = re.search('data-y-rel=.([a-zA-Z:\-0-9]*).',l)
-	if xm is not None:
-		parse_pos_y(xm.group(1), True, id)
-		need_rewrite = True
 
 	# Rewrite pos
 	if need_rewrite:
-		xstr = "data-x='{}'".format(xloc)
-		ystr = "data-y='{}'".format(yloc)
+		xstr = "data-x='{}'".format(int(xloc))
+		ystr = "data-y='{}'".format(int(yloc))
 
-		l = re.sub('data-x-rel=.([a-zA-Z:\-0-9]*).', xstr, l)
-		l = re.sub('data-y-rel=.([a-zA-Z:\-0-9]*).', ystr, l)
+		l = re.sub('data-x-rel=.([_a-zA-Z:\-0-9]*).', xstr, l)
+		l = re.sub('data-y-rel=.([_a-zA-Z:\-0-9]*).', ystr, l)
 
 	return l
 
