@@ -115,7 +115,7 @@ def process1(l):
 	return l
 
 def process2(l):
-	r = re.search('<div id=[\'"](over[a-zA-Z]*)[\'"] .*/>', l)
+	r = re.search('<div id=[\'"](over[a-zA-Z0-9]*)[\'"] .*/>', l)
 	if r is not None:
 		idtag = r.group(1)
 		xscale = (1000 + xmax - xmin) / 1250.
