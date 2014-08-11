@@ -81,7 +81,6 @@ def process1(l):
 	idm = re.search('id=.([a-zA-Z\-0-9]*).', l)
 	if idm is not None:
 		id = idm.group(1)
-		print id
 	else:
 		id = None
 
@@ -109,7 +108,7 @@ def process1(l):
 	if need_rewrite:
 		xstr = "data-x='{}'".format(xloc)
 		ystr = "data-y='{}'".format(yloc)
-		print xstr
+
 		l = re.sub('data-x-rel=.([a-zA-Z:\-0-9]*).', xstr, l)
 		l = re.sub('data-y-rel=.([a-zA-Z:\-0-9]*).', ystr, l)
 
