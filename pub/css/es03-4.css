@@ -1061,3 +1061,14 @@ pre {
 
 #gpu-mt, #gpu-sp, #gpu-sfu, #gpu-dp {
   width: 600px; }
+
+#stream-ex, #simd-ex {
+  width: 500px; }
+
+.impress-on-stream-ex #frag-ex {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+  opacity: 0.8; }
+
+.impress-on-simd-ex #frag-ex {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+  opacity: 0.8; }

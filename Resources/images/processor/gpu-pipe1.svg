@@ -15,7 +15,7 @@
    version="1.1"
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="gpu-pipe1.svg"
-   inkscape:export-filename="/home/bnizette/Dropbox/ES/ES2014/Resources/images/processor/rgb-calc.png"
+   inkscape:export-filename="/home/bnizette/Dropbox/ES/ES2014/Resources/images/processor/gpu-pipe1.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -28,7 +28,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
-     inkscape:cx="331.52387"
+     inkscape:cx="103.12839"
      inkscape:cy="855.27891"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -95,18 +95,18 @@
        y="104.54893" />
     <text
        xml:space="preserve"
-       style="font-size:29.62906837px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#e6e6e6;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-size:29.62906836999999882px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;stroke-width:0.50000000000000000;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        x="161.3602"
        y="129.53241"
        id="text3901-9"
        sodipodi:linespacing="125%"
        transform="scale(1.0479173,0.95427377)"><tspan
-         style="font-size:18px"
+         style="font-size:18px;stroke-width:0.50000000000000000;stroke-miterlimit:4;stroke-dasharray:none;stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1"
          sodipodi:role="line"
          id="tspan3903-4"
          x="161.3602"
          y="129.53241">Vertex</tspan><tspan
-         style="font-size:18px"
+         style="font-size:18px;stroke-width:0.50000000000000000;stroke-miterlimit:4;stroke-dasharray:none;stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1"
          id="tspan5698"
          sodipodi:role="line"
          x="161.3602"
@@ -120,18 +120,18 @@
        y="204.54892" />
     <text
        xml:space="preserve"
-       style="font-size:29.62906837px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#e6e6e6;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-size:29.62906836999999882px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;stroke-width:0.50000000000000000;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        x="161.3602"
        y="234.32414"
        id="text3901-9-2"
        sodipodi:linespacing="125%"
        transform="scale(1.0479173,0.95427377)"><tspan
-         style="font-size:18px"
+         style="font-size:18px;stroke-width:0.50000000000000000;stroke-miterlimit:4;stroke-dasharray:none;stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1"
          sodipodi:role="line"
          id="tspan3903-4-0"
          x="161.3602"
          y="234.32414">Pixel</tspan><tspan
-         style="font-size:18px"
+         style="font-size:18px;stroke-width:0.50000000000000000;stroke-miterlimit:4;stroke-dasharray:none;stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1"
          id="tspan5698-9"
          sodipodi:role="line"
          x="161.3602"
@@ -145,18 +145,18 @@
        y="304.54892" />
     <text
        xml:space="preserve"
-       style="font-size:29.62906837px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#e6e6e6;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-size:29.62906836999999882px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;stroke-width:0.50000000000000000;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        x="160.54721"
        y="339.11588"
        id="text3901-9-2-2"
        sodipodi:linespacing="125%"
        transform="scale(1.0479173,0.95427377)"><tspan
-         style="font-size:18px"
+         style="font-size:18px;stroke-width:0.50000000000000000;stroke-miterlimit:4;stroke-dasharray:none;stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1"
          id="tspan5698-9-7"
          sodipodi:role="line"
          x="160.54721"
          y="339.11588">Framebuffer</tspan><tspan
-         style="font-size:18px"
+         style="font-size:18px;stroke-width:0.50000000000000000;stroke-miterlimit:4;stroke-dasharray:none;stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1"
          sodipodi:role="line"
          x="160.54721"
          y="361.61588"

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=1024" />
-    <title>ENGN8537 Lecture 3: Embedded Processors</title>
+    <title>ENGN8537 Lecture 3.4: Graphics Processing Units</title>
 
     <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
     <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
@@ -23,7 +23,7 @@
 
 <div id="impress">
     <!-- Title slide -->
-    <div id="title" class="step slide" data-x="0" data-y="500">
+    <div id="title" class="step slide" data-x="0" data-y="0">
         <div class="logo">
             <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
         </div>
@@ -43,16 +43,16 @@
         </div>
     </div>
 
-    <div class="step" data-x="0" data-y="1200" data-scale="0.5">
+    <div class="step" data-x="0" data-y="700" data-scale="0.5">
         <center><img class="naked" src="images/processor/6600GT_GPU.jpg"></center>
-        <div class="notes">"6600GT GPU" by Berkut - Own work. Licensed under Creative Commons Attribution-Share Alike 3.0 via Wikimedia Commons - http://commons.wikimedia.org/wiki/File:6600GT_GPU.jpg#mediaviewer/File:6600GT_GPU.jpg</div>
-
         <div class="notes">We have seen SIMD architectures that allow multiple pieces of data to be processed simply with one instruction. We have then seen Stream processors that allow one piece of data to be processed with several instructions in turn. Putting this all together, we get a processor that can perform multiple instructions on multiple data at once.
 
-The canonical example of where this is useful is in graphics processing: The operations will be rendering, shading, texturing; across lots of vertex, triangle, image or pixel data.</div>
+The canonical example of where this is useful is in graphics processing: The operations will be rendering, shading, texturing; across lots of vertex, triangle, image or pixel data.
+
+"6600GT GPU" by Berkut - Own work. Licensed under Creative Commons Attribution-Share Alike 3.0 via Wikimedia Commons - http://commons.wikimedia.org/wiki/File:6600GT_GPU.jpg#mediaviewer/File:6600GT_GPU.jpg</div>
     </div>
 
-    <div class="step" data-x="900" data-y="0" data-scale="0.5">
+    <div class="step" data-x="0" data-y="1100" data-scale="0.5">
         <div style="float:left;padding-right:50px;"><img src="images/processor/gpu-pipe1.png" class="naked"/></div>
         <div style="float:left"><img src="images/processor/gpu-ex1.png" style="width:700px"/></div>
         <div class="notes">Originally GPUs didn’t have much to do: Turn vertices in to visible triangles, turn triangles in to pixels. Each of these used its own specialised hardware</div>
@@ -64,15 +64,15 @@ The canonical example of where this is useful is in graphics processing: The ope
         <div class="notes">As things evolved, more hardware was added to put textures on triangles, filtering and anti-aliasing. Pixel operations were extended to simplify reflections, shadows.</div>
     </div>
 
-    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+    <div class="step" data-x-rel="500" data-y-rel="0" data-scale="0.5">
         <div style="float:left;"><h2>Geometry Heavy</h2><img src="images/processor/gpu-geo.png" style="width:425px"/></div>
         <div style="float:right"><h2>Pixel Heavy</h2><img src="images/processor/gpu-pixel.png" style="width:425px"/></div>
         <div class="notes">It was observed that with this complex sequence of operations, it wasn’t likely that all the hardware modules would be used equally. As such, hardware was often sitting idle, wasted.</div>
     </div>
 
-    <div class="step" data-x-rel="0" data-y-rel="500" data-scale="0.5">
+    <div class="step" style="width:1200px" data-x="1100" data-y="0" data-scale="0.5">
         <h1>GPU</h1>
-        <center><img src="images/processor/gpu-block.png" style="width:1000px" /></center>
+        <center><img src="images/processor/gpu-block.png" style="width:1200px" /></center>
         <div class="notes">Specialised hardware has been replaced with more generic hardware, able to be reconfigured to perform whatever types of graphical operations are required. The following example is from a modern NVidia card and uses their terminology, but the concepts are equally applicable to other brands.
 
 Contains
@@ -128,7 +128,7 @@ These operations include Square Root, Logarithm, Trig operations etc.</div>
         <div class="notes">For pixel operations, this is more than enough. For scientific computer applications of GPUs it can be a problem.</div>
     </div>
 
-    <div class="step" data-x-rel="150" data-y-rel="-520" data-scale="0.3">
+    <div class="step" style="width:600px" data-x-rel="130" data-y-rel="-520" data-scale="0.3">
             <h2>Similar To:</h2>
             <h3>Superscalar</h3>
             <p>Can execute multiple different instructions at once, e.g. down different SM blocks</p>
@@ -142,6 +142,87 @@ These operations include Square Root, Logarithm, Trig operations etc.</div>
 When performing a Vector calculation on a GPU, it may be split back in to scalar components and each scalar given its own SP, but the outcome is the same: A single operation applied to multiple data at the same time.</div>
     </div>
 
+    <div class="step point" data-x-rel="400" data-y-rel="0" data-scale="0.5">
+        <p><b>Superscalar</b> processors can execute two instructions per clock but full utilization was unlikely due to data and hardware dependencies.</p><p>GPUs can run thousands of instructions per clock; <b>how do they get good utilization?</b></p>
+    </div>
+
+    <div class="step" id="hyb1" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <div class="simplecard" style="width:400px;height:300px;float:left">
+        <h3>Stream</h3>
+        <p>Algorithm must be free of data dependencies between instances of the same kernel.</p>
+        </div>
+        <div class="notes">e.g. If your algorithm runs across a set of pixels, the most efficient algorithm must not include dependencies <b>between</b> pixels; it must be able to be executed on every pixel, or set of pixels, independently.
+
+Sometimes such dependencies are impossible to avoid (e.g. Sum of Absolute Differences); these kernels explicitly merge previous streams and as such absolutely must be executed after the previous kernels, not in parallel.</div>
+    </div>
+    
+    <div class="step" id="hyb2" data-x-rel="0" data-y-rel="0" data-scale="0.5">
+        <div class="simplecard" style="width:400px;height:300px;float:right">
+        <h3>SIMD</h3>
+        <p>The programmer must write simple kernels (functions) that apply in the same way to each piece of data.</p>
+        <p>Moreover, the kernels are likely to use Vector operations internally.</p>
+        </div>
+        <div class="notes">Once the kernels are defined, the GPU will manage the parallel execution of a number of instances. If the programmer had to manage the set up and teardown of each kernel for each piece of data, the system would rapidly become too complex.</div>
+    </div>
+
+    <div class="step" id="frag-ex" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h1>Fragments</h1>
+        <div style="float:left;width:300px"><h3>Diffuse Shader</h3>
+            Changes surface brightness depending on angle to light source.</div>
+        <div style="float:left" class="simplecard"><pre class="prettyprint">
+Texture2D&lt;Float3&gt; myTex;
+Float3 lightDir;
+
+Float4 diffuseShader(Float3 norm, Float2 uv) {
+    Float3 kd;
+    kd = myTex.Sample(uv);     // Get texture colour
+    kd *= Dot(lightDir, norm); // scale by angle
+    return Float4(kd, 1.0);    // add 100% opacity
+}</pre>
+        </div>
+        <div class="notes">A thread that satisfies these conditions and, as such, can be run on a GPU, is called a fragment. Here’s a
+shader fragment that computes “diffuse reflectance”.
+
+It gets the colour of the texture at the location then makes it brighter or darker based upon the relative angle of the surface and the light source.</div>
+    </div>
+
+    <div class="step" id="stream-ex" data-x-rel="350" data-y-rel="-20" data-scale="0.5">
+        <h3>Stream?</h3>
+        Each instance is independent. <b>Yes.</b>
+        <div class="notes">The only data accessible to all instances of this fragment are the texture and light direction. These are read-only in the fragment so there are no dependencies between the instances.</div>
+    </div>
+
+    <div class="step" id="simd-ex" data-x-rel="0" data-y-rel="80" data-scale="0.5">
+        <h3>SIMD?</h3>
+        Same code runs on all pixels. Uses Vector instructions internally. <b>Yes.</b>
+        <div class="notes">The fragment applies to any given pixel by design.  Further, it uses vector operations internally such as the dot product between two vectors (multiply-and-accumulate operation) and the multiplication of the <code>kd</code> vector by the scalar dot-product result.</div>
+    </div>
+
+    <div class="step" data-x="1200" data-y="1000" data-scale="0.5">
+        <h1>Performance</h1>
+        <img src="images/processor/gpu-perf.png" />
+        <div class="notes">In order to use a GPU for your problem, it must follow the two rules laid out previously. That is, it must
+be able to be decomposed in to relatively few sets of instructions, each of which can be executed unchanged across multiple data. Further, each of these sets of instructions must be able to run independently of each other when run on different data. This is a fairly restrictive requirement and may make the decision for you.
+
+Then the decision comes down to the data set. The data set must be large enough that the speed up of the GPU outweighs the cost of initializing the GPU and transferring the data back and forward.
+
+The throughput of GPUs is now at least an order of magnitude above that of a CPU, so that break-even point is getting ever-easier to reach. This graph is taken from some relatively old NVidia marketing material but illustrates the point.</div>
+    </div>
+
+    <div class="step" data-x-rel="700" data-y-rel="0" data-scale="0.5">
+        <h1>Integration</h1>
+        <p>Why don't CPUs include heavily-parallel processing pipelines like GPUs?: <b>Memory Latency</b>.</p>
+        <p><b>Masked by Caches</b>: CPUs use Caches to store small data sets, quickly providing data to the executing thread.</p>
+        <p><b>Masked by Threading</b>: GPUs use parallel hardware and software to simply run something else.</p>
+
+        <div class="notes">Why don't CPUs include heavily-parallel processing pipelines like GPUs, if it's such a good idea?
+
+Caching doesn't work well for large data sets such as those used in GPU processing. Running a very large number of threads doesn't work for general use CPUs as the chances of dependencies are too high. As such, each type of device has specific requirements around cache.
+
+Remember that cache was the most significant contributor to CPU die size (and therefore cost). Putting GPU-style processing on the chip as well would be too expensive.
+
+That said, more hybrid chips are coming out that contain both CPU and GPU devices; logically separate but on the same die.
+    </div>
 
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
     <div id="overview" class="step"/>

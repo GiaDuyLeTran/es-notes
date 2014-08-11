@@ -40,4 +40,10 @@
     width:600px;
 }
 
+#stream-ex, #simd-ex {
+    width:500px;
+}
+
+.impress-on-stream-ex #frag-ex { @include opacity(0.8) }
+.impress-on-simd-ex #frag-ex { @include opacity(0.8) }
 
