@@ -16,42 +16,102 @@ xmax = 1
 ymin = 0
 ymax = 1
 
+x_pos = {}
+y_pos = {}
+
+def parse_pos_x(term, rel=False, id=None):
+	global xloc, xmin, xmax
+
+	p = term.split(':')
+	if len(p) == 1:
+		n = int(p[0])
+	elif len(p) == 2:
+		if p[0] not in x_pos:
+			print "No step {} for relative position".format(p[0])
+			exit(-1)
+
+		n = x_pos[p[0]] + int(p[1])
+	else:
+		print "Invalid position specifier {}".format(term)
+		exit(-1)
+
+	if rel:
+		n += xloc
+
+	if id is not None:
+		x_pos[id] = n
+
+	xloc = n
+
+	xmin = min(xmin, xloc)
+	xmax = max(xmax, xloc)
+
+
+def parse_pos_y(term, rel=False, id=None):
+	global yloc, ymin, ymax
+
+	p = term.split(':')
+	if len(p) == 1:
+		n = int(p[0])
+	elif len(p) == 2:
+		if p[0] not in y_pos:
+			print "No step {} for relative position".format(p[0])
+			exit(-1)
+
+		n = y_pos[p[0]] + int(p[1])
+	else:
+		print "Invalid position specifier {}".format(term)
+		exit(-1)
+
+	if rel:
+		n += yloc
+
+	if id is not None:
+		y_pos[id] = n
+
+	yloc = n
+
+	ymin = min(ymin, yloc)
+	ymax = max(ymax, yloc)
+
 def process1(l):
-	global xloc, yloc, xmin, xmax, ymin, ymax
+
 	need_rewrite = False
+
+	idm = re.search('id=.([a-zA-Z\-0-9]*).', l)
+	if idm is not None:
+		id = idm.group(1)
+		print id
+	else:
+		id = None
 
 	# Track current X position
 	xm = re.search('data-x=.([\-0-9]*).',l)
 	if xm is not None:
-		xloc = int(xm.group(1))
+		parse_pos_x(xm.group(1), False, id)
 
-	xm = re.search('data-x-rel=.([\-0-9]*).',l)
+	xm = re.search('data-x-rel=.([a-zA-Z:\-0-9]*).',l)
 	if xm is not None:
-		xloc += int(xm.group(1))
+		parse_pos_x(xm.group(1), True, id)
 		need_rewrite = True
 
 	# Track current Y position
 	xm = re.search('data-y=.([\-0-9]*).',l)
 	if xm is not None:
-		yloc = int(xm.group(1))
+		parse_pos_x(xm.group(1), False, id)
 
-	xm = re.search('data-y-rel=.([\-0-9]*).',l)
+	xm = re.search('data-y-rel=.([a-zA-Z:\-0-9]*).',l)
 	if xm is not None:
-		yloc += int(xm.group(1))
+		parse_pos_x(xm.group(1), True, id)
 		need_rewrite = True
 
 	# Rewrite pos
 	if need_rewrite:
 		xstr = "data-x='{}'".format(xloc)
 		ystr = "data-y='{}'".format(yloc)
-
-		l = re.sub('data-x-rel=.([\-0-9]*).', xstr, l)
-		l = re.sub('data-y-rel=.([\-0-9]*).', ystr, l)
-
-	xmin = min(xmin, xloc)
-	xmax = max(xmax, xloc)
-	ymin = min(ymin, yloc)
-	ymax = max(ymax, yloc)
+		print xstr
+		l = re.sub('data-x-rel=.([a-zA-Z:\-0-9]*).', xstr, l)
+		l = re.sub('data-y-rel=.([a-zA-Z:\-0-9]*).', ystr, l)
 
 	return l
 
