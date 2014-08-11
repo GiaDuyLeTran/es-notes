@@ -97,11 +97,11 @@ def process1(l):
 	# Track current Y position
 	xm = re.search('data-y=.([\-0-9]*).',l)
 	if xm is not None:
-		parse_pos_x(xm.group(1), False, id)
+		parse_pos_y(xm.group(1), False, id)
 
 	xm = re.search('data-y-rel=.([a-zA-Z:\-0-9]*).',l)
 	if xm is not None:
-		parse_pos_x(xm.group(1), True, id)
+		parse_pos_y(xm.group(1), True, id)
 		need_rewrite = True
 
 	# Rewrite pos
