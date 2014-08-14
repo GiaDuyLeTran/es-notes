@@ -38,7 +38,7 @@ def parse_pos(term, dic, id=None):
 			print "No step {} for relative position".format(p[0])
 			exit(-1)
 
-		n = dic[parent] + int(p[1])
+		n = int(p[1])
 	else:
 		print "Invalid position specifier {}".format(term)
 		exit(-1)
@@ -57,13 +57,15 @@ def update_pos(x, y, id=None, rel=False):
 	xmin = min(xmin, xloc)
 	xmax = max(xmax, xloc)
 
-	if id is not None:
-		y_pos[id] = y
-
 	yloc = y
 
 	ymin = min(ymin, yloc)
 	ymax = max(ymax, yloc)
+
+	if id is not None:
+		x_pos[id] = x
+		y_pos[id] = y
+
 
 def process_absolute(l, id, angle):
 	xm = re.search('data-x=.([\-0-9]*).',l)
