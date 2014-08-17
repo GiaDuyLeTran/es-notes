@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 4: Real Time</title>
+
+    <script src="MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es04.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="500">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say">Well, there's a dull ache, certainly.<br/>
+And layered on top of that is a club sandwich of pain. Only instead of bacon, there's</div>
+        <div class="titlebox">
+            <h1>Real Time</h1>
+            <h2>Systems</h2>
+        </div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes">References:
+Burns and Wellings Real-Time Systems and Programming Languages (Third Edition), Addison Wesley Longmain 2001
+Thanks to Dr Uwe Zimmer for inspiration and material from COMP4330</div>
+    </div>
+
+    <div class="step" id="whattime" data-x="1200" data-y="200" data-scale="0.5">
+        <h1>What is Time?</h1>
+        <div class="notes"></div>
+    </div>
+
+    <div class="step" id="math" data-x-rel="whattime:250" data-y-rel="whattime:0" data-scale="0.3" data-rotate="20">
+        <h1>Mathematically?</h1>
+    <ol>
+        <li>Transitivity: <span class="ftab"/>\(x \lt y \land y \lt z \implies x \lt z \)</li>
+        <li>Linearity: <span class="ftab"/>\( x \lt y \lor x \gt y \implies x \ne y\)</li>
+        <li>Irreflexivity: <span class="ftab"/>\(\lnot \left(x \lt x\right)\)</li>
+        <li>Density: <span class="ftab"/>\( x \lt y \implies \exists z: x \lt z \land z \lt y\)</li>
+    </ol>
+        <div class="notes">The density condition implies that time is continuous. Any measurement of time, though, is necessarily discrete.</div>
+    </div>
+
+    <div class="step" data-x-rel="whattime:100" data-y-rel="whattime:-100" data-rotate="-30" data-scale="0.3">
+        <h1>Philosophically?</h1>
+    </div>
+
+    <div class="step" data-x-rel="-100" data-y-rel="-50" data-scale="0.3" data-rotate="-15">
+        <h2>An Intrinsic Property of Nature?</h2>
+        Time is an underlying external phenomenon. Thus simultaneous events happen at the same exact time. There is an underlying assumption that time is progressing, even if no changes can be observed.
+    </div>
+
+    <div class="step" data-x-rel="300" data-y-rel="-100" data-scale="0.3" data-rotate="5">
+        <h2>Based on External Events?</h2>
+        Time is an observation of distinguishable events. If all possible observers detect one event before another, they are said to be in sequence. If this cannot be assumed for all observers, they are said to be simultaneous. Therefore the notion of time is actually one of causality.
+    </div>
+
+    <div class="step" data-x-rel="130" data-y-rel="40" data-scale="0.3">
+        &hellip;but what happens between events?
+    </div>
+
+    <div class="step" data-x-rel="-400" data-y-rel="-80" data-scale="0.3">
+        <h1>Physically?</h1>
+    </div>
+
+    <div class="step" data-x-rel="-60" data-y-rel="100" data-scale="0.3" data-rotate="-10">
+        <b>Quantum Physics.</b> Time is a parameter of the quantum wavefunction from which all state is derived.
+    </div>
+
+    <div class="step" data-x-rel="300" data-y-rel="-120" data-scale="0.3" data-rotate="10">
+        <p><b>General Relativity.</b> Time and Space are the same, distinguished from each other by the sign of the diagonal entries of the Metric Tensor.</p>
+
+        <div class="notes">If two events can be connected by a “straight trajectory” in time and space where the velocity is less than light, the events are “time-like”, and are separated in time, but not necessarily in space (for all observers). If the velocity of the path between events is greater than the speed of light, the events are “space-like” in that they’re definitely separated in space, but might happen at the same time for some observer. This implies that time(space) and events in time(space) are not independent.</div>
+    </div>
+
+    <div class="step" data-x-rel="whattime:-280" data-y-rel="whattime:0" data-scale="0.3" data-rotate="-25">
+        <h1>On a Clock?</h1>
+        <table id="times">
+            <tr class="ut"><td><b>UT0</b></td><td>1884: Mean solar time at Greenwich meridian</td></tr>
+            <tr class="ut"><td><b>UT1</b></td><td>UT0 corrected for polar motion</td></tr>
+            <tr class="ut"><td><b>UT2</b></td><td>UT1 corrected for variations in Earth's rotation</td></tr>
+            <tr class="ia"><td><b>IAT</b></td><td>A Caesium 133 atomic clock</td></tr>
+            <tr class="utc"><td><b>UTC</b></td><td>An IAT clock synchronized to UT2 by inserting leap-seconds</td></tr>
+            <tr class="sec"><td style="width:100px"><b>&ldquo;1 sec&rdquo;</b></td><td>\(\frac{1}{86400}\) of a mean solar day<br/>
+                    &hellip; or \(\frac{1}{31566925.9747}\) of the tropical year for 1900<br/>
+                    &hellip; or \(9192631770\) periods of the radiation corresponding to the transition between two hyperfine levels of the ground state of the caesium 133 atom</td></tr>
+        </table>
+    </div>
+
+    <div class="step" data-x-rel="whattime:0" data-y-rel="whattime:100" data-scale="0.4">
+        <h1>for Embedded Systems?</h1>
+        <b>Where</b> does an Embedded System get its timescales?
+
+        <ul><li>Oscillations of a crystal</li>
+            <li>Charge/discharge cycles of a capacitor</li>
+            <li>Propagation speed of electrons through a device</li>
+        </ul>
+
+        &hellip; or a selection of these.
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="130" data-scale="0.4">
+        <h2>Clock Skew</h2>
+        <p>Two timescales colliding: Occurs if the propagation speed is not negligable with respect to the oscillation (clock) speed.</p>
+
+        <ol><li>Implies <b>&ldquo;now&rdquo;</b> is defined by a clock edge and</li>
+            <li><b>&ldquo;now&rdquo;</b> does not have the same value for all observers due to propagation delays!</li></ol>
+
+        <div class="notes">Depending on the observer (logic gate), the same pair of events (say; clock edge, completion of calculation) may not have a well-defined ordering. In some circumstances it makes no sense to ask "which arrived first", you have to add "as seen by (logic gate/observer/device etc.).</div>
+    </div>
+
+    <div class="step point" data-x-rel="0" data-y-rel="130" data-scale="0.4">
+        Clocks are the fundamental unit of time for a processor, but is that time <b>real</b>?
+    </div>
+
+    <div class="step point" data-x-rel="0" data-y-rel="150" data-scale="0.4">
+        When we say &ldquo;Must happen within 3 seconds&rdquo; do we really mean that it must take less than <b>27577895310</b> periods of a specific type of radiation to complete?
+    </div>
+
+    <div class="step" id="rtfinal" data-x-rel="0" data-y-rel="150" data-scale="0.6">
+        <h1>The Real Time</h1>
+        <p>Pragmatically, <b>Real Time</b> is simply an appropriate and consistant time scale for the problem at hand.</p>
+    </div>
+
+    <div class="step" id="emb" data-x="2000" data-y="100" data-scale="0.5">
+        <h1>What is Embodiment?</h1>
+    </div>
+
+    <div class="step" id="emb1" data-x-rel="50" data-y-rel="80" data-scale="0.4">
+        <b>Embodied Phenomena</b> are those that by their very nature, occur in real time and real space.
+    </div>
+
+    <div class="step" id="emb2" data-x-rel="-50" data-y-rel="80" data-scale="0.4">
+        Embodiment is the property of any engagement with the real world that (may) may that engagement <b>meaningful</b>. (Paul Dourish)
+    </div>
+
+    <div class="step point" data-x-rel="50" data-y-rel="150" data-scale="0.4">
+        <p>Embodied Phenomena are the essence of meaningful interaction.</p>
+        <p>Embedded Systems are <b>Technical Instantiations</b> of Embodied Phenomena.</p>
+    </div>
+
+    <div class="step" id="emb3" data-x-rel="0" data-y-rel="180" data-scale="0.4">
+        <p>Meaningful Embedded Systems are part of an <b>ecological niche</b> (Rolf Pfeifer)</p>
+        <ul><li>The Operational Environment is supportive of, and supported by the system</li>
+            <li>The Embedded System is constructed as part of the Operational Environment according to the task</li>
+            <li>The task is meaningful considering the morphology and cognitive ability of the system as well as the response of the Environment.</li>
+        </ul>
+        <br/>
+        <p style="text-align:center"><b>Situated, Embodied and Self-Sufficient.</b></p>
+    </div>
+
+    <div class="step" id="emb4" data-x-rel="0" data-y-rel="150" data-scale="0.4">
+        <div style="float:left;width:500px">Embodied skills depend on a tight coupling between perception and action, up to the level where the distinction between each can be difficult.</div>
+        <div class="rarrow-m-h" style="margin-top:50px;float:right;width:50px"></div>
+    </div>
+
+    <div class="step" id="emb5" data-x-rel="300" data-y-rel="20" data-scale="0.4">
+        Tight coupling between perception and action means to operate under real time constraints
+        <div class="dlarrow-m-h" style="margin-top:50px;width:50px"></div>
+        <div class="notes">..and to construct meaningful morphologies</div>
+    </div>
+
+    <div class="step point" id="emb6" data-x-rel="-150" data-y-rel="100" data-scale="0.4">
+        An Embedded System operates under constraints on <b>Real Time</b>.
+        <div class="notes">To make its interaction with the world meaningful, such a system must depend not only on the logical correctness of a result, but the real time at which that result was delivered.</div>
+    </div>
+
+    <div class="step" data-x-rel="-470" data-y-rel="0" data-scale="0.6">
+        <div class="rarrow-l-h" style="float:left;width:80px;margin-top:20px"></div>
+        <div class="simplecard" style="float:left;width:450px">A Real Time system depends not only on the <b>logical correctness</b> of a result, but the <b>time</b> at which that result was delivered.</div>
+        <div class="larrow-l-h" style="float:left;width:80px;margin-top:20px"></div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="150" data-scale="0.4">
+        <h1>Determinism</h1>
+        <div style="text-align:center">Specification against Real Time implies <b>Determinism</b> of Response Time.</div>
+        <div class="notes">If you can't determine with any certainty when a response will occur, you have no chance to verify whether it will meet the specification!
+
+Of course, the specification may include both a response time and a response probability, but this doesn't save you from determinism.
+
+Not too early, not too late. A ‘Goldilocks’ result.
+
+Car crash to Airbag deployment: An airbag that deploys a second too late is worse than no airbag at all!</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="120" data-scale="0.4">
+        <h1>Speed</h1>
+        <div style="text-align:center">Note that we haven’t referred to the system <b>speed</b>. In general, a non-RT system cannot be made to obey a RT specification by making it faster.</div>
+
+        <div class="notes">This is intentional, contrary to popular belief, real time systems are not necessarily fast, just predictable (predictably correct).</div>
+    </div>
+
+    <div class="step" data-x="0" data-y="1000" data-scale="0.5">
+        <h1>Motivation</h1>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="100" data-scale="0.5">
+        <div class="simplecard" style="float:left;width:300px">Failing to process inputs from a limit switch in a bounded time</div>
+        <div class="rarrow-m-h" style="float:left;width:50px;margin-left:80px;margin-top:50px;"></div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="0" data-scale="0.5">
+        <div class="simplecard bad" style="float:right;width:300px">Robot rips itself apart</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="100" data-scale="0.5">
+        <div class="simplecard" style="float:left;width:300px">Failing to process sensor measurements in a bounded time</div>
+        <div class="rarrow-m-h" style="float:left;width:50px;margin-left:80px;margin-top:50px;"></div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="0" data-scale="0.5">
+        <div class="simplecard bad" style="float:right;width:300px">your jet engine blows a hole through the plane and its passengers</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="100" data-scale="0.5">
+        <div class="simplecard" style="float:left;width:300px">Failing to process an iterative control loop with a constant period</div>
+        <div class="rarrow-m-h" style="float:left;width:50px;margin-left:80px;margin-top:50px;"></div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="0" data-scale="0.5">
+        <div class="simplecard bad" style="float:right;width:300px">your plant becomes unstable and dumps chemical sludge on an Auklet</div>
+    </div>
+
+    <div class="step" id="auck" data-x-rel="350" data-y-rel="0" data-scale="0.5">
+        <img src="images/real-time/aucklet.jpg" style="width:300px">
+        <div class="notes">Image Credits: http://www.theecoreport.com/green-blogs/area/canada/bc/the-misleading-half-truths-from-our-oily-friends/ , US Fish and Wildlife Service.</div>
+    </div>
+
+    <div class="step" id="class" data-x="0" data-y="1500" data-scale="0.5">
+        <h1>Classification</h1>
+        <table id="rt">
+            <tr class="hard"><td><b>Hard</b></td><td>Single failure leads to severe malfunction</td></tr>
+            <tr class="firm"><td><b>Firm</b></td><td>Results are meaningless after deadline<br/>
+                                 Only multiple or permanent failures threaten the system</td></tr>
+            <tr class="soft"><td><b>Soft</b></td><td>Results may still be useful after deadline</td></tr>
+        </table>
+    </div>
+
+    <div class="step" id="case" data-x="800" data-y="1300" data-scale="0.5">
+        <h1>Case Study: Aeroplane</h1>
+    </div>
+
+    <div class="step case-sys" id="sys1" data-x-rel="_case:300" data-y-rel="_case:0" data-scale="0.3" data-rotate="-40">
+        <h3>Jet Engine Control Systems</h3>
+    </div>
+
+    <div class="step case-sys" id="res1" data-x-rel="0" data-y-rel="0" data-scale="0.3" data-rotate="-40">
+        <h2>Hard</h2>
+        <div class="notes">The controller has a well defined time during which it must react to stimuli such as over-temperature conditions before the system will fail</div>
+    </div>
+
+    <div class="step case-sys" id="sys2" data-x-rel="_case:300" data-y-rel="_case:0" data-scale="0.3" data-rotate="-20">
+        <h3>Aerofoil Control Systems</h3>
+    </div>
+
+    <div class="step case-sys" id="res2" data-x-rel="0" data-y-rel="0" data-scale="0.3" data-rotate="-20">
+        <h2>Hard</h2>
+        <div class="notes">A delay changes the stability of a control system – a varying delay will change the tuning of that system</div>
+    </div>
+
+    <div class="step case-sys" id="sys3" data-x-rel="_case:300" data-y-rel="_case:0" data-scale="0.3" data-rotate="0">
+        <h3>Instrumentation</h3>
+    </div>
+
+    <div class="step case-sys" id="res3" data-x-rel="0" data-y-rel="0" data-scale="0.3" data-rotate="0">
+        <h2>Hard/Firm</h2>
+        <div class="notes">The instrumentation as connected to the autopilot systems will be hard for the same reasons as the airfoil controls. The display of the values to the pilot is probably not hard real time, so long as it doesn’t exceed some (large-to-a-computer) value</div>
+    </div>
+
+    <div class="step case-sys" id="sys4" data-x-rel="_case:300" data-y-rel="_case:0" data-scale="0.3" data-rotate="20">
+        <h3>Wireless Communications</h3>
+    </div>
+
+    <div class="step case-sys" id="res4" data-x-rel="0" data-y-rel="0" data-scale="0.3" data-rotate="20">
+        <h2>Firm/Soft</h2>
+        <div class="notes">The underlying protocol is generally hard RT as the timing of chips, frames etc. is part of the protocol specification. The data level cannot be deterministic, and therefore cannot be real time, in the general case!  Why? Non-deterministic packet-loss means non-deterministic periods of infinite latency.
+
+Note that some Wireless protocols bill themselves as RT. This is usually under an assumption of some bounded packet loss.</div>
+    </div>
+
+    <div class="step case-sys" id="sys6" data-x-rel="_case:300" data-y-rel="_case:0" data-scale="0.3" data-rotate="40">
+        <h3>Lighting, Comfort Systems</h3>
+    </div>
+
+    <div class="step case-sys" id="res6" data-x-rel="0" data-y-rel="0" data-scale="0.3" data-rotate="40">
+        <h2>Firm/Soft</h2>
+        <div class="notes">The low level brightness control (PWM) is probably firm RT, pump control is firm RT, but the response time of light switch to action (for example) probably isn’t</div>
+    </div>
+
+    <div class="step case-sys" id="sys7" data-x-rel="_case:300" data-y-rel="_case:0" data-scale="0.3" data-rotate="60">
+        <h3>Entertainment Systems</h3>
+    </div>
+
+    <div class="step case-sys" id="res7" data-x-rel="0" data-y-rel="0" data-scale="0.3" data-rotate="60">
+        <h2>&hellip;</h2>
+        <div class="notes">An embedded system in their own right! Probably not RT with respect to their integration in to the airplane system at least</div>
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step"/>
+
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+

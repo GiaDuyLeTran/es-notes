@@ -1,0 +1,60 @@
+
+/* ES04 slide specific styling */
+@import 'compass/css3/opacity';
+
+@import 'anu-impress';
+@import 'embedded-systems';
+
+#title h1 {
+    padding-top:40px;
+}
+
+#title h2 {
+    text-align:right;
+    padding-right:50px;
+}
+
+#title #say {
+    margin-top: 150px;
+    text-align:right;
+    font-size:10px;
+    text-shadow:none;
+    color: rgba(0,0,0,0.3);
+    letter-spacing:initial;
+}
+
+#math {width: 700px; }
+#rtfinal {width:700px; text-align:center}
+
+#emb1, #emb2 {width:600px;}
+#emb3 {width:800px;}
+
+#emb4, #emb5, #emb6 {text-align:center; width:700px;}
+
+.ftab {
+    padding: 0px 30px;
+}
+
+#times td {padding-left: 20px;}
+
+#times .ut { background: rgba(0,  255, 0, 0.3); }
+#times .ia { background: rgba(50, 200, 0, 0.3); }
+#times .utc {background: rgba(100, 150, 0, 0.3); }
+#times .sec {background: rgba(150, 100, 0, 0.3); }
+
+#auck {width:350px;}
+
+#class {width: 850px;}
+#rt td {padding: 0 20px;}
+#rt .hard { background: rgba(250,  50, 0, 0.3); }
+#rt .firm { background: rgba(150,  150, 0, 0.3); }
+#rt .soft { background: rgba(50,  250, 0, 0.3); }
+
+.case-sys {width: 600px;}
+.case-sys h2 {text-align:right}
+
+@each $i in (1, 2, 3, 4, 5, 6, 7) {
+    .impress-on-sys#{$i} #res#{$i} {@include opacity(0.0)}
+}
+
+
