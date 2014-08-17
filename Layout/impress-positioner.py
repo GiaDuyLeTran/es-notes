@@ -95,6 +95,7 @@ def process_relative(l, id, angle):
 	yt, ry, parent = parse_pos(ym.group(1), y_pos, id)
 
 	angle = radians(angle)
+	angle = -angle
 
 	if rx or ry:
 		x =   xt * cos(angle) + yt * sin(angle)
