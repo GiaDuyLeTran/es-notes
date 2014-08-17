@@ -157,7 +157,14 @@ The only way to keep modern processors fed with instructions is to have a tightl
         <div class="notes">Almost all modern caches are Set Associative. These combine the best features of each of the previous methods, as each memory location “short lists” a set of cache lines based upon its address modulo the number of sets, then the entry to evict from the set is chosen by an LRU algorithm as with an Associative cache.</div>
     </div>
 
-    <div class="step" id="write" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+    <div class="step point" data-x-rel="500" data-y-rel="0" data-scale="0.5">
+        Cache must store more than data: It must store where that data came from and how old it is.
+        <div class="notes">This metadata is generally called the <b>tag</b> data. It is not cache content as such, it's the extra information that allows the cache to operate correctly.
+
+Note that the age data is only required for Associative and Set Associative type caches that require an LRU algorithm.</div>
+    </div>
+
+    <div class="step" id="write" data-x-rel="-500" data-y-rel="300" data-scale="0.5">
         <h1>Cached Writing</h1>
         <div class="notes">Cache strategies discussed previously assume a read access, but what happens for a write?</div>
     </div>
@@ -184,7 +191,7 @@ The only way to keep modern processors fed with instructions is to have a tightl
 Write-through generates unnecessary writes if the memory location is written several times in sequence. Write-back generates unnecessary writes if only one location in the cache is changed, as the whole line must be written back.</div>
     </div>
 
-    <div class="step" data-x="2600" data-y="1000" data-scale="0.5">
+    <div class="step" data-x="2700" data-y="1200" data-scale="0.5">
         <h1>DMA</h1>
         <center><img class="naked" src="images/processor/dma.png"/></center>
         <div class="notes">Direct Memory Access (DMA) is a technique used when large amounts of data need to be moved between peripherals and memory without any intermediate processing. Instead of requiring a processor load/store cycle, the data may be moved around without processor intervention.</div>
