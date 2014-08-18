@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="delay6.svg"
+   inkscape:export-filename="/home/bennizette/Dropbox/ES/ES2014/Resources/images/real-time/delay2.png"
+   inkscape:export-xdpi="117.58073"
+   inkscape:export-ydpi="117.58073">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lend"
+       style="overflow:visible;">
+      <path
+         id="path3860"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lstart"
+       style="overflow:visible">
+      <path
+         id="path3857"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt"
+         transform="scale(0.8) translate(12.5,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1"
+     inkscape:cx="233.49918"
+     inkscape:cy="915.68946"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:snap-bbox="true"
+     objecttolerance="10000"
+     inkscape:window-width="1440"
+     inkscape:window-height="834"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2985"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true"
+       spacingx="10px"
+       spacingy="10px" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#5cca53;fill-opacity:0.58823529;stroke:none"
+       id="rect4088"
+       width="150"
+       height="10"
+       x="49"
+       y="243.11218" />
+    <rect
+       style="fill:#cccccc;fill-opacity:0.58823529;stroke:#000000;stroke-opacity:1"
+       id="rect4088-0"
+       width="200"
+       height="10"
+       x="199"
+       y="243.11218" />
+    <rect
+       style="fill:#5cca53;fill-opacity:0.58823529;stroke:none"
+       id="rect4088-7"
+       width="120"
+       height="10"
+       x="479.5"
+       y="243.11218" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.27636075;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:6.82908222, 2.27636074;stroke-dashoffset:0"
+       d="M 199,233.06673 C 199,64.657637 199,64.657637 199,64.657637"
+       id="path3827"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="247.29297"
+       y="87.369995"
+       id="text3847"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3849"
+         x="247.29297"
+         y="87.369995"
+         style="font-size:24px">Intended Delay</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.92387611px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-end:url(#Arrow1Lend)"
+       d="m 48.961938,273.36218 c 549.576122,0 549.576122,0 549.576122,0"
+       id="path3851"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="50"
+       y="292.36218"
+       id="text4665"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4667"
+         x="50"
+         y="292.36218"
+         style="font-size:18px">Time</tspan></text>
+    <rect
+       style="fill:#53b0ca;fill-opacity:0.58823529;stroke:#000000;stroke-opacity:1"
+       id="rect4088-7-0-9"
+       width="80"
+       height="10"
+       x="399.5"
+       y="243.11218" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.56185591;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4.68556781, 1.56185594;stroke-dashoffset:0"
+       d="m 398.71907,232.08125 c 0,-79.2803 0,-79.2803 0,-79.2803"
+       id="path3827-2-0"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.2677536;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:6.80326065, 2.26775355;stroke-dashoffset:0"
+       d="m 478.71907,231.2984 c 0,-167.137938 0,-167.137938 0,-167.137938"
+       id="path3827-2-5"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="220"
+       y="192.36218"
+       id="text3847-1"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3849-8"
+         x="220"
+         y="192.36218"
+         style="font-size:24px">Actual Delay</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-128.73906"
+       y="474.34509"
+       id="text3847-4-0"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.23313761,-0.97244375,0.97244375,0.23313761,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan3849-1-3"
+         x="-128.73906"
+         y="474.34509"
+         style="font-size:14px">Scheduled to Run Again</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:17.43478775px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ff6600;fill-opacity:1;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Sans"
+       x="67.90184"
+       y="437.03302"
+       id="text3791"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.89938452,-0.43715842,0.43715842,0.89938452,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan3793"
+         x="67.90184"
+         y="437.03302"
+         style="stroke-width:0.5">Interrupt Occurs</tspan></text>
+    <path
+       style="fill:#ff6600;stroke:#000000;stroke-width:1.2722379px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-mid:none;marker-end:url(#Arrow1Lend)"
+       d="M 380.13612,311.72606 399.86388,262.4983"
+       id="path3795"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

@@ -1048,5 +1048,16 @@ pre {
   color: rgba(0, 0, 0, 0.3);
   letter-spacing: initial; }
 
+#title #say2 {
+  margin-top: 40px;
+  text-align: right;
+  font-size: 10px;
+  text-shadow: none;
+  color: rgba(0, 0, 0, 0.3);
+  letter-spacing: initial; }
+
+#title .linkbox {
+  margin-top: 100px; }
+
 #det, #det-fpga {
   width: 600px; }

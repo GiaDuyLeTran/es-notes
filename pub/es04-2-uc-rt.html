@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=1024" />
-    <title>ENGN8537 Lecture 4: Determinism in Microprocessors</title>
+    <title>ENGN8537 Lecture 4.2: Determinism in Microprocessors</title>
 
     <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
     <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
@@ -32,18 +32,19 @@
             <p>Research School of Engineering</p>
             <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
         </div>
-        <div id="say">TODO</div>
+        <div id="say">Get me a big block of</div>
         <div class="titlebox">
             <h1>Execution Determinism</h1>
             <h2>in Microprocessors</h2>
         </div>
+        <div id="say2">I said.<br/> I'll cut a Tonton out of it I said.</div>
         <div class="linkbox">
             <a href="?print">print view</a>
         </div>
         <div class="notes"></div>
     </div>
 
-    <div class="step" id="feat" data-x="1800" data-y="-200">
+    <div class="step" id="feat" data-x="1800" data-y="-300">
         <h1>Processor Features</h1>
         <div class="notes">In order to get the best possible performance, microprocessors may make extensive use of features like
 <ul><li>Branch Prediction</li>
@@ -54,11 +55,11 @@ All of these, and more, will effect the real time response of the processor.
 If there’s only one ‘thread’ of execution then many of the following effects are greatly reduced. We will define a thread of execution simply as a piece of code executed asynchronously with respect to another. In this way, threads include interrupt and exception handlers so single-threaded execution is actually very rare, even on the smallest of processors.</div>
     </div>
 
-    <div class="step point" data-x='2300' data-y='-300' data-scale="0.5">
+    <div class="step point" data-x='2300' data-y='-400' data-scale="0.5">
         A microprocessor is a collection of logic gates and therefore is <b>deterministic in nature</b>. Indeterminism comes from <b>coupling</b> the response time of the processor to unknown or unknowable influences.
     </div>
 
-    <div class="step" data-x='900' data-y='-50' data-scale="0.5">
+    <div class="step" data-x='900' data-y='-150' data-scale="0.5">
         <h1>Pipelining</h1><br/>
         <div class="simplecard" style="float:left;width:300px">Execution latency of an instruction depends on the several instructions before it</div>
         <div class="rarrow-m-h" style="float:left;width:50px;margin-left:80px;margin-top:70px;"></div>
@@ -67,13 +68,13 @@ If there’s only one ‘thread’ of execution then many of the following effec
 A stall could be due to a floating point computation (execution time may be dependent on the actual data value), branch misprediction, cache miss or a number of other inter-instruction dependencies.</div>
     </div>
 
-    <div class="step" data-x='900' data-y='-50' data-scale="0.5">
+    <div class="step" data-x='900' data-y='-150' data-scale="0.5">
         <h1>&nbsp;</h1><br/>
         <div class="simplecard bad" style="float:right;width:300px">RT behaviour must be proven for RT theads <b>and</b> any other (part of a) thread that can execute immediately before it.</div>
     </div>
 
 
-    <div class="step" data-x='1500' data-y='-50' data-scale="0.5">
+    <div class="step" data-x='1500' data-y='-150' data-scale="0.5">
         <h1>Branch Prediction</h1><br/>
         <div class="simplecard" style="float:left;width:300px">Execution latency of a branch depends on the several branches before it</div>
         <div class="rarrow-m-h" style="float:left;width:50px;margin-left:80px;margin-top:50px;"></div>
@@ -82,13 +83,13 @@ A stall could be due to a floating point computation (execution time may be depe
 This speeds up the case where the processor guesses correctly, but if the processor guesses incorrectly there’s a some amount of time (and energy) spent doing the wrong thing. Branch prediction is generally deterministic if you look hard enough, but can couple different subsystems in unexpected ways. For example, the run time of Thread 1 can be affected by the way Thread 2 has conditioned the branch predictor.</div>
     </div>
 
-    <div class="step" data-x='1500' data-y='-50' data-scale="0.5">
+    <div class="step" data-x='1500' data-y='-150' data-scale="0.5">
         <h1>&nbsp;</h1><br/>
         <div class="simplecard bad" style="float:right;width:300px">RT behaviour must be proven for RT theads <b>and</b> any other (part of a) thread that can execute immediately before it.</div>
     </div>
 
 
-    <div class="step" data-x='2100' data-y='-30' data-scale="0.5">
+    <div class="step" data-x='2100' data-y='-130' data-scale="0.5">
         <h1>Caching</h1><br/>
         <div class="simplecard" style="float:left;width:300px">Execution latency of a memory access depends on the order and address of a large number of accesses before it.</div>
         <div class="rarrow-m-h" style="float:left;width:50px;margin-left:80px;margin-top:100px;"></div>
@@ -97,12 +98,12 @@ This speeds up the case where the processor guesses correctly, but if the proces
 It’s often stated that interrupts must be fast in order to have minimal impact on other processes. More generally, they should be deterministic in their execution time. Rarely would you find an interrupt specified in terms of its data access patterns but you should!</div>
     </div>
 
-    <div class="step" data-x='2100' data-y='-30' data-scale="0.5">
+    <div class="step" data-x='2100' data-y='-130' data-scale="0.5">
         <h1>&nbsp;</h1><br/>
         <div class="simplecard bad" style="float:right;width:300px">RT behaviour must be proven for all possible data access patterns</div>
     </div>
 
-    <div class="step" data-x='2700' data-y='-30' data-scale="0.5">
+    <div class="step" data-x='2700' data-y='-130' data-scale="0.5">
         <h1>Frequency Scaling</h1><br/>
         <div class="simplecard" style="float:left;width:300px">Execution latency of an instruction depends on the frequency at which the processor is currently running.</div>
         <div class="rarrow-m-h" style="float:left;width:50px;margin-left:80px;margin-top:90px;"></div>
@@ -111,7 +112,7 @@ It’s often stated that interrupts must be fast in order to have minimal impact
 Frequency Scaling cannot be modeled based on knowledge of the processor and software package alone. As the name suggests, this feature changes the speed of execution based upon the physical parameters of the processor. If the processor can be clocked faster without physical damage, it is.</div>
     </div>
 
-    <div class="step" data-x='2700' data-y='-30' data-scale="0.5">
+    <div class="step" data-x='2700' data-y='-130' data-scale="0.5">
         <h1>&nbsp;</h1><br/>
         <div class="simplecard bad" style="float:right;width:300px">RT behaviour must be proven all possible
             <ul><li>Temperatures</li>
@@ -122,14 +123,14 @@ Frequency Scaling cannot be modeled based on knowledge of the processor and soft
     </div>
     
 
-    <div class="step" id="det" data-x='1800' data-y='250' data-scale="0.5">
+    <div class="step" id="det" data-x='1800' data-y='150' data-scale="0.5">
         <div class="darrow-l-h" style="width:100px;margin-bottom:50px;margin-left:150px"></div>
         <h1>Processor Determinism</h1>
         <div class="card bad">High performance processors get that way by sacrificing plenty of things, <b>determinism among them.</b></div>
         <div class="notes">In fact, modern processors are so non-deterministic, they are actually a useful source of cryptographic entropy. See for example the <a href="http://www.irisa.fr/caps/projects/hipsor/">HAVEGE Project</a>. Note that worst-case execution time is usually still bounded, just not deterministic.</div>
     </div>
 
-    <div class="step" id="det-fpga" data-x='1800' data-y='550' data-scale="0.5">
+    <div class="step" id="det-fpga" data-x='1800' data-y='400' data-scale="0.5">
         <h1>FPGA Determinism</h1>
         <div class="card">Tasks in FPGAs do not share resources by <b>default</b>. Any sharing can be audited</div>
         <div class="notes">How do FPGAs compare to microcontrollers in terms of determinism and real time performance?
@@ -138,8 +139,141 @@ FPGAs do have an intrinsic advantage over microprocessors in terms of determinis
 If your FPGA design includes some shared resource and an associated arbitration algorithm (memory, radio modem etc.) then you start introducing couplings and associated non-determinism. These interconnections are very explicit though, and relatively easy to audit.</div>
     </div>
 
+    <div class="step" data-x="-200" data-y="600" data-scale="1.0">
+        <h1>Specifying Delays</h1>
+    </div>
+
+    <div class="step" data-x='-200' data-y='800' data-scale="0.5">
+        <center><img class="naked" src="images/real-time/delay1.png"/></center>
+        <div class="notes">Delaying execution for a fixed amount of time is a commonly-used alternative to busy-waiting or interrupts</div>
+    </div>
+
+    <div class="step" data-x='-200' data-y='1000' data-scale="0.5">
+        <h1>Local Drift</h1>
+        <center><img class="naked" src="images/real-time/delay2.png"/></center>
+        <div class="notes">But the semantics of primitive delays aren’t as one might expect. They’re precise only in their lower bound. In English, rather than “Stop the task then run again after n”, “Stop the task, then after the CPU’s idea of n, make it eligible to be run again”.</div>
+    </div>
+
+    <div class="step" data-x='-200' data-y='1200' data-scale="0.5">
+        <center><img class="naked" src="images/real-time/delay3.png"/></center>
+        <div class="notes">This difference is termed Local Drift</div>
+    </div>
+
+    <div class="step" data-x='350' data-y='800' data-scale="0.5">
+        <h1>Zero Delay</h1>
+        <center><img class="naked" src="images/real-time/delay4.png"/></center>
+        <div class="notes">What is the effect of a ‘zero’ delay? “Stop the task, then after the CPU’s idea of 0, make it eligible to be run again”.</div>
+    </div>
+
+    <div class="step" data-x='350' data-y='1000' data-scale="0.5">
+        <center><img class="naked" src="images/real-time/delay5.png"/></center>
+        <div class="notes">Returning to our description of delays, what is the effect of a ‘zero’ delay? “Stop the task, then after the CPU’s idea of 0, make it eligible to be run again”.
+
+This is a  ‘Task Yield’. A voluntary surrender of the CPU to another task (if another task wants it)</div>
+    </div>
+
+    <div class="step" data-x='900' data-y='800' data-scale="0.5">
+        <h1>Interrupt Response</h1>
+        <center><img class="naked" src="images/real-time/delay6.png"/></center>
+        <div class="notes">If the thread is enabled for interrupts then it might be made runnable again sooner: “Stop the task running, then after the CPU’s idea of n, make it eligible to be run again unless someone(thing) wants its attention sooner, in which case run it at that time instead”</div>
+    </div>
+
+    <div class="step" data-x="1500" data-y="600" data-scale="1.0">
+        <h1>Programming Delays</h1>
+    </div>
+
+    <div class="step" data-x='1500' data-y='750' data-scale="0.5">
+        <div style="width:400px;float:left"><p>A naive attempt in C.</p><p>Suffers from <b>cumulative delay</b></div>
+        <div style="width:400px;float:left"><pre class="simplecard prettyprint">while(1) {
+  do_action();
+  _delay_ms(Interval);	
+}</pre></div>
+        <div class="notes">The cumulative delay is due to the finite time taken to execute the loop and take the action. It may also be due to interrupts occuring in the middle, other threads executing etc.
+
+This example assumes library support (i.e. that someone else has written a <code>_delay_ms</code> function.</div>
+    </div>
+
+    <div class="step" data-x='1500' data-y='950' data-scale="0.5">
+        <div style="width:400px;float:left"><p>Implementing PWM with these delays can be dangerous</p></div>
+        <div style="width:400px;float:left"><pre class="simplecard prettyprint">while(1) {	
+    pin_high();	
+    _delay_ms(Interval * Duty);
+    pin_low();
+    _delay_ms(Interval * (1 – Duty));
+}</pre></div>
+        <div style="clear:both"><center><img class="naked" style="margin-top:50px" src="images/real-time/pwm.png"/></center></div>
+
+        <div class="notes">Despite being naïve, it’s actually very common construct in very simple single-threaded microprocessors where the possible values of local drift are very small or zero. In the general case, this may actually be physically dangerous.</div>
+    </div> 
+
+    <div class="step" data-x='1500' data-y='1200' data-scale="0.5">
+        <h1>Fix Attempt 1</h1>
+        <div style="width:350px;float:left;margin-right:30px"><p>Delay time calculation is <b>not atomic</b>.</p></div>
+        <div style="width:500px;float:left"><pre class="simplecard prettyprint">while(1) {	
+    start = get_time();	
+    do_action();
+    _delay_ms(Interval – (get_time() – start));
+}</pre></div>
+
+        <div class="notes">Attempt to remove cumulative delay by timing the action in the middle and subtracting this number from the overall delay time.
+
+If an interrupt arrives at the wrong time (including the timer interrupt that’s probably driving the clock behind the get_time() function) then the delay can still be significantly wrong. Don’t do this unless you’ve taken separate measures to ensure the atomicity of that statement!</div>
+    </div>
+
+    <div class="step" data-x='1500' data-y='1400' data-scale="0.5">
+        <h1>Real Solution</h1>
+        <div style="width:350px;float:left;margin-right:30px"><p>Must use <b>absolute delays</b>. Language must support them!</p></div>
+        <div style="width:500px;float:left"><pre class="simplecard prettyprint">next_time = Clock + Interval;	
+begin loop	
+    Do_Action;	
+    delay until	next_time;	
+    next_time = next_time + Interval;	
+end loop</pre></div>
+
+        <div class="notes">The only correct way to do these kinds of delays is to use absolute delay constructs, rather than the relative delays we’ve seen up until now. These will delay on average for the right time, even if the action is sporadically longer than that. Neither C nor the standard C libraries support absolute delays so the example above has been written in Ada. If you are required to do proper absolute delays in C then it is possible to write your own absolute delay in that language.</div>
+    </div>
+
+    <div class="step" data-x='2100' data-y='1400' data-scale="0.5">
+        <h1>Language Support</h1>
+        <div class="simplecard" style="float:left;width:25%;margin-right:20px;"><h3>Relative Only</h3>
+<ul><li>C</li><li>Java</li><li>&hellip;</li></ul></div>
+        <div class="simplecard" style="float:left;width:25%;margin-right:20px;"><h3>Both</h3>
+<ul><li>Ada</li><li>RT Java</li><li>&hellip;</li></ul></div>
+        <div class="simplecard" style="float:left;width:25%"><h3>Absolute Only</h3>
+<ul><li>Ada Ravenscar</li><li>Occam2</li><li>&hellip;</li></ul></div>
+
+        <div class="notes">Constructs for specifying timing constraints are strictly part of a
+programming language and/or its support libraries.
+
+Relative delays only:
+C, generally simple languages never designed for RT tasks. In C (POSIX), absolute delays may be constructed out of timers and signals.
+
+Both Relative and Absolute delays:
+Ada, Real Time Java, most process-oriented languages
+
+Absolute delays only:
+Ada Ravenscar Profile, Occam2, most languages built explicitly for real time use</div>
+    </div>
+
+    <div class="step" data-x="2200" data-y="600">
+        <h1>Safety and Liveness</h1>
+    </div>
+
+    <div class="step" data-x='2200' data-y='730' data-scale="0.5">
+        <div class="simplecard" style="float:left;width:400px;height:160px;margin-right:20px"><h3>Safety</h3>Is the right thing going to happen?</div>
+        <div class="simplecard" style="float:left;width:400px;height:160px"><h3>Liveness</h3>Is the wrong thing <b>not</b> going to happen?</div>
+        <div class="notes">If a program has been written to interface with real time, the
+following questions can be asked:
+•  Is the right thing going to happen (liveness)
+•  Is the wrong thing not going to happen (safety)
+
+The property of liveness is that of progress; if a program has to wait for an event (resource), will that event (resource) eventually come? This is a key concept when scheduling resources that have to be used by several threads (including the CPU itself) and will be revisited during discussions of operating systems.
+
+Safety is less subtle. Simply, do all failure modes lead to something safe happening over something bad (controlled shutdown, self destruct...).</div>
+    </div>
+
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
-	<div id="overview" class="step" data-x="1350" data-y="277.0" data-scale="3.0">&nbsp</div>
+	<div id="overview" class="step" data-x="1450" data-y="744.0" data-scale="3.1">&nbsp</div>
 </div>
 
 <script src="js/impress.js"></script>
