@@ -1107,30 +1107,57 @@ pre {
 .case-sys h2 {
   text-align: right; }
 
-.impress-on-sys1 #res1 {
+.step.future .res {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0; }
 
-.impress-on-sys2 #res2 {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
-  opacity: 0; }
+#pitch {
+  width: 1000px;
+  height: 500px;
+  background: #329632; }
 
-.impress-on-sys3 #res3 {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
-  opacity: 0; }
+.mark, .finalmark {
+  float: left;
+  height: 500px;
+  width: 10px;
+  margin-right: 100px;
+  background: black; }
 
-.impress-on-sys4 #res4 {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
-  opacity: 0; }
+.finalmark {
+  margin: 0; }
 
-.impress-on-sys5 #res5 {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
-  opacity: 0; }
+.ball {
+  position: absolute;
+  top: 200px;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  background: brown;
+  border-radius: 15px; }
 
-.impress-on-sys6 #res6 {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
-  opacity: 0; }
+.blink {
+  width: 1000px;
+  height: 10px;
+  background: black; }
 
-.impress-on-sys7 #res7 {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
-  opacity: 0; }
+.impress-on-brain .ball {
+  left: 1100px;
+  -webkit-transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  -o-transition-duration: 1s;
+  transition-duration: 1s;
+  -webkit-transition-delay: 3.3s;
+  -moz-transition-delay: 3.3s;
+  -o-transition-delay: 3.3s;
+  transition-delay: 3.3s;
+  -webkit-transition-timing-function: linear;
+  -moz-transition-timing-function: linear;
+  -o-transition-timing-function: linear;
+  transition-timing-function: linear; }
+
+.impress-on-brain .blink {
+  background: red;
+  -webkit-transition-delay: 3.95s;
+  -moz-transition-delay: 3.95s;
+  -o-transition-delay: 3.95s;
+  transition-delay: 3.95s; }

@@ -82,7 +82,7 @@ Thanks to Dr Uwe Zimmer for inspiration and material from COMP4330</div>
         &hellip;but what happens between events?
     </div>
 
-    <div class="step" data-x-rel="-400" data-y-rel="-80" data-scale="0.3">
+    <div class="step" id="phys" data-x-rel="-400" data-y-rel="-80" data-scale="0.3">
         <h1>Physically?</h1>
     </div>
 
@@ -94,6 +94,28 @@ Thanks to Dr Uwe Zimmer for inspiration and material from COMP4330</div>
         <p><b>General Relativity.</b> Time and Space are the same, distinguished from each other by the sign of the diagonal entries of the Metric Tensor.</p>
 
         <div class="notes">If two events can be connected by a “straight trajectory” in time and space where the velocity is less than light, the events are “time-like”, and are separated in time, but not necessarily in space (for all observers). If the velocity of the path between events is greater than the speed of light, the events are “space-like” in that they’re definitely separated in space, but might happen at the same time for some observer. This implies that time(space) and events in time(space) are not independent.</div>
+    </div>
+
+    <div class="step" data-x-rel="phys:-300" data-y-rel="phys:-100" data-scale="0.3">
+        <h1>In the Brain?</h1>
+        <h2>Ready..</h2>
+    </div>
+
+    <div class="step" id="brain" data-x-rel="0" data-y-rel="110" data-scale="0.3">
+        <div id="pitch">
+            <div class="mark"></div>
+            <div class="mark"></div>
+            <div class="mark"></div>
+            <div class="mark"></div>
+            <div class="mark"></div>
+            <div class="mark"></div>
+            <div class="mark"></div>
+            <div class="mark"></div>
+            <div class="mark"></div>
+            <div class="finalmark"></div>
+        </div>
+        <div class="ball"></div>
+        <div class="blink"></div>
     </div>
 
     <div class="step" data-x-rel="whattime:-280" data-y-rel="whattime:0" data-scale="0.3" data-rotate="-25">
@@ -259,64 +281,74 @@ Car crash to Airbag deployment: An airbag that deploys a second too late is wors
         </table>
     </div>
 
-    <div class="step" id="case" data-x="800" data-y="1300" data-scale="0.5">
+    <div class="step" id="case" data-x="500" data-y="1500" data-scale="0.5">
         <h1>Case Study: Aeroplane</h1>
     </div>
 
-    <div class="step case-sys" id="sys1" data-x-rel="_case:300" data-y-rel="_case:0" data-scale="0.3" data-rotate="-40">
+    <div class="step case-sys" data-x-rel="_case:300" data-y-rel="_case:0" data-scale="0.3" data-rotate="-30">
         <h3>Jet Engine Control Systems</h3>
     </div>
 
-    <div class="step case-sys" id="res1" data-x-rel="0" data-y-rel="0" data-scale="0.3" data-rotate="-40">
-        <h2>Hard</h2>
+    <div class="step case-sys" data-x-rel="0" data-y-rel="0" data-scale="0.3" data-rotate="-30">
+        <h2 class="res">Hard</h2>
         <div class="notes">The controller has a well defined time during which it must react to stimuli such as over-temperature conditions before the system will fail</div>
     </div>
 
-    <div class="step case-sys" id="sys2" data-x-rel="_case:300" data-y-rel="_case:0" data-scale="0.3" data-rotate="-20">
+    <div class="step case-sys" data-x-rel="_case:300" data-y-rel="_case:0" data-scale="0.3" data-rotate="-15">
         <h3>Aerofoil Control Systems</h3>
     </div>
 
-    <div class="step case-sys" id="res2" data-x-rel="0" data-y-rel="0" data-scale="0.3" data-rotate="-20">
-        <h2>Hard</h2>
+    <div class="step case-sys" data-x-rel="0" data-y-rel="0" data-scale="0.3" data-rotate="-15">
+        <h2 class="res">Hard</h2>
         <div class="notes">A delay changes the stability of a control system – a varying delay will change the tuning of that system</div>
     </div>
 
-    <div class="step case-sys" id="sys3" data-x-rel="_case:300" data-y-rel="_case:0" data-scale="0.3" data-rotate="0">
+    <div class="step case-sys" data-x-rel="_case:300" data-y-rel="_case:0" data-scale="0.3" data-rotate="0">
         <h3>Instrumentation</h3>
     </div>
 
-    <div class="step case-sys" id="res3" data-x-rel="0" data-y-rel="0" data-scale="0.3" data-rotate="0">
-        <h2>Hard/Firm</h2>
+    <div class="step case-sys" data-x-rel="0" data-y-rel="0" data-scale="0.3" data-rotate="0">
+        <h2 class="res">Hard/Firm</h2>
         <div class="notes">The instrumentation as connected to the autopilot systems will be hard for the same reasons as the airfoil controls. The display of the values to the pilot is probably not hard real time, so long as it doesn’t exceed some (large-to-a-computer) value</div>
     </div>
 
-    <div class="step case-sys" id="sys4" data-x-rel="_case:300" data-y-rel="_case:0" data-scale="0.3" data-rotate="20">
+    <div class="step case-sys" data-x-rel="_case:300" data-y-rel="_case:0" data-scale="0.3" data-rotate="15">
         <h3>Wireless Communications</h3>
     </div>
 
-    <div class="step case-sys" id="res4" data-x-rel="0" data-y-rel="0" data-scale="0.3" data-rotate="20">
-        <h2>Firm/Soft</h2>
+    <div class="step case-sys" data-x-rel="0" data-y-rel="0" data-scale="0.3" data-rotate="15">
+        <h2 class="res">Firm/Soft</h2>
         <div class="notes">The underlying protocol is generally hard RT as the timing of chips, frames etc. is part of the protocol specification. The data level cannot be deterministic, and therefore cannot be real time, in the general case!  Why? Non-deterministic packet-loss means non-deterministic periods of infinite latency.
 
 Note that some Wireless protocols bill themselves as RT. This is usually under an assumption of some bounded packet loss.</div>
     </div>
 
-    <div class="step case-sys" id="sys6" data-x-rel="_case:300" data-y-rel="_case:0" data-scale="0.3" data-rotate="40">
+    <div class="step case-sys" data-x-rel="_case:300" data-y-rel="_case:0" data-scale="0.3" data-rotate="30">
         <h3>Lighting, Comfort Systems</h3>
     </div>
 
-    <div class="step case-sys" id="res6" data-x-rel="0" data-y-rel="0" data-scale="0.3" data-rotate="40">
-        <h2>Firm/Soft</h2>
+    <div class="step case-sys" data-x-rel="0" data-y-rel="0" data-scale="0.3" data-rotate="30">
+        <h2 class="res">Firm/Soft</h2>
         <div class="notes">The low level brightness control (PWM) is probably firm RT, pump control is firm RT, but the response time of light switch to action (for example) probably isn’t</div>
     </div>
 
-    <div class="step case-sys" id="sys7" data-x-rel="_case:300" data-y-rel="_case:0" data-scale="0.3" data-rotate="60">
+    <div class="step case-sys" data-x-rel="_case:300" data-y-rel="_case:0" data-scale="0.3" data-rotate="45">
         <h3>Entertainment Systems</h3>
     </div>
 
-    <div class="step case-sys" id="res7" data-x-rel="0" data-y-rel="0" data-scale="0.3" data-rotate="60">
-        <h2>&hellip;</h2>
+    <div class="step case-sys" data-x-rel="0" data-y-rel="0" data-scale="0.3" data-rotate="45">
+        <h2 class="res">&hellip;</h2>
         <div class="notes">An embedded system in their own right! Probably not RT with respect to their integration in to the airplane system at least</div>
+    </div>
+
+    <div class="step" data-x="1300" data-y="1500" data-scale="0.5">
+        <h1>Real-Time Heirarchy</h1>
+        <center><img class="naked" src="images/real-time/heir.png"/></center>
+    </div>
+
+    <div class="step point" data-x-rel="450" data-y-rel="0" data-scale="0.5">
+        This is the only way one can use <b>non-RT</b> technologies in Embedded Systems - in <b>layers</b> that don't have tight constraints.
+        <div class="notes">Technologies include Windows, Linux, USB, TCP/IP, any wireless communication etc. These may be important technologies to have somewhere in the device, but they must be supported by true real-time components.</div>
     </div>
 
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->

@@ -53,8 +53,54 @@
 .case-sys {width: 600px;}
 .case-sys h2 {text-align:right}
 
-@each $i in (1, 2, 3, 4, 5, 6, 7) {
-    .impress-on-sys#{$i} #res#{$i} {@include opacity(0.0)}
+.step.future .res { @include opacity(0.0) }
+
+
+#pitch {
+    width:1000px;
+    height:500px;
+    background: rgba(50, 150, 50, 1);
+}
+
+.mark {
+    float: left;
+    height:500px;
+    width:10px;
+    margin-right: ((1000px - 100) / 9);
+    background: rgba(0,0,0,1);
+}
+
+.finalmark {
+    @extend .mark;
+    margin: 0;
+}
+
+.ball {
+    position: absolute;
+    top: 200px;
+    left: 0;
+    width:30px;
+    height:30px;
+    background: brown;
+    border-radius:15px;
+}
+
+.blink {
+    width:1000px;
+    height:10px;
+    background: black;
+}
+
+.impress-on-brain .ball {
+    left:1100px;
+    @include transition-duration(1.0s);
+    @include transition-delay(3.3s);
+    @include transition-timing-function(linear);
+}
+
+.impress-on-brain .blink {
+    background: red;
+    @include  transition-delay(3.95s);
 }
 
 
