@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 4: Determinism in Microprocessors</title>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es04-2.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say">TODO</div>
+        <div class="titlebox">
+            <h1>Execution Determinism</h1>
+            <h2>in Microprocessors</h2>
+        </div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes"></div>
+    </div>
+
+    <div class="step" id="feat" data-x="1800" data-y="-200">
+        <h1>Processor Features</h1>
+        <div class="notes">In order to get the best possible performance, microprocessors may make extensive use of features like
+<ul><li>Branch Prediction</li>
+<li>Caching</li>
+<li>Frequency Scaling</li>
+<li>Pipelining</li></ul>
+All of these, and more, will effect the real time response of the processor.
+If there’s only one ‘thread’ of execution then many of the following effects are greatly reduced. We will define a thread of execution simply as a piece of code executed asynchronously with respect to another. In this way, threads include interrupt and exception handlers so single-threaded execution is actually very rare, even on the smallest of processors.</div>
+    </div>
+
+    <div class="step point" data-x-rel="500" data-y-rel="-100" data-scale="0.5">
+        A microprocessor is a collection of logic gates and therefore is <b>deterministic in nature</b>. Indeterminism comes from <b>coupling</b> the response time of the processor to unknown or unknowable influences.
+    </div>
+
+    <div class="step" data-x-rel="feat:-900" data-y-rel="feat:150" data-scale="0.5">
+        <h1>Pipelining</h1><br/>
+        <div class="simplecard" style="float:left;width:300px">Execution latency of an instruction depends on the several instructions before it</div>
+        <div class="rarrow-m-h" style="float:left;width:50px;margin-left:80px;margin-top:70px;"></div>
+        <div class="notes">Pipelining introduces dependencies between successive instructions (which may be from different threads of execution). This is not a problem if every instruction takes the same amount of time to execute, but if one instruction stalls, then those behind it stall as well.
+
+A stall could be due to a floating point computation (execution time may be dependent on the actual data value), branch misprediction, cache miss or a number of other inter-instruction dependencies.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="0" data-scale="0.5">
+        <h1>&nbsp;</h1><br/>
+        <div class="simplecard bad" style="float:right;width:300px">RT behaviour must be proven for RT theads <b>and</b> any other (part of a) thread that can execute immediately before it.</div>
+    </div>
+
+
+    <div class="step" data-x-rel="feat:-300" data-y-rel="feat:150" data-scale="0.5">
+        <h1>Branch Prediction</h1><br/>
+        <div class="simplecard" style="float:left;width:300px">Execution latency of a branch depends on the several branches before it</div>
+        <div class="rarrow-m-h" style="float:left;width:50px;margin-left:80px;margin-top:50px;"></div>
+        <div class="notes">When ever the processor encounters an ‘if’ construct (including things like ‘stop looping if’), it attempts to guess the answer and starts executing one branch before the outcome is actually known.
+
+This speeds up the case where the processor guesses correctly, but if the processor guesses incorrectly there’s a some amount of time (and energy) spent doing the wrong thing. Branch prediction is generally deterministic if you look hard enough, but can couple different subsystems in unexpected ways. For example, the run time of Thread 1 can be affected by the way Thread 2 has conditioned the branch predictor.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="0" data-scale="0.5">
+        <h1>&nbsp;</h1><br/>
+        <div class="simplecard bad" style="float:right;width:300px">RT behaviour must be proven for RT theads <b>and</b> any other (part of a) thread that can execute immediately before it.</div>
+    </div>
+
+
+    <div class="step" data-x-rel="feat:300" data-y-rel="feat:170" data-scale="0.5">
+        <h1>Caching</h1><br/>
+        <div class="simplecard" style="float:left;width:300px">Execution latency of a memory access depends on the order and address of a large number of accesses before it.</div>
+        <div class="rarrow-m-h" style="float:left;width:50px;margin-left:80px;margin-top:100px;"></div>
+        <div class="notes">The processor keeps a ‘cache’ of commonly used (in practice, usually <b>recently used</b>) data somewhere it can get quick access. Like the previous items, this introduces timing dependencies between seemingly unrelated pieces of code. For example, being interrupted for a short time by a thread that uses lots of data may be more harmful than being interrupted for a long time by a thread that doesn’t touch much data (and therefore many cache lines).
+
+It’s often stated that interrupts must be fast in order to have minimal impact on other processes. More generally, they should be deterministic in their execution time. Rarely would you find an interrupt specified in terms of its data access patterns but you should!</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="0" data-scale="0.5">
+        <h1>&nbsp;</h1><br/>
+        <div class="simplecard bad" style="float:right;width:300px">RT behaviour must be proven for all possible data access patterns</div>
+    </div>
+
+    <div class="step" data-x-rel="feat:900" data-y-rel="feat:170" data-scale="0.5">
+        <h1>Frequency Scaling</h1><br/>
+        <div class="simplecard" style="float:left;width:300px">Execution latency of an instruction depends on the frequency at which the processor is currently running.</div>
+        <div class="rarrow-m-h" style="float:left;width:50px;margin-left:80px;margin-top:90px;"></div>
+        <div class="notes">The previous items could, theoretically, be perfectly modeled. If all the running tasks are deterministic then there’s no problem; the problem they present is that it becomes hard to analyze the interaction between tasks, and to decouple real time and non-RT tasks.
+
+Frequency Scaling cannot be modeled based on knowledge of the processor and software package alone. As the name suggests, this feature changes the speed of execution based upon the physical parameters of the processor. If the processor can be clocked faster without physical damage, it is.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="0" data-scale="0.5">
+        <h1>&nbsp;</h1><br/>
+        <div class="simplecard bad" style="float:right;width:300px">RT behaviour must be proven all possible
+            <ul><li>Temperatures</li>
+                <li>Dust levels</li>
+                <li>Fan speeds</li>
+                <li>Air densities</li>
+                <li>&hellip;</li></ul></div>
+    </div>
+    
+
+    <div class="step" id="det" data-x-rel="feat:0" data-y-rel="feat:450" data-scale="0.5">
+        <div class="darrow-l-h" style="width:100px;margin-bottom:50px;margin-left:150px"></div>
+        <h1>Processor Determinism</h1>
+        <div class="card bad">High performance processors get that way by sacrificing plenty of things, <b>determinism among them.</b></div>
+        <div class="notes">In fact, modern processors are so non-deterministic, they are actually a useful source of cryptographic entropy. See for example the <a href="http://www.irisa.fr/caps/projects/hipsor/">HAVEGE Project</a>. Note that worst-case execution time is usually still bounded, just not deterministic.</div>
+    </div>
+
+    <div class="step" id="det-fpga" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h1>FPGA Determinism</h1>
+        <div class="card">Tasks in FPGAs do not share resources by <b>default</b>. Any sharing can be audited</div>
+        <div class="notes">How do FPGAs compare to microcontrollers in terms of determinism and real time performance?
+FPGAs do have an intrinsic advantage over microprocessors in terms of determinism as unrelated tasks are performed in physically separate places so there is not necessarily any conflict for resources nor coupling between unrelated pieces of code.
+
+If your FPGA design includes some shared resource and an associated arbitration algorithm (memory, radio modem etc.) then you start introducing couplings and associated non-determinism. These interconnections are very explicit though, and relatively easy to audit.</div>
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step"/>
+
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+
