@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 5: Operating Environments</title>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es05.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say">Which of the following would you most prefer?<br/>
+A: a puppy, B: a pretty flower from your sweetie, or C: large properly formatted</div>
+        <div class="titlebox">
+            <h2>Embedded</h2>
+            <h1>Operating Environments</h1>
+        </div>
+        <div id="say2">Choose!</div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes">References:
+Burns and Wellings Real-Time Systems and Programming Languages (Third Edition), Addison Wesley Longmain 2001
+Thanks to Dr Uwe Zimmer for inspiration and material from COMP4330</div>
+    </div>
+
+    <div class="step" data-x="1000" data-y="-200">
+        <center><img class="naked" src="images/os/system1.png"></center>
+        <div class="notes">The most likely situation for embedded software has the system interacting with several unpredictable input/output activities. Traditionally a single loop will deal with each activity in turn with the assumption that the loop executes with a time scale much shorter than any of the events of interest</div>
+    </div>
+
+    <div class="step" id="mainloop" data-x-rel="0" data-y-rel="150" data-scale="0.5">
+        <div style="height:400px"></div>
+        <div style="width:50%;float:left"><pre class="simplecard prettyprint">
+while(1) {
+    keys = read_keys();
+    if (keys)
+        update_display();
+
+    parse_communications();
+
+    sensors = read_sensors();
+    new_data = process_sensors(sensors);
+
+    if (new_data)
+        send_packet();
+}</pre></div>
+        <div style="padding-left:20px;width:45%;float:left"><ul>
+            <li>Possible non-deterministic communications latency</li>
+            <li>Branch prediction non-determinism</li>
+            <li>Execution time may depend on received data</li></ul>
+        </div>
+        <div class="notes">This is generally fine for simple systems with limited processor capabilities and completely provable (or at least bounded) input sequences. It’s also useful as a ‘quick hack’ to test the functionality of portions of the embedded device.
+
+The code can, however, suffer from multiple sources of non-determinism.
+
+As the system grows, more sources of non-determinism get mixed in and it becomes harder to prove correctness.</div>
+    </div>
+
+    <div class="step point" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        There’s no central location that can ‘force’ <b>correctness</b> of execution except the programmer’s head, and it has to do it off-line.
+    </div>
+
+    <div class="step point" data-x-rel="400" data-y-rel="0" data-scale="0.5">
+        <p>Not every action has the same requirements regarding correct execution.</p>
+        <p>If there were a <b>central piece</b> of code that knew about execution priorities and could control execution flow, it could ensure at <b>run time</b> that the programmer’s wishes were being carried out.</p>
+    </div>
+
+    <div class="step" data-x="800" data-y="500" data-scale="0.5">
+        <h1>Executives</h1>
+        <center>This central code is called a <b>scheduler</b> or <b>executive</b>.</center>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <p><b>Activity</b>: The base unit of code that performs a given action, or portion of an action. No activity can forcefully be ‘preempted’ by another activity and all activities have direct access to each other’s resources (including data).</p>
+        <p><b>Thread</b>: A container for one or more activities that can be ‘preempted’ by another thread at the request of the scheduler.</p>
+        <p><b>Task</b>: A container for one of more threads where no activity or task in one thread has direct access to the resources of an activity or task in another thread.</p>
+        <p><b>Application:</b> A container for one or more tasks</p>
+
+        <div class="notes">By using threads or tasks, the programmer can defer decisions regarding the order in which actions should be completed until run time, when all the variables are known.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>Pre-emption</h2>
+        <p>Pre-emption is the process of forcing one thread to give up the resource (CPU), allowing another to take its place.</p>
+        <p>This can guard against timing overruns.</p>
+
+        <div class="notes">Threads and tasks, which can be preempted, also protect against timing overruns; if something is taking longer to run than it should, the executive can take appropriate action asynchronously
+<ul><li>Temporarily give the CPU to another, higher priority task</li>
+<li>Send a signal to the misbehaving task ‘warning’ it of its bad behaviour</li>
+<li>Terminate the misbehaving task but give it a chance to clean itself up</li>
+<li>Kill the misbehaving task immediately</li></ul>
+&hellip; but what if the misbehaving task has some sort of exclusive use of a resource? Killing it prematurely may leave that resource completely unusable to other activities.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="150" data-scale="0.5">
+        <h2>Multiprocessing</h2>
+        Threads may be scheduled on one or more CPUs. If more than one CPU is used, threads may run truly in parallel; otherwise they merely appear to (for some observer).
+        <div class="notes">Multithreaded applications also have another major advantage in modern embedded systems: They can transparently take advantage of multicore processors.
+
+In traditional multithreading, the idea of concurrency is present but isn’t really a reality in that there was only one CPU therefore at any instant of time to an external observer, only one thread was running. An external observer might be a peripheral or memory, not just a conscious entity! The introduction of multicore CPUs have uncovered a whole new range of bugs and false assumptions as this is no longer the case.</div>
+    </div>
+
+    <div class="step" id="env" data-x="1400" data-y="550" data-scale="0.5">
+        <h1>Operating Environments</h1>
+        <center><img class="naked" src="images/os/environs.png"></center>
+        <div class="notes">An Operating Environment is made up of the executive, primitives to control access to resources, devices drivers and other ‘general purpose’ utilities. The central part of the operating environment of an embedded system is the executive though, so from here we will use the terms ‘operating environment’, ‘scheduler’ and ‘executive’ interchangeably. The term ‘operating system’, distinct from operating environment, will be defined later.</div>
+    </div>
+
+    <div class="step" id="bm" data-x-rel="env:-90" data-y-rel="env:90" data-scale="0.2">
+        <h2>Bare Metal</h2>
+        <div class="notes">Bare Metal systems are those discussed earlier in the lecture. They may have library support, device drivers and other utilities, however there is no central executive making decisions about how and when activities should be performed.
+
+The correct operation of these systems must be completely proven (and provable!) off-line by the programmer.</div>
+    </div>
+
+    <div class="step" id="cyc" data-x-rel="env:10" data-y-rel="env:90" data-scale="0.2">
+        <h2>Cyclic Executive</h2>
+        <div class="notes">A Cyclic Executive can control only the execution of ‘activities’; that is, it doesn’t have the power to preempt the execution of any piece of code, only choose what happens once the current piece of code has finished running.
+
+This type of scheduling is termed ‘cooperative’ and has the advantage that the executive need not be able to save state halfway through an execution. Everything is sequential and provable so long as the longest possible activity execution time is shorter than the shortest possible gap between critical events.</div>
+    </div>
+
+    <div class="step" data-x-rel="-50" data-y-rel="60" data-scale="0.15">
+        <img style="padding-bottom:30px" class="naked" src="images/os/cyclic.png">
+        <img style="padding-bottom:20px" class="naked" src="images/os/cyclic2.png">
+        <img class="naked" src="images/os/cyclic3.png">
+
+        <div class="notes">A Cyclic Executive may be implemented in a few different ways. The most simple way forward is to have a simple ring of actions that the executive calls in turn.
+
+If less than 100% of the CPU is required, the executive can just "burn" cycles.
+
+If more than 100% is required (overrun), the cyclic executive cannot recover.</div>
+    </div>
+
+    <div class="step" id="rte" data-x-rel="env:90" data-y-rel="env:90" data-scale="0.2">
+        <h2>Real-Time Executive</h2>
+        <div class="notes">Real Time executives are the first of the schedulers we’ve seen that may offer preemption.
+
+Preemption is the ability of the scheduler to evict the current thread from the CPU and hand the CPU over to another thread instead. In doing so, it must know how to save the state of the preempted thread so that when it is later given the CPU back, it can pick up where it left off with no gaps in its world knowledge. To any given thread, preemption just seems like one of its instructions took an unusually long time to execute (with some exceptions we’ll see later).</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="40" data-scale="0.15">
+        <h2>Examples</h2>
+        <ul><li>FreeRTOS</li>
+            <li>VxWorks</li>
+            <li>VRTX</li>
+            <li>QNX</li>
+            <li>LynxOS</li>
+            <li>MicroC/OS</li>
+            <li>&hellip;</li></ul>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="60" data-scale="0.15">
+        <h2>Co-hosted OS</h2>
+        <img class="naked" src="images/os/rtai.png">
+        <div class="notes">In addition, it’s not uncommon to run a full operating system as a thread inside the RTE! This method can be used to improve the response time of desktop operating systems such as Linux. Suitable RTEs for this application include RTLinux, RTAI.</div>
+    </div>
+
+    <div class="step" id="os" data-x-rel="env:180" data-y-rel="env:90" data-scale="0.2">
+        <h2>Operating System</h2>
+        <div class="notes">Real Time Executives can generally only work with threads, not tasks. A full multi-tasking environment generally requires an operating system.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="30" data-scale="0.15">
+        An Operating System <b>Kernel</b> includes:
+        <ul><li>(complex) Scheduler/Executive</li>
+            <li>Virtual Memory</li>
+            <li>Storage Arbitration</li>
+            <li>Comms Arbitration</li>
+            <li>&hellip;</li></ul>
+
+        <div class="notes">In addition to simple scheduling, tasks require complete isolation of resources which in turn requires:
+<ul><li>Virtual Memory: One task’s memory location 0x10000000 will be different from another task’s memory location 0x10000000</li>
+<li>Storage Arbitration: The operating system must manage file systems on underlying storage devices and allocate and schedule time for each task’s requests to be met</li>
+<li>Comms Arbitration: For comms links supporting multiple end points (eg Ethernet) the OS must allocate and schedule time for each task’s requests to be met</li>
+<li>&hellip;</li></ul></div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="70" data-scale="0.15">
+        <h2>Kernel/Shell</h2>
+        <img src="images/os/kernel-shell.jpg" style="width:500px">
+        <div class="notes">The operating system was originally divided in to exactly two parts, the Kernel and Shell. The Kernel was the portion of code that provided core functionality and the shell gave the user interface. The user interface is now extended beyond the shell, however the concept of the kernel is still very much in tact.
+
+For example, Linux is not an operating system, it’s a kernel. The operating system is formally GNU/Linux where GNU is the name of the collection of tools that exist outside the kernel.
+
+Image Credits: שרה גולד - Wild Flowers of Israel via the PikiWiki - Israel free image collection project</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="80" data-scale="0.15">
+        <p>Non-kernel components now often referred to as <b>userspace</b></p>
+        <p>An OS <b>userspace</b> includes:</p>
+        <ul><li>Windowing system</li>
+            <li>Network manager</li>
+            <li>Service manager</li>
+            <li>Application stack</li>
+            <li>Internationalization tools (I18N)</li>
+            <li>Power policy tools</li>
+            <li>&hellip;</li></ul>
+    </div>
+
+    <div class="step point" data-x-rel="0" data-y-rel="60" data-scale="0.15">
+        The Kernel provides <b>mechanism</b>, Userspace provides <b>policy</b>.
+    </div>
+
+    <div class="step" id="pe" data-x="2000" data-y="540" data-scale="0.5">
+        <h1>Mechanism of Pre-emption</h1>
+        <center><img class="naked" src="images/os/sched1.png"/></center>
+        <div class="notes">In order for the executive to make the decision to preempt the running task, it requires the CPU itself. The executive must preempt the running task to determine whether it should preempt the running task?!
+
+The answer is to use a special interrupt, generally triggered from a timer.</div>
+    </div>
+
+    <div class="step" id="pes1" data-x-rel="-50" data-y-rel="50" data-scale="0.2">
+        Interrupt occurs, executive decides to give the CPU back to Thread 2 just like a ‘normal’ interrupt.
+    </div>
+
+    <div class="step" id="pes2" data-x-rel="100" data-y-rel="0" data-scale="0.2">
+        Interrupt occurs, executive decides to give the CPU to Thread 1. It saves and modifies the internal CPU state to the interrupt ‘returns’ to a different instruction to the one it interrupted.
+    </div>
+
+    <div class="step" id="pes3" data-x-rel="100" data-y-rel="0" data-scale="0.2">
+        Thread 1 finishes processing and voluntarily calls the executive which restores Thread 2’s state and gives it back the CPU.
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step"/>
+
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+
