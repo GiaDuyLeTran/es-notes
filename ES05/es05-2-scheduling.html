@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 5.2: Scheduling</title>
+
+    <script src="MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es05.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say">Are you classified as</div>
+        <div class="titlebox">
+            <h2>Executive</h2>
+            <h1>Scheduling</h1>
+        </div>
+        <div id="say2">Negative, I am a meat popsicle.</div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes">References:
+Burns and Wellings Real-Time Systems and Programming Languages (Third Edition), Addison Wesley Longmain 2001
+Thanks to Dr Uwe Zimmer for inspiration and material from COMP4330</div>
+    </div>
+
+    <div class="step" data-x="1000" data-y="-200">
+        <h1>Scheduling</h1>
+        <p>We have asserted that <b>schedulers</b> or <b>executives</b> exist that can determine the best order in which to run a set of threads.</p>
+        <p>This scheduling problem will be examined for the CPU, however all shared resources must be scheduled</p>
+
+        <div class="notes">We have asserted that the existence of a preemptive executive can improve the determinism of the system by considering all possible options for allocation of CPU time in order to choose the best order in which to run threads.
+
+In addition to ordering access to the CPU, the executive can order access to other shared resources (such as the network) to the same end.  It can also provide a central location at which to calculate the worst case behaviour of the system.
+
+This prediction can be used at compile time to verify that the overall temporal requirements of the application can be met, or at run time to permit or reject tasks as they apply for resources.</div>
+    </div>
+
+    <div class="step" data-x-rel="1000" data-y-rel="0">
+        <h1>Example Case</h1>
+        <ul><li>All threads are periodic with known period</li>
+            <li>Threads are independent</li>
+            <li>Overhead of the executive is negligable</li>
+            <li>All threads have deadline equal to their period</li>
+        </ul>
+        <div class="notes">The last condition simply states that all "old" instances of a thread must have completed executing before a "new" one is started</div>
+    </div>
+
+    <div class="step" id="req" data-x-rel="0" data-y-rel="400">
+        <h2>Requested Times</h2>
+        <img class="naked" src="images/os/sched-case.png" style="width:110%"/>
+        <h2>Utilization</h2>
+        \[ \frac{1}{4} + \frac{3}{12} + \frac{8}{16} = 100\% \]
+        <div class="notes">This can theoretically be successfully scheduled as CPU utilization is exactly 100% (not more).</div>
+    </div>
+
+    <div class="step" data-x-rel="req:-500" data-y-rel="req:400" data-scale="0.5">
+        <h1>Earliest-Deadline First</h1>
+        Execute current thread until:<ol>
+        <li>It finishes</li>
+        <li>Another thread is found with an earlier deadline</li></ol>
+        <img class="naked" src="images/os/sched-edf.png" style="padding-top:50px;width:110%"/>
+        <div class="notes">In the case of two threads being found with the same deadline, context switches are avoided; i.e. which ever already has the CPU keeps it.  If neither already has the CPU, the behaviour is implementation-dependent.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <img class="naked" src="images/os/sched-edf2.png" style="width:110%"/>
+        <b>Safely</b> scheduled.
+        <div class="notes">EDF can safely schedule to 100% utilization (so long as all threads conform to their prescribed period)</div>
+    </div>
+
+    <div class="step" data-x-rel="req:500" data-y-rel="req:400" data-scale="0.5">
+        <h1>Fixed-Priority Rate Monotonic</h1>
+        <ol><li>Assign threads fixed priority based on their period, short periods are high priority.</li>
+            <li>At any time, run the thread with the highest priority</li></ol>
+        <img class="naked" src="images/os/sched-rmp.png" style="padding-top:50px;width:100%"/>
+        <div class="notes">Rate-Monotonic Priority scheduling is optimal amongst fixed-priority schedulers, in that if a set of threads can be safely scheduled with any fixed priority scheme, they can be safely scheduled with RMP.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <img class="naked" src="images/os/sched-rmp2.png" style="width:110%"/>
+        Green <b>missed deadline</b>.
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>Safe Utilization</h2>
+        <div style="float:left;width:40%;padding-top:50px">
+            <p>RMP can not safely schedule to 100% utilization.</p>
+            <p>A sufficient condition for safety is
+                \[ U \leq N \left( 2^\frac{1}{N} - 1 \right) \]</p>
+        </div>
+        <div style="float:right;width:50%"><img src="images/os/rmp-graph.png" style="padding:20px;width:100%"/></div>
+    </div>
+
+    <div class="step" data-x-rel="-500" data-y-rel="300" data-scale="0.6">
+        <h1>Comparison</h1>
+        <div class="simplecard" style="float:left;width:45%">
+            <h3>EDF</h3>
+            <ul><li>Complex to implement</li>
+                <li>Safe to 100% utilization</li>
+                <li>Any (all) thread(s) may miss deadline when oversubsribed</li></ul>
+        </div>
+        <div class="simplecard" style="float:right;width:45%">
+            <h3>RMP</h3>
+            <ul><li>Simple to implement</li>
+                <li>Cannot schedule to 100%</li>
+                <li>Low-priority threads always miss deadline first</li></ul>
+        </div>
+        <div class="notes">The fact that static priortiy schemes have well-defined failure modes (lowest priority misses first) is often highly desirable.
+
+EDF not only doesn't have this property, but a single overrun can lead to a cascade of missed deadlines from which is may never recover (without intervention).</div>
+    </div>
+
+    <div class="step point" data-x-rel="550" data-y-rel="0" data-scale="0.6">
+We have only considered scheduling where all threads are <b>hard real time</b>. Scheduling with soft real time or non-real time threads won’t be considered theoretically in this course.
+        <div class="notes">We will, however, see one practical implementation when we examine the Linux Kernel’s scheduler</div>
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step"/>
+
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+

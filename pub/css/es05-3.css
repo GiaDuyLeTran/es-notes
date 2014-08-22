@@ -1,4 +1,4 @@
-/* ES03 Recap, slide specific styling */
+/* ES05-3 slide specific styling */
 /*
     Styling common to all ANU-type usage of Impress JS.
 
@@ -1044,11 +1044,12 @@ pre {
     padding: 20px;
     font-size: 18px; } }
 #title h1 {
-  padding-top: 30px; }
+  padding-top: 40px; }
 
 #title h2 {
   text-align: left;
-  padding-right: 30px; }
+  padding-right: 50px;
+  padding-top: 50px; }
 
 #title #say {
   margin-top: 150px;
@@ -1059,21 +1060,25 @@ pre {
   letter-spacing: initial; }
 
 #title #say2 {
-  margin-top: 20px;
+  margin-top: 40px;
   text-align: right;
   font-size: 10px;
   text-shadow: none;
   color: rgba(0, 0, 0, 0.3);
   letter-spacing: initial; }
 
-#m-cache {
-  background: #aa5712;
-  color: rgba(0, 0, 0, 0.8); }
+#cs1 {
+  font-size: 36px; }
 
-.impress-on-write1 #write {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
-  opacity: 1; }
+#cs1l {
+  text-align: right;
+  padding-right: 40px; }
 
-.impress-on-write2 #write {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
-  opacity: 1; }
+#pipe1, #skt1, #sig1, #shm1 {
+  width: 700px; }
+
+#pipetbl {
+  margin: 50px 0; }
+
+td {
+  padding-left: 20px; }

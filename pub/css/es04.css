@@ -297,6 +297,9 @@ body {
 .codesample, .prettyprint {
   font-size: 16px; }
 
+.cen {
+  text-align: center; }
+
 pre.prettyprint {
   line-height: 150%;
   text-align: left;
@@ -950,7 +953,7 @@ ul {
   padding-left: 2em;
   text-indent: -2em; }
 
-ul li:before, li > ul li:before {
+ul li:before {
   font-family: "fontello";
   content: '\e803';
   float: left;
@@ -960,20 +963,27 @@ ul li:before, li > ul li:before {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
   opacity: 0.8; }
 
-li > ul li:before {
-  margin-left: 2em;
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
-  opacity: 0.5; }
-
 ol li {
   display: block; }
 
-ol li:before, ol li > ul li:before, li > ul ol li:before {
+ol li:before {
   content: counter(item) ". ";
   counter-increment: item;
   color: #aa5712;
   font-weight: bold;
   padding-right: 20px; }
+
+li > ul li:before {
+  counter-increment: none;
+  font-family: "fontello";
+  content: '\e803';
+  float: left;
+  width: 2em;
+  vertical-align: baseline;
+  color: #aa5712;
+  margin-left: 2em;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+  opacity: 0.5; }
 
 p {
   margin-bottom: 15px; }

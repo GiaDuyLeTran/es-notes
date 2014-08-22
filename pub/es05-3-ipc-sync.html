@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 5.3: Inter-Process communication and Synchronization</title>
+
+    <script src="MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es05-3.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say">Well he only had three other batches: "Gorilla Panic", "They're coming! They're coming!" and something called</div>
+        <div class="titlebox">
+            <h2>Inter-process Communication and </h2>
+            <h1>Synchronization</h1>
+        </div>
+        <div id="say2"></div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes">References:
+Burns and Wellings Real-Time Systems and Programming Languages (Third Edition), Addison Wesley Longmain 2001
+Thanks to Dr Uwe Zimmer for inspiration and material from COMP4330</div>
+    </div>
+
+    <div class="step" data-x="1000" data-y="0">
+        <h1>Communication<br/>&#8597;<br/>Synchronization</h1>
+        <div class="notes">Threads (and their extension, tasks) have been introduced as a container for scheduling, in that a thread is a set of actions whose execution time can be controlled by a scheduler.
+
+Scheduling has in turn been presented as a way to enfore real-time constraints at runtime, rather than having to prove every aspect of a system off-line (a process that may be hard or impossible).
+
+It's rare that the actions in every thread are completely independent of each other. We will now examine how threads and tasks can exchange information safely.
+
+For the purposes of Real-time Embedded Systems, inter-thread communication and synchronization are tightly related; they will be examined together.</div>
+    </div>
+
+    <div class="step" id="cs1" data-x='1600' data-y='-100' data-scale="0.5">
+        Recall:
+        <h2>Real Time</h2>
+        <div id="cs1l" style="float:left;width:400px">The right <b>result</b><br/> at the right <b>time</b></div>
+        <div style="float:left;">&#8592; communication<br/>&#8592; synchronization</div>
+    </div>
+
+    <div class="step" data-x='1600' data-y='100' data-scale="0.5">
+        <h2>Suppose</h2>
+        A thread computes a value that is required by another thread.<br/>
+        <h3>The second thread</h3>
+        <ul><li>must not see intermediate values</li>
+            <li>must not be able to interfere with the calculation</li>
+            <li>must know when the new value is available</li>
+            <li>may need to signal back that it has finished with this value and the first thread may replace it</li></ul>
+
+        <div class="notes">All of these conditions speak to synchronization as well as communication.  From now on we will refer to these processes simply as <b>communication</b>, with the communication of times/events (synchronization) implied.</div>
+    </div>
+
+    <div class="step" id="meth" data-x="1000" data-y="400">
+        <h1>Communication Methods</h1>
+    </div>
+
+    <div class="step" data-x='100' data-y='500' data-scale="0.5">
+        <h1>Pipes</h1>
+    </div>
+
+    <div class="step" id="pipe1" data-x='100' data-y='600' data-scale="0.5">
+        <div class="listcard"><ul><li>Unidirectional</li>
+            <li>FIFO (limited size)</li>
+            <li>Simple, fast</li>
+            <li>Threads must <b>share parents</b></ul></div>
+
+        <div class="notes">&hellip; or one thread must be the parent of the other.  This means they cannot be used for communication between arbitrary applications.</div>
+    </div>
+
+    <div class="step" id="pipe2" data-x='100' data-y='850' data-scale="0.5">
+        <p>Commonly used to pass the output of one simple program to the input of another:</p>
+        <div style="margin:0 auto;width:30%;" class="simplecard"><pre class="prettyprint">$: ls | wc -l</pre></div>
+        <table id="pipetbl" >
+            <tr><td><b><code>ls</code></b></td><td>output list of files</td></tr>
+            <tr><td><b><code>wc -l</code></b></td><td>count number of lines in input</td></tr>
+            <tr><td><b><code>|</code></b></td><td>connect output of first command to input of second command with a pipe</td></tr>
+        </table>
+        <h3>&#8594; Count files in current directory</h3>
+    </div>
+
+    <div class="step" data-x='100' data-y='1050' data-scale="0.5">
+        <h2>Communication</h2>
+        A thread can pass arbitrary data through the pipe in a FIFO manner.
+
+        <h2>Synchronization</h2>
+        The reading thread will <b>block</b> until data is ready.<br/>
+        The writing thread will <b>block</b> until there is space in the FIFO.
+        
+        <div class="notes">To block means to pause execution.  During this period the thread is said to be "blocked", or "not runnable" and the scheduler will not attempt to give it time on the CPU.
+
+This implies that the scheduler must know about pipes, or at least about the blocking and unblocking events.</div>
+    </div>
+
+    <div class="step" data-x='700' data-y='500' data-scale="0.5">
+        <h1>Sockets</h1>
+    </div>
+
+    <div class="step" id="skt1" data-x='700' data-y='600' data-scale="0.5">
+        <div class="listcard"><ul><li>Bidirectional</li>
+            <li><b>usually</b> FIFO (may not be guaranteed)</li>
+            <li>Capable of local and remote (network) communications</li>
+            <li>May be used between any thread/task/application</li></ul></div>
+
+        <div class="notes">&hellip; or one thread must be the parent of the other.  This means they cannot be used for communication between arbitrary applications.</div>
+    </div>
+
+    <div class="step" data-x='700' data-y='850' data-scale="0.5">
+        <p>Come in different <b>families</b> depending on required features.</p>
+
+        <div class="simplecard" style="float:left;width:27%;margin-right:10px">
+            <h3>TCP</h3>
+            <ul><li>Networkable</li>
+                <li>Reliable delivery by retry</li>
+                <li>Can broadcast</li>
+                <li>In-order reception</li></ul>
+        </div>
+
+        <div class="simplecard" style="float:left;width:27%;margin-right:10px">
+            <h3>UDP</h3>
+            <ul><li>Networkable</li>
+                <li>No reliable delivery</li>
+                <li>Can broadcast</li>
+                <li>Low overhead</li></ul>
+        </div>
+
+        <div class="simplecard" style="float:left;width:27%">
+            <h3>UNIX</h3>
+            <ul><li>Local only</li>
+                <li>Reliable <b>blocking</b> delivery</li>
+                <li>No broadcast</li>
+                <li>Best security</li></ul>
+        </div>
+    </div>
+
+    <div class="step point" data-x='700' data-y='1100' data-scale="0.5">
+        <p>Using TCP to a local computer is inefficient as all data has to go through the <b>full network stack</b> (twice).</p>
+        <p>Some OSs can detect when both ends of a TCP connection are on the same computer and <b>bypass</b> the stack.</p>
+
+        <div class="notes">In Linux, this feature is called "TCP Friends" and has been around since about 2012.  It still isn't as efficient as using local sockets, but you maintain your ability to transparently shift the applications to different computers on the network.</div>
+    </div>
+
+    <div class="step" data-x='700' data-y='1300' data-scale="0.5">
+        <h2>Communication</h2>
+        A thread can pass arbitrary data through the socket (which may or may not be delivered depending on socket type, network load etc).
+
+        <h2>Synchronization</h2>
+        The reading thread will <b>block</b> until data is ready.<br/>
+        The writing thread <b>may NOT block</b> if there is no space, the packet may be dropped instead.
+        
+        <div class="notes">UNIX sockets have writer-blocking, network sockets don't.</div>
+    </div>
+
+    <div class="step" data-x='1300' data-y='500' data-scale="0.5">
+        <h1>Signals</h1>
+    </div>
+
+    <div class="step" id="sig1" data-x='1300' data-y='600' data-scale="0.5">
+        <div class="listcard"><ul><li>Communicates <b>events</b></li>
+            <li>List of possible events are predefined</li>
+            <li>Delivered <b>asynchronously</b></li>
+            <li>Used to e.g. &ldquo;force quit&rdquo;</li></ul></div>
+
+        <div class="notes">The requirement that signal types be predefined is restrictive, however there are some "user defined" types.  For example, the <code>dd</code> program under Linux prints out statistics if it receives <code>SIGUSR1</code>.
+
+Some signals can be blocked by the receiving application, some will always be delivered.  An example of the latter is the <code>SIGKILL</code> signal that causes a program to force quit.
+
+Asynchronous delivery means that the receiving program doesn't have to be actively listening for the signal.  In this way, they are a lot like interrupts.</div>
+    </div>
+
+    <div class="step" data-x='1300' data-y='800' data-scale="0.5">
+        <h2>Communication</h2>
+        Event occurance only (not data).
+
+        <h2>Synchronization</h2>
+        The sender may or may not know whether the signal was delivered depending on signal type.<br/>
+        The receiver is notified of arrival asynchronously. This may or may not be desirable.<br/>
+        Signals may or may not <b>queue</b>, meaning that a signal sent before a previous one is delivered may be lost.
+        
+        <div class="notes">Asynchronous delivery means that a program may immediately respond to the signal event. On the other hand, if the signal is used (for example) to notify a program of new data being available, there is no guarantee that the receiving program is in a position to actually process it.</div>
+    </div>
+
+    <div class="step" data-x='1900' data-y='500' data-scale="0.5">
+        <h1>Shared Memory</h1>
+    </div>
+
+    <div class="step" id="shm1" data-x='1900' data-y='600' data-scale="0.5">
+        <div class="listcard"><ul><li>Communicates data only</li>
+            <li>No synchronization</li>
+            <li>Used between threads, tasks can &ldquo;opt-in&rdquo;</li>
+            <li>Data size and format is largely unrestricted.</li></ul></div>
+
+        <div class="notes">Synchronization privitives may be built out of shared memory, we will look at some examples shortly.  The mechanism by itself though allows exchange of data but no notification regarding the other end's progress reading/writing/updating the data.</div>
+    </div>
+
+    <div class="step" data-x='1900' data-y='800' data-scale="0.5">
+        <h2>Race Conditions</h2>
+
+        <div class="simplecard" style="margin:0 auto;width:200px"><pre class="prettyprint">int i;</pre></div>
+        <div style="float:left;margin-left:200px;width:250px;"><h3>Thread 1</h3><pre class="simplecard prettyprint">while(1) {
+    i++;
+    _delay_1ms();
+}</pre></div>
+        <div style="float:left;margin-left:20px;width:250px;"><h3>Thread 2</h3><pre class="simplecard prettyprint">while(1) {
+    i = 0;
+    _delay_500ms();
+}</pre></div>
+        <div style="padding-top:50px;clear:both">What values can <code>i</code> take?</div>
+    </div>
+
+    <div class="step" data-x='1900' data-y='1050' data-scale="0.5">
+        <div style="float:left;margin-left:200px;width:250px;"><h3>Thread 1</h3><pre class="simplecard prettyprint">LOOP: Ld r1, [i]
+      Add r1, r1, #1
+
+
+
+      St [i], r1
+      Call _delay_1ms
+      Jmp LOOP
+      </pre></div>
+        <div style="float:left;margin-left:20px;width:250px;"><h3>Thread 2</h3><pre class="simplecard prettyprint">
+
+
+LOOP: Ld r2, #0
+      St [i], r2
+      Call _delay_500ms
+
+
+
+      Jmp LOOP</pre></div>
+        <div style="padding-top:50px;clear:both"><code>i</code> can take <b>any</b> value (though the probability of this particular scheduling pattern occuring every time is small).</div>
+
+        <div class="notes">Suppose <code>i = 499</code> and the Thread 1 code starts to run. After the value 499 has been loaded to <code>r1</code> and the addition performed, Thread 2 wakes up and is scheduled to run. It sets <code>i = 0</code> but still <b>r1 = 500</b>.  Thread 2 then goes back to sleep for 500ms, meanwhile Thread 1 was up, sets <code>i = 500</code> and continues. Thread 2's execution <b>had no effect</b>, <code>i</code> will continue to increment to at least 999 at which time this "race" occurs again.</div>
+    </div>
+
+    <div class="step" data-x='1900' data-y='1350' data-scale="0.5">
+        <h2>Long Variables</h2>
+        <div style="float:left;margin-left:200px;width:250px;"><h3>Thread 1</h3><pre class="simplecard prettyprint">LOOP: Ld r1, low([i])
+      Ld r2, high([i])
+      Add r1, r1, #1
+      AdC r2, r2, #0
+
+
+      St low([i]), r1
+      St high([i]), r2
+      Call _delay_1ms
+
+
+      Jmp LOOP
+      </pre></div>
+        <div style="float:left;margin-left:20px;width:250px;"><h3>Thread 2</h3><pre class="simplecard prettyprint">
+
+
+
+
+LOOP: Ld r3, #0
+      St low([i]), r3
+
+
+
+      St high([i]), r3
+      Call _delay_500ms
+
+      Jmp LOOP</pre></div>
+        <div style="padding-top:50px;clear:both">Assume <code>i</code> is 16 bits and we are executing on an 8 bit microprocessor (each memory access is 8-bits).  Further, suppose <code>i</code> starts this snippet at 499, by the end <code>i</code> will be neither 0 nor 500, it will be 244.</div>
+
+        <div class="notes">Note: AdC is shorthand for "add carry"; i.e. r2 = r2 + 0 + Carry bit from previous addition
+
+Because the memory access to <code>i</code> is no longer <b>atomic</b>, there is the possibility for it to be split and for other threads to see intermediate results from an ongoing calculation and interfere with their correctness.
+
+<b>Note</b> that the ordering of ASM instructions shown is just one possibility, chosen to demonstrate potential problems. If this code were to actually be executed, the "preemption points", the times at which the scheduler switches from one thread to another, will be slightly different and may or may not cause a problem.
+
+Of course, "may not cause a problem" is not good enough.</div>
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+	<div id="overview" class="step" data-x="950" data-y="602.5" data-scale="2.5">&nbsp</div>
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+

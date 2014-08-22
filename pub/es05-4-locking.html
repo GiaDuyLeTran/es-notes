@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 5.4: Locking and Synchronization</title>
+
+    <script src="MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es05-4.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say"></div>
+        <div class="titlebox">
+            <h2>Synchronization and </h2>
+            <h1>Locking</h1>
+        </div>
+        <div id="say2">by itself rules nothing. It only comes alive in skilled hands</div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes">References:
+Burns and Wellings Real-Time Systems and Programming Languages (Third Edition), Addison Wesley Longmain 2001
+Thanks to Dr Uwe Zimmer for inspiration and material from COMP4330</div>
+    </div>
+
+    <div class="step" id="cond" data-x="1000" data-y="200">
+        <h1>Race Conditions</h1>
+        Conditions for racing:<br/>
+        <ol><li>System Concurrency</li>
+            <li>Shared Resources (between concurrent paths)</li>
+            <li>Resource access is not atomic</li>
+            <li>Resource access is not synchronized</li></ol>
+
+        <div class="notes">All four points must be met for a particular resource access to be at risk of race conditions.  Note that points 1 and 3 are related: If there is no concurrency, all actions are atomic!</div>
+    </div>
+
+    <div class="step" data-x='300' data-y='500'>
+        <h1>Concurrency and Sharing</h1>
+    </div>
+
+    <div class="step" data-x='300' data-y='600' data-scale="0.5">
+        <p>Almost all Embedded Systems <b>are concurrent</b>, even if only between the main code and interrupts.</p>
+        <p>Most Embedded Systems will have at least some threads that <b>share memory</b>.</p>
+    </div>
+
+    <div class="step" data-x='1000' data-y='500'>
+        <h1>Atomicity</h1>
+    </div>
+
+    <div class="step" data-x='1000' data-y='700' data-scale="0.5">
+        <h3>Atomic Actions</h3>
+        <p>An operation that cannot be broken in to smaller pieces.</p>
+
+        <div class="simplecard" style="float:left;width:40%;margin-right:20px;height:350px">
+        <h3>Atomic</h3>
+        <ul><li>Single RISC Instructions</li>
+            <li>Word-sized Memory accesses</li>
+            <li>Anything while concurrency is disabled</li></ul>
+        </div>
+
+        <div class="simplecard" style="float:left;width:40%;height:350px">
+        <h3>Not (nec.) Atomic</h3>
+        <ul><li>Single CISC Instructions</li>
+            <li>Larger-than-word Memory accesses</li>
+            <li>Most things when running with multiple processors</li>
+            <li>Most things when running with interrupts enabled</li></ul>
+        </div>
+
+        <div class="notes">Of course, we almost always need interrupts, so atomicity of anything but the most simle actions is unlikely.
+
+In these conditions we have to build atomicity.</div>
+    </div>
+
+    <div class="step" data-x='1000' data-y='950' data-scale="0.5">
+        <h2>Building Atomicity</h2>
+        Building atomicity effectively means disabling concurrency.
+
+        <div class="simplecard" style="width:50%;margin:30px 25%"><pre class="prettyprint">
+save_and_disable_interrupts();
+do_action_atomically();
+restore_interrupts();</pre></div>
+
+        <p>Doesn't work on <b>multiprocessor</b> machines.</p>
+        <p>May ruin real-time constraints.</p>
+
+        <div class="notes">Remember the "interrupts disabled" period of local drift: This is why it can be a problem. Interrupts may <b>have</b> to be disabled for a period for atomicity reasons, but that will disable scheduling and cause problems with relative delays.</div>
+
+    </div>
+
+
+    <div class="step" data-x='1700' data-y='500'>
+        <h1>Synchronization</h1>
+    </div>
+
+    <div class="step point" data-x='1700' data-y='650' data-scale="0.5">
+        If our actions aren't atomic, then we must at least synchronize them.
+    </div>
+
+    <div class="step" data-x='1700' data-y='900' data-scale="0.5">
+        <h1>Semaphores</h1>
+
+        <div class="simplecard" style="margin:0 auto;width:200px"><pre class="prettyprint">int i;
+Semaphore lock;</pre></div>
+        <div style="float:left;margin-left:200px;width:250px;"><h3>Thread 1</h3><pre class="simplecard prettyprint">while(1) {
+    wait(lock);
+    i++;
+    signal(lock);
+    _delay_1ms();
+}</pre></div>
+        <div style="float:left;margin-left:20px;width:250px;"><h3>Thread 2</h3><pre class="simplecard prettyprint">while(1) {
+    wait(lock);
+    i = 0;
+    signal(lock);
+    _delay_500ms();
+}</pre></div>
+        <div style="padding-top:50px;clear:both">
+            <p><b>Waiting</b> on a semaphore blocks a thread's execution until the lock is released.</p>
+            <p><b>Signalling</b> a semaphore marks it as released and unblocks all threads waiting for it.</p>
+            <p>As a result, only a single thread can be in the <b>critial section</b> between the <code>wait</code> and <code>signal</code> calls for any given lock.
+            <p>Must be implemented with help from your scheduler/executive.</p>
+        </div>
+    </div>
+
+    <div class="step" data-x='1700' data-y='1150' data-scale="0.5">
+        <h2>Warning</h2>
+        <ul><li>Semaphores must be added at every access of a protected variable</li>
+            <li>Semaphores may not be <b>fair</b></li></ul>
+        <div class="notes">This first point means that their use is hard to get correct and harder to audit.</div>
+    </div>
+
+    <div class="step" data-x='1700' data-y='1350' data-scale="0.5">
+        <h2>Fairness</h2>
+        <div class="simplecard" style="margin:0 auto;width:200px"><pre class="prettyprint">int i;
+Semaphore lock;</pre></div>
+        <div style="float:left;margin-left:200px;width:250px;"><h3>Thread 1</h3><pre class="simplecard prettyprint">while(1) {
+    wait(lock);
+    i++;
+    signal(lock);
+}</pre></div>
+        <div style="float:left;margin-left:20px;width:250px;"><h3>Thread 2</h3><pre class="simplecard prettyprint">while(1) {
+    wait(lock);
+    i = 0;
+    signal(lock);
+}</pre></div>
+
+        <div style="clear:both"><br/>
+        <p>Depending on implentation, there is no guarantee that both of those threads will run - one may always release the lock then be allowed to immediately re-take it.</p></div>
+    </div>
+
+    <div class="step" data-x='1700' data-y='1550' data-scale="0.5">
+        More generally:
+        <ol><li>The waiting processes are placed on a queue and the ‘front’ one is woken up at each signal<ul><li>Complex but fair</li></ul></li>
+
+            <li>All waiting processes are woken up at each signal and they race to try and claim the lock<ul><li>Simple but can lead to starvation</li></ul></li></ol>
+    </div>
+
+    <div class="step" data-x='1700' data-y='1750' data-scale="0.5">
+        <h1>Monitors</h1>
+
+        <div class="simplecard" style="margin:0 auto;width:400px"><pre class="prettyprint">int i;
+MonitoredArithmetic(i) iMonitor;</pre></div>
+        <div style="float:left;margin-left:150px;width:300px;"><h3>Thread 1</h3><pre class="simplecard prettyprint">while(1) {
+    iMonitor.increment();
+    _delay_1ms();
+}</pre></div>
+        <div style="float:left;margin-left:20px;width:300px;"><h3>Thread 2</h3><pre class="simplecard prettyprint">while(1) {
+    iMonitor.set(0);
+    _delay_500ms();
+}</pre></div>
+        <div class="notes">Monitors are special code that collects all access to, and operations on, a variable or set of variables in to one location.  All accesses must be through the monitor.
+
+This central location provides a single place that can be checked for correctness.  It also allows a single place to implement algorithms such as the fair-queueing described above.
+
+A monitor may be <b>implemented</b> with semaphores, but need not be - they are a distinct design pattern.</div>
+    </div>
+
+
+    <div class="step" data-x='2400' data-y='500'>
+        <h1>Deadlocks</h1>
+    </div>
+
+    <div class="step" data-x='2400' data-y='700' data-scale="0.5">
+        <div class="simplecard" style="margin:0 auto;width:200px"><pre class="prettyprint">int a;
+int b;
+Semaphore lock_a;
+Semaphore lock_b;</pre></div>
+        <div style="float:left;margin-left:250px;width:200px;"><h3>Thread 1</h3><pre class="simplecard prettyprint">
+wait(lock_a);
+wait(lock_b);
+a = a + b;
+
+signal(lock_b);
+signal(lock_a);
+
+
+
+
+
+</pre></div>
+        <div style="float:left;margin-left:20px;width:200px;"><h3>Thread 2</h3><pre class="simplecard prettyprint">
+
+
+
+wait(lock_b);
+
+
+wait(lock_a);
+a = b = 0;
+signal(lock_a);
+signal(lock_b);
+</pre></div>
+
+    <div class="notes">When ever you are using multiple locks, there is the opportunity for deadlock.  In this example, two threads are running, Thread 2 pre-empts Thread 1 and starts to wait on <code>lock_b</code> which is then released immediately upon return to Thread 1. The code completes as expected.</div>
+    </div>
+
+    <div class="step" data-x='2400' data-y='1000' data-scale="0.5">
+        <div class="simplecard" style="margin:0 auto;width:200px"><pre class="prettyprint">int a;
+int b;
+Semaphore lock_a;
+Semaphore lock_b;</pre></div>
+        <div style="float:left;margin-left:250px;width:200px;"><h3>Thread 1</h3><pre class="simplecard prettyprint">
+wait(lock_a);
+
+
+wait(lock_b);
+a = a + b;
+signal(lock_b);
+signal(lock_a);
+</pre></div>
+        <div style="float:left;margin-left:20px;width:200px;"><h3>Thread 2</h3><pre class="simplecard prettyprint">
+
+wait(lock_b);
+
+wait(lock_a);
+a = b = 0;
+signal(lock_a);
+signal(lock_b);
+</pre></div>
+
+    <div class="notes">Same code but a different pre-emption point.  Thread 1 is now holding <code>lock_a</code> while waiting on <code>lock_b</code>; Thread 2 is waiting on <code>lock_a</code> while holding <code>lock_b</code>.</div>
+    </div>
+
+    <div class="step" data-x='2400' data-y='1200' data-scale="0.5">
+        <div class="bam">ABBA</div>
+
+        <div class="notes">This is called an ABBA deadlock as the first thread tried to aquire a&#8594;b, Thread 2 b&#8594;a.</div>
+    </div>
+
+    <div class="step point" data-x='2400' data-y='1350' data-scale="0.5">
+        Locks must have a strict <b>ordering</b>. If <b>A</b> is taken before <b>B</b> once, it must always be taken before <b>B</b>.
+    </div>
+
+    <div class="step" data-x='2400' data-y='1550'>
+        <h1>Priority Inversion</h1>
+    </div>
+
+    <div class="step" data-x='2400' data-y='1750' data-scale="0.5">
+        <p>Suppose <span class="grn">Green</span> is holding a lock that <span class="blue">Blue</span> is waiting to acquire.</p>
+        <img class="naked" src="images/os/prio-inv.png" style="width:100%"/>
+
+        <div class="notes">Lower boxes represent <b>requested</b> run times. Numbers on the left are priorities.
+
+Note that Blue is higher priority than Red, but it isn't running while Red is.
+
+This is because the lock is being held by the lowest-priority thread, Green.  This is called "priority inversion" as Blue acts as if it has the same priority as Green.
+
+There are a number of strategies to overcome this, the simplest of which is to simply elevate the priority of the lock holder to that of the highest priority waiter.
+
+In this example, Green would "inherit" the priority of Blue for the duration of it holding the lock. Red would not run, Green would complete as quickly as possible, Blue would run as soon as possible.</div>
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+	<div id="overview" class="step" data-x="1200" data-y="737.5" data-scale="2.8">&nbsp</div>
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+
