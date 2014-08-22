@@ -119,6 +119,8 @@ $badshadow: 0px 0px 20px $badhighlight;
     font-size: 16px;
 }
 
+.cen { text-align: center; }
+
 pre.prettyprint {
     line-height: 150%;
     text-align: left;
@@ -251,12 +253,6 @@ ul li:before{
     @include opacity(0.8);
 }
 
-li > ul li:before {
-    @extend li:before;
-    margin-left:2em;
-    @include opacity(0.5);
-}
-
 ol li {
     display: block;
 }
@@ -267,6 +263,18 @@ ol li:before {
     color: $highlight;
     font-weight: bold;
     padding-right: 20px;
+}
+
+li > ul li:before {
+    counter-increment: none;
+    font-family: "fontello";
+    content: '\e803';
+    float: left;
+    width: 2em;
+    vertical-align: baseline;
+    color: $highlight;
+    margin-left:2em;
+    @include opacity(0.5);
 }
 
 p {
