@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 5.5: Scheduling in Linux</title>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es05-5.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say">Morbo will now introduce tonight's candidates…<br/>
+PUNY HUMAN NUMBER ONE<br/>
+PUNY HUMAN NUMBER TWO<br/>
+and Morbo's good friend</div>
+        <div class="titlebox">
+            <h1>Linux</h1>
+            <h2>Scheduling</h2>
+        </div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes">References:
+Robert Love, Linux Kernel Development (2nd Edition), Pearson Education 2005
+Linux Kernel in-tree documentation (“Documentation/”)</div>
+    </div>
+
+    <div class="step" data-x="1200" data-y="0">
+        <img src="images/os/linux-hist.png" style="width:100%"/>
+        <div class="notes">Linux was first released in 1991. It is an Operating System Kernel, not a whole operating system. The whole system is typically referred to as a Linux Distribution or, if packaged with a specific set of userspace programs, GNU/Linux.</div>
+    </div>
+
+    <div class="step" data-x-rel="800" data-y-rel="-250" data-scale="0.5">
+        <h1>Used in&hellip;</h1>
+        <ul><li>Desktops</li>
+            <li>Servers</li>
+            <li>Android Phones</li>
+            <li>Smart TVs</li>
+            <li>Digital Cameras</li>
+            <li>Almost every Sony product</li>
+            <li>&hellip;</li></ul>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        Linux is commonly used on embedded devices for a number of reasons:
+        <ul><li>Cheap (no per-unit costs)</li>
+            <li>Configurable</li>
+            <li>Runs on more processors than any other kernel ever has (26 official at last count, many more unofficial)</li>
+            <li>Has a huge range of libraries and tools available</li>
+            <li>Provides a familiar programming environment for those coming from non-embedded backgrounds</li></ul>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h1>Real Time?</h1>
+        <div class="simplecard" style="float:left;width:40%;height:300px">
+            <h3>Microkernel</h3>
+            <p>RTAI, RTLinux, Xenomai.</p>
+            <p>Separate RT Executive that schedules the Linux kernel as a low-priority process.</p>
+        </div>
+
+        <div class="simplecard" style="float:right;width:40%;height:300px">
+            <h3>Preempt RT</h3>
+            <p>Named for the configuration option, it is a set of tweaks to Linux itself that improve RT behaviour.</p>
+        </div>
+
+        <div class="notes">It was never designed for real time use, so applications in embedded systems must be approached with care. There are a number of efforts that have gone in to making Linux more suitable for hard real time tasks.
+
+One approach is to run Linux inside another real time executive (RTLinux, RTAI). The less radical approach is found in the “PREEMPT_RT” work that is sponsored by many commercial embedded Linux vendors. Later in the lecture we will examine some examples of where this works and where it doesn’t.</div>
+    </div>
+
+    <div class="step point" data-x-rel="500" data-y-rel="0" data-scale="0.5">
+&ldquo;Controlling a laser with Linux is crazy, but everyone in this room is crazy in his own way. So if you want to use Linux to control an industrial welding laser, I have no problem with your using PREEMPT_RT.&rdquo;
+<h3>Linus Torvalds</h3>
+</div>
+
+    <div class="step" data-x="0" data-y="700" data-scale="0.6">
+        <h1>Processes</h1>
+        <div class="simplecard" style="float:left;width:40%"><h3>Thread</h3>Schedulable entity with implicitly-shared resources.</div>
+        <div class="simplecard" style="float:right;width:40%"><h3>Task</h3>Schedulable entity isolated from all others.</div>
+        <div class="drarrow-l-h" style="float:left;width:50px;margin:50px 150px"></div>
+        <div class="dlarrow-l-h" style="float:right;width:50px;margin:50px 150px"></div>
+        <div class="simplecard" style="clear:both;width:40%;margin:0 auto;"><h3>Process</h3>Level of sharing defined when created.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="400" data-scale="0.6">
+        <h1><code>clone(); fork();</code></h1>
+        <div style="float:left;width:45%"><p>New processes created with <code>clone()</code>. The programmer usually calls <code>fork()</code> which uses <code>clone()</code> internally.</p><p><code>fork()</code> returns <b>twice</b>.</p></div>
+        <div style="float:right;width:50%" class="simplecard"><pre class="prettyprint">
+if (fork()) {
+/* This code is run by the parent */
+} else {
+/* This code is run by the child */
+}
+
+/* Anything after the above if statement
+   will be run by both parent and child */</pre></div>
+
+        <div class="notes">Processes are created on Linux using the clone() system call. More usually, the programmer will call fork() which uses clone internally. Fork creates what we would think of as Tasks, in that parent and child will not share memory once they’re running.
+
+These functions are interesting: You call them once, they return twice. From the point of view of the parent, fork returns the process identifier of its new child. From the point of view of the child, fork returns zero.
+
+Note that the example doesn't do any error checking, do not copy!</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.6">
+        <div style="float:left;width:40%"><p>The usual practice is to use the <code>exit()</code> system call to terminate the child before it leaves the if statement.</p></div>
+        <div style="float:right;width:50%" class="simplecard"><pre class="prettyprint">
+if (fork()) {
+    be_parental();
+} else {
+    be_childish();
+    exit();
+}
+
+wait_for_child_to_die();
+clean_up();
+exit();</pre></div>
+
+        <div class="notes">Note the order of exit, the parent should wait for the child to die before exiting itself.
+Why?
+• It’s assumed the parent has started the child for a reason, it is usual for it to be around to see the results
+• If the child doesn’t execute correctly, the parent presumably needs to know about it</div>
+    </div>
+
+    <div class="step point" data-x-rel="0" data-y-rel="300" data-scale="0.6">
+    In Linux, if a parent doesn’t wait for a child to die, the child might become a <b>zombie</b> and never completely disappear. It waits around, using system resources indefinitely.
+
+        <div class="notes">If the parent dies before the child, the orphan tasks are ‘re-parented’ to the init task in order to maintain a (semi-) sane process hierarchy.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.6">
+        <div style="float:left;width:40%"><p>What happens to existing memory?</p><p>Will <code>i</code>, as printed by the child, have a well-defined value? What will it be?</p></div>
+        <div style="float:right;width:50%" class="simplecard"><pre class="prettyprint">
+int i = 7;
+
+if (fork()) {
+    i = 42; /* Parent code */
+} else {
+    print(i); /* Child code */
+    exit();
+}</pre></div>
+
+        <div class="notes">Forking doesn’t share memory from parent to child, so it can’t print 42, nor can ‘race’ with the parent thread to print some hybrid of 42 and 7.
+
+It might make sense for the child to start with no variables, but in practice that’s ungainly and makes it difficult to perform tasks like setting up communication mechanisms between parent and child.
+
+The child starts off with a value of i = 7 and that's what it prints.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.6">
+        <ul><li>The parent's write doesn't affect the child's value of <code>i</code></li>
+        <li>The child and parent must have different copies of <code>i</code></li>
+        <li>By extension, they must have different copies of all variables.</li>
+        <li>When a child starts, it must copy <b>all</b> of the parent's memory?</li></ul>
+    </div>
+
+    <div class="step" id="cow" data-x-rel="400" data-y-rel="100" data-scale="0.6">
+        <h1>COW</h1>
+        <div class="simplecard">The parent and child must have their own copy of memory</div>
+        <div class="darrow-m-h" style="width:50px;margin:50px auto"></div>
+        <div class="simplecard" style="margin-bottom:50px">The parent and child must have their own copy of any memory <b>that differs</b></div>
+
+        <p>The parent's memory is marked <b>Copy on Write</b> and is only duplicated if either the parent or child tries to write to it.</p>
+    </div>
+
+    <div class="step" data-x="1000" data-y="600" data-scale="0.6">
+        <h1>Scheduling Classes</h1>
+
+        <h3><code>SCHED_RR, SCHED_FIFO</code></h3>
+        <p>&ldquo;Real Time&rdquo; by some definition. Fixed-priority with processes at the same priority scheduled in Round-Robin or First-in-First-out order.</p>
+
+        <h3><code>SCHED_OTHER</code></h3>
+        <p>Default for all processes. Scheduled using a non-RT algorithm known as <b>CFS</b></p>
+    </div>
+
+    <div class="step" id="cfs" data-x-rel="0" data-y-rel="300" data-scale="0.6">
+        <h1>CFS</h1>
+        <div class="card">Models the <b>ideal</b> multithreading processor set on real hardware.</div>
+
+        <div class="notes">CFS was written once the kernel had added support for High Resolution Timers, allowing actual task run time to be accounted for with nanosecond resolution, opening up new options for scheduling.
+
+The operation of CFS can be summed up in a single sentence: CFS models the ideal multithreading processor set on real hardware.
+
+Ideal multithreading hardware doesn’t exist, so it’s emulated on a real CPU quite simply: If two tasks of the same priority want to run, each should get 50% of the CPU.
+
+Conceptually, the CPU should flick back and forwards between those two tasks as fast as possible so that neither is particularly favored over the other. Of course, in the real world, there must be some granularity here. (Why?)</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.6">
+        <h2>Priority</h2>
+        Splits CPU ratiometrically. Two tasks with the same priority will get the same share of the CPU. A task with double the priority of another will get double the share of the CPU.
+        <h2>Heirarchy</h2>
+        Can split the CPU ratiometrically on other things too; e.g. two <b>users</b> of the same priority get the same share of the CPU.  Within each User, processes can be scheduled as usual, appearing to run on a CPU half as powerful.
+        <h2>Latency</h2>
+        No guarantees on latency. Any process of any priority can preempt any other. The latency for a particular task to get CPU time is a function of the running behaviour of every other process on the system.
+    </div>
+
+    <div class="step" data-x="2000" data-y="700" data-scale="0.6">
+        <h1>Latency</h1>
+
+        <h2><code>SCHED_RR, SCHED_FIFO</code></h2>
+        <ul><li>The Kernel itself has many internal tasks, some of which have RT priority</li>
+            <li>Kernel interrupt handlers are relatively large and not able to be preempted, even by RT processes</li>
+            <li>Aggressive power management means that tasks are moved around available CPUs in order to best manage power. Migration to another CPU will almost certainly change the cache behaviour</li>
+            <li>The kernel is full of complex interdependencies and locking that can’t be preempted</li>
+            <li>Large portions of kernel code must be run with interrupts disabled, compounding the issues above.</li>
+            <li>Linux may aggressively use frequency scaling and opportunistic suspend</li></ul>
+
+        <div class="notes">Some of these issues are softened when using PREEMPT_RT kernels; most aren't.
+
+An analysis of all the RT processes in the kernel is possible, but complex.
+
+Opportunistic suspend is the act of putting the computer in to a deep sleep whenever it looks like no program is running. It is used a lot on mobile phones.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.6">
+        <h2><code>SCHED_OTHER</code></h2>
+        All of the issues with CFS compounded with all of the issues from the real-time classes.
+    </div>
+
+    <div class="step bam" data-x-rel="0" data-y-rel="400" data-scale="0.8">
+        Linux is <b>not</b> real time.
+
+        <div class="notes">&hellip; A sufficiently expert programmer may be able to make it work closely enough to RT for many applications, but that doesn't alter the above conclusion.</div>
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step"/>
+
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+
