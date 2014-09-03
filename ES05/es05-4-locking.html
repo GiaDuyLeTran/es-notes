@@ -141,7 +141,7 @@ Semaphore lock;</pre></div>
         <div style="padding-top:50px;clear:both">
             <p><b>Waiting</b> on a semaphore blocks a thread's execution until the lock is released.</p>
             <p><b>Signalling</b> a semaphore marks it as released and unblocks all threads waiting for it.</p>
-            <p>As a result, only a single thread can be in the <b>critial section</b> between the <code>wait</code> and <code>signal</code> calls for any given lock.
+            <p>As a result, only a single thread can be in the <b>critical section</b> between the <code>wait</code> and <code>signal</code> calls for any given lock.
             <p>Must be implemented with help from your scheduler/executive.</p>
         </div>
     </div>
@@ -157,7 +157,7 @@ Semaphore lock;</pre></div>
         <h2>Fairness</h2>
         <div class="simplecard" style="margin:0 auto;width:200px"><pre class="prettyprint">int i;
 Semaphore lock;</pre></div>
-        <div style="float:left;margin-left:200px;width:250px;"><h3>Thread 1</h3><pre class="simplecard prettyprint">while(1) {
+        <div style="float:left;margin-left:70px;width:250px;"><h3>Thread 1</h3><pre class="simplecard prettyprint">while(1) {
     wait(lock);
     i++;
     signal(lock);
@@ -168,12 +168,18 @@ Semaphore lock;</pre></div>
     signal(lock);
 }</pre></div>
 
+        <div style="float:left;margin-left:20px;width:250px;"><h3>Thread 3</h3><pre class="simplecard prettyprint">while(1) {
+    wait(lock);
+    print(i);
+    signal(lock);
+}</pre></div>
+
         <div style="clear:both"><br/>
-        <p>Depending on implentation, there is no guarantee that both of those threads will run - one may always release the lock then be allowed to immediately re-take it.</p></div>
+        <p>Depending on implentation, there is no guarantee that all of these threads will be able to run at any time.</p></div>
     </div>
 
     <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
-        More generally:
+        Either:
         <ol><li>The waiting processes are placed on a queue and the ‘front’ one is woken up at each signal<ul><li>Complex but fair</li></ul></li>
 
             <li>All waiting processes are woken up at each signal and they race to try and claim the lock<ul><li>Simple but can lead to starvation</li></ul></li></ol>
@@ -215,8 +221,8 @@ wait(lock_b);
 a = a + b;
 
 signal(lock_b);
-signal(lock_a);
 
+signal(lock_a);
 
 
 
@@ -228,8 +234,8 @@ signal(lock_a);
 
 wait(lock_b);
 
-
 wait(lock_a);
+
 a = b = 0;
 signal(lock_a);
 signal(lock_b);
