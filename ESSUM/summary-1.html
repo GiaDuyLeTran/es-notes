@@ -1,0 +1,751 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 6: Summary, Term 1</title>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/sum1.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say"></div>
+        <div class="titlebox">
+            <h1>Summary</h1>
+            <h2>Term 1</h2>
+        </div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes"></div>
+    </div>
+
+    <div class="step" id="arch" data-x="2500" data-y="0">
+        <div id="dummy" >&nbsp;</div>
+        <img src="images/fairphone/fairphone.png" id="fp" />
+
+        <h1 class="small" id="proc">Processor</h1>
+        <h1 class="small" id="power">Power</h1>
+        <h1 class="small" id="periph">Peripherals</h1>
+        <h1 class="small" id="mem">Memories</h1>
+        <h1 class="small" id="comms">Communications</h1>
+        <h1 class="small" id="sens">Sensors</h1>
+        <h1 class="small" id="act">Actuators</h1>
+        <h1 class="small" id="ui">UI</h1>
+
+        <div class="notes">The architecture of an Embedded System is often thought to contain hardware and hardware interfaces only. Certainly this is the portion of the Embedded System that is typically given to Electronic Engineers to design.
+
+Embedded Systems must interact closely with their environment, so the correct definition and specification of interfaces is certainly of great importance.
+
+Image Credits: CC-BY-SA: Fairphone.org</div>
+    </div>
+
+    <div class="step" id="soft" data-x-rel="-800" data-y-rel="-250" data-scale="0.6">
+        <img class="naked" src="images/architecture/sw-arch.png"/>
+        <div class="notes">
+Embedded Systems typically have stricter constraints on power consumption, space, performance any many other attributes that can’t
+be described by the hardware alone. The software stack forms an integral part of the overall systems architecture and must certainly be considered when designing the system.
+        </div>
+    </div>
+
+    <div class="step" id="over1" data-x-rel="500" data-y-rel="250" data-scale="1.3">
+    <!-- dummy -->
+    </div>
+
+    <div class="step point" id="environ" data-x-rel="800" data-y-rel="-500" data-scale="1.0">
+        <h1>Environment</h1>
+        <div class="notes">
+The interface with the environment is obvious for sensors and actuators.  It must also be considered for reliability and usage specifications (will it be used in water? Is it expected to be in reach of a child?).
+
+A more subtle interface with the environment affects every part of the design: The interface with time. This will be covered extensively in future lectures.
+        </div>
+    </div>
+
+    <div class="step point" id="user" data-x-rel="-1000" data-y-rel="1000" data-scale="1.0">
+        <h1>User</h1>
+        <div class="notes">
+The interface with the user can also be obvious in a touchscreen, display, speaker etc. Once again there are more subtle user interface specifications required, commonly termed "user experience".  These include all the modes of interaction, required training, failure modes and notifications etc.
+        </div>
+    </div>
+
+    <div class="step" id="over2" data-x-rel="300" data-y-rel="-500" data-scale="1.6">
+    <!-- dummy -->
+    </div>
+
+    <div class="step" id="business" data-x-rel="-1050" data-y-rel="200" data-scale="1.0">
+        <div class="listcard" style="width:500px"><ul>
+        <li>Reliability Specification</li>
+        <li>Development Strategy</li>
+        <li>Testing Strategy</li>
+        <li>Marketing Strategy</li>
+        <li>Social/Environmental policy</li>
+        </ul></div>
+        <div class="notes">
+The tight constraints surrounding Embedded Systems don’t stop at physical parameters.
+
+The successful design of an Embedded System has to note the fact that such systems are commodities, but also that they are rarely sold
+as a final product. An Embedded System architecture has to recognize the interfaces between the system and the business processes around it, not just the physical processes.
+        </div>
+
+    </div>
+
+    <div class="step" id="toolchain" data-x-rel="0" data-y-rel="-500" data-scale="1.0">
+        <div class="listcard" style="width:500px"><ul>
+        <li>Development Environment</li>
+        <li>Toolchain</li>
+        <li>Development Workflow</li>
+        <li>Testbench</li>
+        </ul></div>
+        <div class="notes">
+These business processes include budgets and lead times and therefore come back and affect the choice of development system as well.
+        </div>
+
+    </div>
+
+    <div class="step" data-x="0" data-y="700">
+        <h1>Memory Hierarchy</h1>
+    </div>
+
+    <div class="step" id="memblocks" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <div class="rightbox" style="width:200px" id="m-cache">L1 Cache<br/>L2 Cache<br/>L3&hellip;</div>
+        <div class="rightbox" style="width:200px" id="m-ram">RAM</div>
+        <div class="rightbox" style="width:200px" id="m-flash">Flash</div>
+        <div class="rightbox" style="width:200px" id="m-hdd">Hard Drive</div>
+        <div class="rightbox" style="width:200px" id="m-cloud">Network/Cloud</div>
+    </div>
+
+    <div class="step" id="cache" data-x-rel="-100" data-y-rel="-70" data-scale="0.15">
+        <div style="float:right;width:500px">
+        <ul><li>Fast access (cycles)</li>
+            <li>Tight coupling</li>
+            <li>Small capacity (MB)</li>
+            <li>Implemented as RAM</li></ul></div>
+
+        <div class="notes">
+Most modern CPUs keep recently-accessed data cached in a small amount of memory tightly coupled to the CPU itself. Code rarely controls the cache itself, but can be optimized for good cache performance. L1 Cache is typically accessed in 1-2 CPU cycles while lower level caches are proportionally slower.
+
+In multi-core chips, the lower levels of cache may be shared between cores. This increases
+complexity somewhat as the cache has to remain ‘coherent’ across all cores; that is, because cache
+data is a copy of RAM data, it exists in at least two places at one and every core must ensure it
+accesses the most recent copy.</div>
+    </div>
+
+    <div class="step" id="ram" data-x-rel="0" data-y-rel="55" data-scale="0.15">
+        <div style="float:right;width:500px;">
+        <ul><li>Static or Dynamic</li>
+            <li>Medium capacity (GB)</li>
+            <li>Medium access (100's of cycles)</li></ul></div>
+
+        <div class="notes">
+RAM is what we typically think of when we think of memory. In an Embedded System, some base amount is required for program variables and the rest may be used for buffering, trading off cost against throughput.
+
+Larger RAM devices (such as Dynamic RAM) require code to execute in order to be initialized.
+This causes a “chicken and egg” problem; code needs RAM to execute, but the RAM needs some code to have executed. If a device is designed to use Dynamic RAM, it will typically also include a small amount of Static RAM internal to the device for the sole purpose of supporting this initial execution.
+        </div>
+    </div>
+
+    <div class="step" id="flash" data-x-rel="0" data-y-rel="33" data-scale="0.15">
+        <div style="float:right;width:500px;">
+        <ul><li>Non-volatile</li>
+            <li>Large capacity (10s/100s of GB)</li>
+            <li>Slow access (1000's of cycles)</li>
+            <li>Finite lifetime</li></ul></div>
+
+        <div class="notes">
+Flash memory is slowly replacing hard drives as the standard for local, non-volatile memory. It is typically a few orders of magnitude slower than RAM and several orders of magnitude slower than a CPU cache. Flash can only be written a finite number of times before it wears out, so much of the technology behind dealing with this type of memory goes in to avoiding, detecting and/or correcting errors. Premium flash devices include Error Correcting Codes, ECC, which are special portions of memory that contain enough information to not just detect, but even fix 1, 2 or several-bit errors.
+        </div>
+    </div>
+
+    <div class="step point" data-x-rel="150" data-y-rel="0" data-scale="0.15">
+        <h1>Wear Levelling</h1>
+        Flash lifetime is extended by <b>wear levelling</b>. The algorithm chosen dramatically affects device lifetime.
+
+        <div class="notes">Modern flash memory cards such as SD cards may cheat with their wear leveling algorithms. The FAT filesystem that is typically used on such cards writes data across the card in something approaching a round-robin fashion – in essence it does its own wear leveling. The exception to this is the File Allocation Table block which is written every time any other piece of the card is written.
+
+Given that the FAT gets written many more times than any other piece, the memory may choose to only wear level the section of the card where it thinks the FAT will sit. This means that using a filesystem other than FAT on an SD card may reduce its lifespan 10s or 100s of times!</div>
+    </div>
+
+    <div class="step" id="hdd" data-x-rel="-150" data-y-rel="34" data-scale="0.15">
+        <div style="float:right;width:500px;">
+        <ul><li>Non-volatile</li>
+            <li>Very Large capacity (1000s of GB)</li>
+            <li>Very Slow access (10,000's of cycles)</li>
+            <li>Non-deterministic access times</li></ul></div>
+
+        <div class="notes">
+Hard Drives, or magnetic storage generally, have been around almost as long as computers themselves. They are still the de-facto standard for high volume, non-volatile storage. They are not often used in Embedded Systems as they are relatively power-hungry and fragile, at least when they are spinning. They also have non-deterministic response time as the magnetic heads need to physically move over the surface of the disk with each new request.
+        </div>
+    </div>
+
+    <div class="step" id="cloud" data-x-rel="0" data-y-rel="33" data-scale="0.15">
+        <div style="float:right;width:500px;">
+        <ul><li>High Reliability</li>
+            <li>Very Large capacity (+1000s of GB)</li>
+            <li>Very Slow access (1,000,000 cycles)</li>
+            <li>Non-deterministic access times</li></ul></div>
+
+        <div class="notes">
+Network storage is becoming more fashionable as markets become less about the Embedded Device itself and more about the service it can offer. Having the service state data live externally to the system itself streamlines upgrades and can drive down system costs by centralizing much more of the system than would traditionally be the case.
+
+Network storage has the obvious drawbacks though – the network is a weak link, both in terms of uptime and reliability, but also in terms of security.
+        </div>
+    </div>
+
+    <div class="step" data-x="0" data-y="1400">
+        <h1>Programming Languages</h1>
+    </div>
+
+    <div class="step" data-x-rel="-100" data-y-rel="150" data-scale="0.5">
+        <h1>Compiled</h1>
+        <center><img class="naked" src="images/software-interfaces/compiled.png" /></center>
+        <div class="notes">Precompiled code is typical of programming languages such as C, C++, ADA etc. Precompiled code doesn’t incur run-time overhead translating the programmer’s wishes to actions, however it offers less flexibility than other options.</div>
+    </div>
+
+    <div class="step" data-x-rel="-60" data-y-rel="110" data-scale="0.2">
+            <p><b>Compiler:</b> Source Code to Assembly</p>
+            <p><b>Assembler:</b> Assembly to Binary. Does not resolve symbols.</p>
+            <p>Compiler and Assembler are specific to a particular platform.</p>
+        <div class="notes">The compiler takes source code and generates machine language assembly mnemonics (written instructions such as MOV, ADD). The assembler takes this assembly, along with any that has been manually written and generates the binary object files. References to memory locations remain in symbolic form – the object file doesn’t yet know where in memory everything is going to end up.
+
+The compiler and assembler are typically invoked with a single instruction, the intermediate assembly mnemonics are stored in a temporary file and removed upon successful generation of the object file.
+
+The compiler is responsible for most optimizations and generation of platform-specific code. When choosing hardware, it must be selected to be compatible with the target compiler.</div>
+    </div>
+
+    <div class="step" data-x-rel="170" data-y-rel="-5" data-scale="0.2">
+            <p><b>Linker:</b> Object Files to Executable</p>
+            <p>Resolves symbols between object files and libraries.</p>
+
+        <div class="notes">The Linker combines multiple object files (typically one per source file) along with external libraries, joins them all together in a single executable then goes through and resolves all symbols. Symbol resolution is the process of going through the executable, finding instructions that reference memory (load, store, function calls etc.) and inserting the correct memory location in to the instruction.</div>
+    </div>
+
+    <div class="step" data-x-rel="-150" data-y-rel="300" data-scale="0.5">
+        <h1>JIT/Intepretted</h1>
+        <center><img class="naked" src="images/software-interfaces/int-jit.png" /></center>
+        <div class="notes">Just-in-time (JIT) compiled code has two processes, one on done before-hand and one done while the program runs. The intermediate representation is called &ldquo;Byte Code&rdquo;</div>
+    </div>
+
+    <div class="step" data-x-rel="-60" data-y-rel="70" data-scale="0.2">
+            <p><b>Compiler:</b> Source Code to &ldquo;virtual&rdquo; Assembly (Bytecode)</p>
+            <p>Bytecode is like assembly, but not tied to a particular architecture.</p>
+        <div class="notes">Bytecode can be run on multiple machines/architectures. It can't run by itself though, it requires runtime support on the target machine.</div>
+    </div>
+
+    <div class="step" data-x-rel="200" data-y-rel="-90" data-scale="0.2">
+            <p><b>JIT:</b> Compiles the BC to the platform's Assembly then executes it directly</p>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="105" data-scale="0.2">
+            <p><b>Interpretted:</b> Parses the BC to find what action to perform, then calls a function to perform the operation.</p>
+    </div>
+
+    <div class="step" data-x-rel="200" data-y-rel="-60" data-scale="0.2">
+        <div class="simplecard" style="width:400px;float:left">
+        <h3>JIT</h3>
+        <ul><li>Slow Compilation</li>
+            <li>Fast Execution</li>
+            <li>Good Optimization</li>
+            <li>JIT hard to port</li></ul>
+        </div>
+        <div class="notes">The JIT paradigm adds some overhead to the runtime process as the translation from byte code to machine instructions has to be done before the instruction can actually be executed. This sounds like it would take a lot of overhead, but modern JIT compilers might add just a few percent to the execution time. JIT code means that optimization and generation of platform-specific codes are left to the platform itself, the same byte code can then be run on multiple machines. If your Embedded System and your development machine use different architectures, you can still run a single lot of code on both.
+
+The platform itself is also usually in the best position to determine which optimizations to apply, so the overhead of JIT compilation may be reclaimed through smart application of code optimization.</div>
+    </div>
+    
+    <div class="step" data-x-rel="0" data-y-rel="0" data-scale="0.2">
+        <div class="simplecard" style="width:400px;float:right">
+        <h3>Interpretted</h3>
+        <ul><li>Fast Parse</li>
+            <li>Slow Execution</li>
+            <li>Some Optimization</li>
+            <li>VM easy to port</li></ul>
+        </div>
+        <div class="notes">Interpreted code has the same portability advantages as JIT code but because the code is run in a completely controlled and isolated fashion (inside a Virtual Machine), there is the possibility for increased security.
+
+JIT compilers are widely recognized as the future of this kind of technology and are slowly replacing run-time interpreters. One exception is on obscure architectures as Virtual Machines are typically written entirely in C and can be compiled for anything supported by that compiler. JIT compilers have to be written, at least partially, specifically for a target architecture as it has to know which machine instructions to output.</div>
+    </div>
+
+    <div class="step" data-x-rel="400" data-y-rel="-150" data-scale="0.5">
+        <h1>Languages</h1>
+        <div class="simplecard" style="width:400px;float:left">
+            <h3>Compiled</h3>
+            <ul><li>C,C++</li>
+                <li>ADA</li>
+                <li>Fortran</li>
+                <li>&hellip;</li></ul>
+            <p>Older Languages, low-level code</p>
+        </div>
+        <div class="simplecard" style="width:400px;float:left">
+            <h3>JIT/Interpretted</h3>
+            <ul><li>Java</li>
+                <li>Python</li>
+                <li>Javascript</li>
+                <li>&hellip;</li></ul>
+            <p>New Languages, portability required.</p>
+        </div>
+
+        <div class="notes">Precompiled languages: C, C++, ADA etc. Typically older, more established languages but still very commonly used in Embedded Systems.
+
+Much low-level code such as the Linux Kernel are written in precompiled languages as there isn’t necessarily any platform upon which the JIT compiler or Virtual Machine can run.
+
+JIT languages: Java, .NET, Dalvik since Android 2.2, Python, Javascript in some browsers. Most modern languages were either designed to be interpreted but have subsequently had JIT compilers written, or were designed for JIT execution from the start.
+
+Interpreted languages: Typically older versions of the JIT languages above.</div>
+    </div>
+
+
+    <div class="step" data-x="900" data-y="700">
+        <h1>Processor Architectures</h1>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="100" data-scale="0.5">
+        <h1>CISC</h1>
+        <ul><li>Memory-efficient</li>
+            <li>Complex processor design</li>
+            <li>Slow per-instruction</li>
+            <li>Hard to <b>pipeline</b></li></ul>
+        <div class="notes">Complex Instruction Set Computer vs Reduced Instruction Set Computer. These two terms reflect two different philosophies in the design of a processor’s instruction set and, in turn, the processor architecture.
+
+Before the 1970s, all computers were of CISC type. Memory was the supremely limited resource of the time, hardware wasn’t so much of a problem, so the focus was on packing the maximum amount of complexity in to the minimum number of instructions.
+
+Memory is now relatively cheap and the focus has moved to performance. This favours the RISC style as simpler instructions are faster to execute</div>
+    </div>
+
+    <div class="step" data-x-rel="300" data-y-rel="100" data-scale="0.5">
+        <h2>CISC characterized by</h2>
+        <ul><li>Complex Addressing modes</li>
+            <li>Instructions span multiple (and variable) words</li>
+            <li>Specialized instructions implement particular functions</li>
+            <li>Operations can be performed directly on memory locations</li>
+            <li>Memory-to-memory transfers</li>
+            <li>Small program sizes</li></ul>
+    </div>
+
+    <div class="step" data-x-rel="-300" data-y-rel="200" data-scale="0.5">
+        <h1>RISC</h1>
+        <ul><li>Efficient implementations</li>
+            <li>Larger program sizes</li>
+            <li>Efficient to pipeline</li></ul>
+    </div>
+
+
+    <div class="step" data-x-rel="300" data-y-rel="100" data-scale="0.5">
+        <h2>RISC characterized by</h2>
+        <ul><li>Simple addressing modes</li>
+            <li>Single word, fixed length instructions</li>
+            <li>Small instruction set of general purpose instructions</li>
+            <li>Operations only performed on registers</li>
+            <li>All memory accesses though a Load/Store architecture</li>
+            <li>Instructions implemented in (the same set of) discrete phases</li>
+            <li>More instructions are required to implement functionality</li></ul>
+    </div>
+
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>Canonical RISC</h2>
+        <div class="rightbox" style="width:200px">Fetch</div>
+        <div class="rightbox" style="width:200px">Decode</div>
+        <div class="rightbox" style="width:200px">Execute</div>
+        <div class="rightbox" style="width:200px">Memory</div>
+        <div class="rightbox" style="width:200px">Writeback</div>
+    </div>
+
+    <div class="step" data-x-rel="-90" data-y-rel="-45" data-scale="0.2">
+        <div style="float:right;width:500px"><p>Get the instruction out of memory</p></div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="33" data-scale="0.2">
+        <div style="float:right;width:500px"><p>Break the instruction down to determine required registers and functional units. Read registers.</p></div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="35" data-scale="0.2">
+        <div style="float:right;width:500px"><p>Execute the instruction</p></div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="33" data-scale="0.2">
+        <div style="float:right;width:500px"><p>Perform memory operations</p></div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="33" data-scale="0.2">
+        <div style="float:right;width:500px"><p>Write results to the destination register</p></div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h1>Pipelining</h1>
+        <center><img class="naked" src="images/processor/pipe1.png"></center>
+
+        <div class="notes">The core observation of pipelining is this: Each instruction must take five clock cycles to complete, but you may execute more than one instruction at a time!
+By breaking each instruction in to exactly the same number of pieces like this, each section of the processor can be fully utilized at every point in time.
+
+Why keep the ME or WB stages for instructions that don’t need them? Because keeping instructions
+the same as each each other, they can be pipelined and the overall utilization increases significantly.</div>
+    </div>
+
+    <div class="step" data-x="1700" data-y="900">
+        <h1>Cache</h1>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h1>Direct Cache</h1>
+        <center><img class="naked" src="images/processor/direct-cache.png"/></center>
+        <div class="notes">The cache is, of course, smaller than main memory so some algorithm has to be used to map a main memory location to a cache line. The simplest algorithm is called Direct Mapping. In this scheme, each memory block is stored in a cache line of the same address modulo the cache size. For example, a cache of 128 blocks will store memory block 134 in cache line number 6. DM Caches are simple but there may be contention even when the cache isn’t full.</div>
+    </div>
+
+    <div class="step" data-x-rel="500" data-y-rel="0" data-scale="0.5">
+        <h1>Associative Cache</h1>
+        <center><img class="naked" src="images/processor/assoc-cache.png"/></center>
+        <div class="notes">An Associative Mapping is the most flexible cache arrangement in which any memory location can be stored in any cache location. If the cache isn’t full, each new memory block can just take an empty slot. If the cache is full, the cache line to evict is chosen typically using a Least Recently Used algorithm. Complexity comes from finding where in the cache a particular memory block has been put when it is next needed.</div>
+    </div>
+
+
+    <div class="step" data-x-rel="-250" data-y-rel="300" data-scale="0.5">
+        <div class="drarrow-m-h" style="float:left;width:100px;margin-top:100px;margin-bottom:50px"></div>
+        <div class="dlarrow-m-h" style="float:right;width:100px;margin-top:100px;margin-bottom:50px"></div>
+        <div style="clear:both">
+        <h1>Set Associative Cache</h1>
+        <center><img class="naked" src="images/processor/set-cache.png"/></center>
+        </div>
+
+        <div class="notes">Almost all modern caches are Set Associative. These combine the best features of each of the previous methods, as each memory location “short lists” a set of cache lines based upon its address modulo the number of sets, then the entry to evict from the set is chosen by an LRU algorithm as with an Associative cache.</div>
+    </div>
+
+    <div class="step point" data-x-rel="500" data-y-rel="0" data-scale="0.5">
+        Cache must store more than data: It must store where that data came from and how old it is.
+        <div class="notes">This metadata is generally called the <b>tag</b> data. It is not cache content as such, it's the extra information that allows the cache to operate correctly.
+
+Note that the age data is only required for Associative and Set Associative type caches that require an LRU algorithm.</div>
+    </div>
+
+    <div class="step" id="write" data-x-rel="-500" data-y-rel="300" data-scale="0.5">
+        <h1>Cached Writing</h1>
+        <div class="notes">Cache strategies discussed previously assume a read access, but what happens for a write?</div>
+    </div>
+
+    <div class="step" id="write1" data-x-rel="0" data-y-rel="150" data-scale="0.5">
+        <div class="simplecard" style="width:400px;height:400px;float:left">
+        <h3>Writethrough</h3>
+        <p>New value is written to both the cache and the main memory locations at once.</p>
+        <ul><li>Writes only the changed value</li>
+            <li>Writes every time that value is changed</li></ul>
+        </div>
+        <div class="notes">If the memory is in Cache, what should a write do: Write-back or Writethrough? In a write-through cache, a write to a memory location in Cache will write the new value to the cache line and the memory location.</div>
+    </div>
+    
+    <div class="step" id="write2" data-x-rel="0" data-y-rel="0" data-scale="0.5">
+        <div class="simplecard" style="width:400px;height:400px;float:right">
+        <h3>Writeback</h3>
+        <p>New value is written only to the cache. Main memory is updated when the cache line is evicted.</p>
+        <ul><li>Writes all values in the line, even if only one has changed</li>
+            <li>Writes only once, even if a value has changed several times</li></ul>
+        </div>
+        <div class="notes">Write-back writes the new value to cache and marks it dirty; it is then written to main memory only when the line is evicted.
+
+Write-through generates unnecessary writes if the memory location is written several times in sequence. Write-back generates unnecessary writes if only one location in the cache is changed, as the whole line must be written back.</div>
+    </div>
+
+    <div class="step" data-x="3000" data-y="900">
+        <h1>SIMD/Stream</h1>
+    </div>
+
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h1>SIMD</h1>
+        <p>ARM A8 can execute <b>two</b> independent arithmetic instructions at once; it is Superscalar.</p>
+        <p><b>Super</b>: More than one instruction per clock cycle</p>
+        <p><b>Scalar</b>: One piece of data per instruction</p>
+        <p>Is there such thing as <b>Vector</b> execution: More than one piece of data per instruction?</p>
+        <div class="card" style="text-align:center"><b>SIMD</b>: Single Instruction, Multiple Data.</div>
+        <div class="notes">In the A8 example, two additions (say) can be done at a time but it requires two instructions.
+
+Pushing further, what if several registers could be loaded with inputs and a single instruction issued to perform an operation on all of them at once? This is called Single Instruction Multiple Data (SIMD) or Vector Execution (as opposed to [super]scalar execution). Most modern processors can perform some SIMD operations.
+
+Some material and graphics in this section inspired by the Cell Programming Tutorial: https://www.kernel.org/pub/linux/kernel/people/geoff/cell/ps3-linux-docs/CellProgrammingTutorial/</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h1>Vector Registers</h1>
+        <b>Vector Registers</b> may be any size, but they can be partitioned in different ways. SIMD instructions take vectors as inputs.
+        <div style="padding-top:50px"><img class="naked" src="images/processor/vector-reg.png" /></div>
+
+        <div class="notes">It is possible to do SIMD within a slightly modified ALU: For example, a 32-bit ALU may be able to be programmed to do four independent 8-bit operations at once, rather than a single 32-bit one. More commonly though, the processor is augmented with special “vector” registers that are much bigger than the usual.
+
+These vector regs are typically 128-bits long. As such, the a SIMD processor can typically execute 16 8-bit operations at once, down to
+two 64-bit operations. Bigger vectors are of course possible however memory bandwidth becomes an increasingly large issue. No good being able to execute quickly if there’s no data.</div>
+    </div>
+
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h1>Stream Processing</h1>
+        <p><b>Vector</b> processing applies the same operation to multiple pieces of data.</p>
+        <p><b>Stream</b> processing applies multiple operations to the same piece of data.</p>
+
+        <div class="notes">Vector operations can be thought of as extending data operations “sideways”, allowing more things to be done with a single instruction. What about extending the operations “lengthways”; allowing a single instruction to describe multiple operations on the same data? This is called Stream Processing.
+
+It is a common paradigm in fields from computer vision to networking - anywhere data undergoes significant but consistant transformation.</div>
+    </div>
+
+    <div class="step" data-x="3600" data-y="900">
+        <h1>GPU</h1>
+    </div>
+
+    <div class="step" id="sm" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h1>Stream Multiprocessors</h1>
+        <div style="float:left">
+            <h3>Contain:</h3>
+            <ul><li>Stream Processor cores</li>
+            <li>Special Function Units</li>
+            <li>Caches</li>
+            <li>Memory</li>
+            <li>Double-precision hardware</li>
+            <li>Multi-Instruction Issue</li></div>
+        <div style="float:right"><img src="images/processor/gpu-sm.png" style="height:600px"/></div>
+
+        <div class="notes">A Stream Multiprocessor (SM) here is roughly equivalent to a Stream Processor from the previous lectures in that it can perform a sequence of operations on incoming data. Modern SMs are more powerful than the stream concept before as they aren’t strictly linear, they may throw away data chunks halfway through, perform conditional operations, split and merge streams internally etc. In terms of graphical operations, these may be things like only rendering pixels that are actually visible.
+
+An SM contains Stream Processors (SPs) which are more limited than the previous definition - each one can perform only a single operation.</div>
+    </div>
+
+    <div class="step" data-x="4200" data-y="900">
+        <h1>Real Time</h1>
+    </div>
+
+    <div class="step" id="rtfinal" data-x-rel="0" data-y-rel="150" data-scale="0.6">
+        <h1>The Real Time</h1>
+        <p>Pragmatically, <b>Real Time</b> is simply an appropriate and consistant time scale for the problem at hand.</p>
+    </div>
+
+    <div class="step point" data-x-rel="0" data-y-rel="200" data-scale="0.6">
+        A Real Time system depends not only on the <b>logical correctness</b> of a result, but the <b>time</b> at which that result was delivered.
+    </div>
+
+    <div class="step" id="class" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h1>Classification</h1>
+        <table id="rt">
+            <tr class="hard"><td><b>Hard</b></td><td>Single failure leads to severe malfunction</td></tr>
+            <tr class="firm"><td><b>Firm</b></td><td>Results are meaningless after deadline<br/>
+                                 Only multiple or permanent failures threaten the system</td></tr>
+            <tr class="soft"><td><b>Soft</b></td><td>Results may still be useful after deadline</td></tr>
+        </table>
+    </div>
+
+    <div class="step" id="det" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h1>Processor Determinism</h1>
+        <div class="card bad">High performance processors get that way by sacrificing plenty of things, <b>determinism among them.</b></div>
+        <div class="notes">In fact, modern processors are so non-deterministic, they are actually a useful source of cryptographic entropy. See for example the <a href="http://www.irisa.fr/caps/projects/hipsor/">HAVEGE Project</a>. Note that worst-case execution time is usually still bounded, just not deterministic.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h1>Local Drift</h1>
+        <center><img class="naked" src="images/real-time/delay2.png"/></center>
+        <div class="notes">But the semantics of primitive delays aren’t as one might expect. They’re precise only in their lower bound. In English, rather than “Stop the task then run again after n”, “Stop the task, then after the CPU’s idea of n, make it eligible to be run again”.</div>
+    </div>
+
+    <div class="step" data-x="3800" data-y="-200">
+        <h1>Operating Environments</h1>
+    </div>
+
+    <div class="step" id="env" data-x-rel="0" data-y-rel="150" data-scale="0.5">
+        <h1>Operating Environments</h1>
+        <center><img class="naked" src="images/os/environs.png"></center>
+        <div class="notes">An Operating Environment is made up of the executive, primitives to control access to resources, devices drivers and other ‘general purpose’ utilities. The central part of the operating environment of an embedded system is the executive though, so from here we will use the terms ‘operating environment’, ‘scheduler’ and ‘executive’ interchangeably. The term ‘operating system’, distinct from operating environment, will be defined later.</div>
+    </div>
+
+    <div class="step" id="pe" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h1>Mechanism of Pre-emption</h1>
+        <center><img class="naked" src="images/os/sched1.png"/></center>
+        <div class="notes">In order for the executive to make the decision to preempt the running task, it requires the CPU itself. The executive must preempt the running task to determine whether it should preempt the running task?!
+
+The answer is to use a special interrupt, generally triggered from a timer.</div>
+    </div>
+
+    <div class="step" data-x="4600" data-y="-200">
+        <h1>RT Scheduling</h1>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="150" data-scale="0.6">
+        <h1>Comparison</h1>
+        <div class="simplecard" style="float:left;width:45%">
+            <h3>EDF</h3>
+            <ul><li>Complex to implement</li>
+                <li>Safe to 100% utilization</li>
+                <li>Any (all) thread(s) may miss deadline when oversubsribed</li></ul>
+        </div>
+        <div class="simplecard" style="float:right;width:45%">
+            <h3>RMP</h3>
+            <ul><li>Simple to implement</li>
+                <li>Cannot schedule to 100%</li>
+                <li>Low-priority threads always miss deadline first</li></ul>
+        </div>
+        <div class="notes">The fact that static priortiy schemes have well-defined failure modes (lowest priority misses first) is often highly desirable.
+
+EDF not only doesn't have this property, but a single overrun can lead to a cascade of missed deadlines from which is may never recover (without intervention).</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200">
+        <h1>Linux Scheduling (CFS)</h1>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.6">
+        <h2>Priority</h2>
+        Splits CPU ratiometrically. Two tasks with the same priority will get the same share of the CPU. A task with double the priority of another will get double the share of the CPU.
+        <h2>Heirarchy</h2>
+        Can split the CPU ratiometrically on other things too; e.g. two <b>users</b> of the same priority get the same share of the CPU.  Within each User, processes can be scheduled as usual, appearing to run on a CPU half as powerful.
+        <h2>Latency</h2>
+        No guarantees on latency. Any process of any priority can preempt any other. The latency for a particular task to get CPU time is a function of the running behaviour of every other process on the system.
+    </div>
+
+    <div class="step" data-x-rel="600" data-y-rel="0" data-scale="0.5">
+        <h1>COW</h1>
+        <div class="simplecard">The parent and child must have their own copy of memory</div>
+        <div class="darrow-m-h" style="width:50px;margin:50px auto"></div>
+        <div class="simplecard" style="margin-bottom:50px">The parent and child must have their own copy of any memory <b>that differs</b></div>
+
+        <p>The parent's memory is marked <b>Copy on Write</b> and is only duplicated if either the parent or child tries to write to it.</p>
+    </div>
+
+    <div class="step" data-x="5000" data-y="900">
+        <h1>Communication and Synchronization</h1>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h2>Long Variables</h2>
+        <div style="float:left;margin-left:200px;width:250px;"><h3>Thread 1</h3><pre class="simplecard prettyprint">LOOP: Ld r1, low([i])
+      Ld r2, high([i])
+      Add r1, r1, #1
+      AdC r2, r2, #0
+
+
+      St low([i]), r1
+      St high([i]), r2
+      Call _delay_1ms
+
+
+      Jmp LOOP
+      </pre></div>
+        <div style="float:left;margin-left:20px;width:250px;"><h3>Thread 2</h3><pre class="simplecard prettyprint">
+
+
+
+
+LOOP: Ld r3, #0
+      St low([i]), r3
+
+
+
+      St high([i]), r3
+      Call _delay_500ms
+
+      Jmp LOOP</pre></div>
+        <div style="padding-top:50px;clear:both">Assume <code>i</code> is 16 bits and we are executing on an 8 bit microprocessor (each memory access is 8-bits).  Further, suppose <code>i</code> starts this snippet at 499, by the end <code>i</code> will be neither 0 nor 500, it will be 244.</div>
+
+        <div class="notes"></div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="350" data-scale="0.5">
+        <h1>Semaphores</h1>
+
+        <div class="simplecard" style="margin:0 auto;width:200px"><pre class="prettyprint">int i;
+Semaphore lock;</pre></div>
+        <div style="float:left;margin-left:200px;width:250px;"><h3>Thread 1</h3><pre class="simplecard prettyprint">while(1) {
+    wait(lock);
+    i++;
+    signal(lock);
+    _delay_1ms();
+}</pre></div>
+        <div style="float:left;margin-left:20px;width:250px;"><h3>Thread 2</h3><pre class="simplecard prettyprint">while(1) {
+    wait(lock);
+    i = 0;
+    signal(lock);
+    _delay_500ms();
+}</pre></div>
+        <div style="padding-top:50px;clear:both">
+            <p><b>Waiting</b> on a semaphore blocks a thread's execution until the lock is released.</p>
+            <p><b>Signalling</b> a semaphore marks it as released and unblocks all threads waiting for it.</p>
+            <p>As a result, only a single thread can be in the <b>critical section</b> between the <code>wait</code> and <code>signal</code> calls for any given lock.
+            <p>Must be implemented with help from your scheduler/executive.</p>
+        </div>
+    </div>
+
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <div class="simplecard" style="margin:0 auto;width:200px"><pre class="prettyprint">int a;
+int b;
+Semaphore lock_a;
+Semaphore lock_b;</pre></div>
+        <div style="float:left;margin-left:250px;width:200px;"><h3>Thread 1</h3><pre class="simplecard prettyprint">
+wait(lock_a);
+
+
+wait(lock_b);
+a = a + b;
+signal(lock_b);
+signal(lock_a);
+</pre></div>
+        <div style="float:left;margin-left:20px;width:200px;"><h3>Thread 2</h3><pre class="simplecard prettyprint">
+
+wait(lock_b);
+
+wait(lock_a);
+a = b = 0;
+signal(lock_a);
+signal(lock_b);
+</pre></div>
+
+    <div class="notes">Same code but a different pre-emption point.  Thread 1 is now holding <code>lock_a</code> while waiting on <code>lock_b</code>; Thread 2 is waiting on <code>lock_a</code> while holding <code>lock_b</code>.</div>
+    </div>
+
+
+    <div class="step" data-x="5800" data-y="900">
+        <h1>Device/Driver Model</h1>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.6">
+        <img class="naked" src="images/os/dev-drv.png">
+    </div>
+
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step"/>
+
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+

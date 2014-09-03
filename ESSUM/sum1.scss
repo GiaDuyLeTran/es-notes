@@ -1,0 +1,86 @@
+
+/* ES05 slide specific styling */
+@import 'compass/css3/opacity';
+
+@import 'anu-impress';
+@import 'embedded-systems';
+
+#title h1 {
+    padding-top:40px;
+}
+
+#title h2 {
+    text-align:right;
+    padding-right:50px;
+}
+
+#title #say {
+    margin-top: 150px;
+    text-align:right;
+    font-size:10px;
+    text-shadow:none;
+    color: rgba(0,0,0,0.3);
+    letter-spacing:initial;
+}
+
+#title #say2 {
+    margin-top: 40px;
+    text-align:right;
+    font-size:10px;
+    text-shadow:none;
+    color: rgba(0,0,0,0.3);
+    letter-spacing:initial;
+}
+
+#title .linkbox {
+    margin-top:100px;
+}
+
+
+#arch #dummy { height:900px }
+#arch #fp { position:absolute; top:200px; left:200px; width:600px;}
+#arch #proc { position:absolute; top:200px; left:0px; }
+
+#arch #power { position:absolute; top:500px; left:900px; }
+#arch #periph { position:absolute; top:100px; left:500px; }
+#arch #mem { position:absolute; top:400px; left:0px; }
+
+#arch #comms { position:absolute; top:800px; left:500px; }
+#arch #sens { position:absolute; top:250px; left:900px; }
+#arch #act { position:absolute; top:350px; left:900px; }
+#arch #ui { position:absolute; top:700px; left:100px; }
+
+#environ { background: rgba(0, 128, 0, 0.3); }
+#user { background: rgba(255, 100, 0, 0.3); }
+
+#over1 { display: none;}
+#over2 { display: none;}
+#over3 { display: none;}
+
+@each $slide in (arch, soft) {
+    .impress-on-over1 ##{$slide} { @include opacity(1.0) }
+}
+
+@each $slide in (environ, user, business, toolchain) {
+    .impress-on-over1 ##{$slide} { @include opacity(0.0) }
+}
+
+@each $slide in (arch, soft, environ, user) {
+    .impress-on-over2 ##{$slide} { @include opacity(1.0) }
+}
+
+@each $slide in (business, toolchain) {
+    .impress-on-over2 ##{$slide} { @include opacity(0.0) }
+}
+
+@each $slide in (arch, soft, environ, user, business, toolchain) {
+    .impress-on-over3 ##{$slide} { @include opacity(1.0) }
+}
+
+#class {width: 850px;}
+#rt td {padding: 0 20px;}
+#rt .hard { background: rgba(250,  50, 0, 0.3); }
+#rt .firm { background: rgba(150,  150, 0, 0.3); }
+#rt .soft { background: rgba(50,  250, 0, 0.3); }
+
+
