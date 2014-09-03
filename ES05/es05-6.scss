@@ -1,0 +1,41 @@
+
+/* ES05-3 slide specific styling */
+@import 'compass/css3/opacity';
+
+@import 'anu-impress';
+@import 'embedded-systems';
+
+#title h1 {
+    padding-top:80px;
+}
+
+#title h2 {
+    text-align:right;
+    padding-right:50px;
+    padding-top:30px;
+}
+
+#title #say {
+    margin-top: 150px;
+    text-align:right;
+    font-size:10px;
+    text-shadow:none;
+    color: rgba(0,0,0,0.3);
+    letter-spacing:initial;
+    line-height:initial;
+}
+
+#rpi { @include opacity(0.5) }
+.impress-on-rpi #rpi { @include opacity(1.0) }
+
+.rpiv { z-index: 99 }
+
+.rpiv h2 {
+    text-shadow: $bigshadow;
+}
+
+#rpboard h2 { margin-top:150px }
+#rpdev h2 {margin-bottom: 200px }
+
+#bios { width: 500px }
+

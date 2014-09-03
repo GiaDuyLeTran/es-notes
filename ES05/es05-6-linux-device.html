@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 5.6: Linux Device Model</title>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es05-6.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say">Rot a peck of pa's malt has Jhem or Shen brewed by Arclight and rory end to the regginbrow was to be seen ring some on the</div>
+        <div class="titlebox">
+            <h1>Linux</h1>
+            <h2>Device Model</h2>
+        </div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes">References:
+Robert Love, Linux Kernel Development (2nd Edition), Pearson Education 2005
+Linux Kernel in-tree documentation (“Documentation/”)</div>
+    </div>
+
+    <div class="step" data-x="0" data-y="700">
+        <h1>Linux Support</h1>
+        <div class="notes"></div>
+    </div>
+
+    <div class="step rpiv" data-x-rel="0" data-y-rel="500" data-scale="0.10">
+        <h2>Architecture</h2>
+    </div>
+
+    <div class="step rpiv" data-x-rel="0" data-y-rel="-10" data-scale="0.20">
+        <h2>Processor</h2>
+    </div>
+
+    <div class="step rpiv" id="rpboard" data-x-rel="0" data-y-rel="-20" data-scale="0.6">
+        <h2>Board</h2>
+    </div>
+
+    <div class="step rpiv" id="rpdev" data-x-rel="0" data-y-rel="-30" data-scale="1.0">
+        <h2>Devices</h2>
+    </div>
+
+    <div class="step" id="rpi" data-x-rel="-20" data-y-rel="100">
+        <img class="naked" src="images/os/rpi.png"/>
+        <div class="notes">We will assume that the architecture work has been done and that the devices on the board have their drivers written. We will examine what might have to be done to write a Board Support Package (BSP). A BSP is a selection of code and other binary or plain text files that describe the operation of a particular board to the kernel. The BSP should also include board documentation, build environment and userspace code required to operate the board such as the graphical environment. That stuff is boring (but necessary), we will examine only the kernel portion of the BSP.
+
+"ARM logo" by ARM HoldingsUploaded by Tlsa at en.wikipedia - Converted from a PDF file on their web siteTransferred from en.wikipedia by SreeBot. Licensed under Public domain via Wikimedia Commons - http://commons.wikimedia.org/wiki/File:ARM_logo.svg#mediaviewer/File:ARM_logo.svg</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="500">
+        <h1>Board Support Package</h1>
+
+        <ol><li>What devices are present</li>
+            <li>Where are they (bus and address)</li>
+            <li>Which drivers are required to control them</li></ol>
+
+        <div class="notes">Some devices also require that the kernel load firmware in to them before they can operate. We will lump firmware configuration in with the drivers here.
+
+We will ignore devices that can be automatically detected (USB devices for example) and focus only on describing parts that are connected in ways that can’t be automatically detected.</div>
+    </div>
+
+    <div class="step" id="bios" data-x-rel="0" data-y-rel="250" data-scale="0.6">
+        <h1>BIOS</h1>
+
+        <div class="simplecard"><p>Describes the fixed devices on an x86 motherboard.</p>
+            <p>All other devices are discoverable</p></div>
+
+        <div class="notes">The concept of a BSP is unusual to people who are used to building their own x86-based computers. In those machines, you can connect anything where ever it fits and at the next boot, the hardware should be automatically detected.
+
+This is true for two reasons:
+1. The BIOS on the motherboard is preloaded with information regarding the board itself. Stock-standard code can be used in the kernel to read and act on this (through commands called ACPI commands)
+2. All the busses within an x86 computer (SATA, PCIe, USB etc.) have functionality to probe locations and/or to auto-detect device arrival and removal.
+
+It hasn’t always been true. Anyone ever fit an ISA card?
+
+The address and interrupt number of each card had to be manually selected by means of jumpers on the boards. If it was incorrectly configured, the system would crash. Modern busses such as PCI either have dedicated resources for each physical slot, or some sort of arbitration and control algorithm to assign unique resources to each device at boot time.</div>
+    </div>
+
+    <div class="step" data-x="1000" data-y="0">
+        <h1>Device Model</h1>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.6">
+        <h2>Device</h2>
+        <p>A physical chip (or part of one) which is connected in some way to the board.</p>
+        <ul><li>Network Card</li>
+            <li>Interrupt Controller</li>
+            <li>Memory Bank</li>
+            <li>CPU Itself</li></ul>
+        <p>Each will have unique parameters.</p>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="150" data-scale="0.6">
+        <h2>Driver</h2>
+        The software entity the interfaces with a device and exposes some useful function to higher-level software.
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="100" data-scale="0.6">
+        <h2>Bus</h2>
+        The mechanism by which the device and processor are attached. Includes logic such as autodetect, device/driver pairing and managing data transfer.
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.6">
+        <img class="naked" src="images/os/dev-drv.png">
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.6">
+        <img class="naked" src="images/os/nios-dev.png">
+        <div class="notes">We’ve already seen how to create devices on a soft core processor. On the Nios, all the devices were on the same bus so there was no need to specify it explicitly</div>
+    </div>
+
+    <div class="step" data-x="1800" data-y="100" data-scale="0.6">
+        <h1>Flattened Device Tree</h1>
+
+        <div class="simplecard"><pre class="prettyprint">/{
+cpus  {
+  PowerPC,970 @0 {	
+    device_type	= "cpu";	
+    clock-­‐frequency	 = < 5f5e1000 >;	
+    timebase-­‐frequency = < 1FCA055 >;	
+    linux,boot-­‐cpu;		
+    i-­‐cache-­‐size = < 10000 >;	
+    d-­‐cache-­‐size = < 8000 >;	
+  };	
+};	
+
+mpic@0x3fffdd08400 {
+  /* Interrupt controller */	
+  /* ... */	
+};
+
+pci@40000000000000 {
+  /* PCI host bridge */	
+  /*  ...  */
+};
+};</pre></div>
+
+        <div class="notes">A portion of a device tree is shown here representing a CPU, some memory, the interrupt controller and the PCI controller. For each device, you have a type, a location and properties specific to that device.
+
+All these devices are directly connected to the processor and therefore on the “Platform Bus”. If there were an Ethernet card or similar on the list, it would have a bus descriptor as well.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="400" data-scale="0.6">
+        <h1>C Descriptors</h1>
+
+        <div class="simplecard"><pre class="prettyprint">static	struct spi_board_info spi0_board_info[] __initdata = {	
+{
+  .modalias = "mtd_dataflash",	
+  .max_speed_hz = 8000000,	
+  .chip_select = 0,	
+},  
+};	
+
+at32_add_device_spi(0, spi0_board_info,	ARRAY_SIZE(spi0_board_info));	
+</pre></div>
+
+        <div class="notes">The third option for describing a particular board is to write C code that exactly describes that board and compile it in to the kernel. This is the way that most embedded systems have traditionally been described as it’s simple and efficient.
+
+It has the significant down side that you have to completely recompile the kernel each time you add a new device to your board. It also leads to significant bloat of the source tree as you have to keep code describing every variation of every board that has ever been supported by the kernel.
+
+You need one of these snippets for every device on the board! At least, every device that can’t be automatically detected.</div>
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step"/>
+
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+
