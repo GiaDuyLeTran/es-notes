@@ -11,7 +11,30 @@
     <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
     <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
     <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
-    <link href="css/es05.css" rel="stylesheet" />
+    <link href="css/es05-2.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="js/jquery/jquery-ui.min.css">
+    <script src="js/jquery/external/jquery/jquery.js"></script>
+    <script src="js/jquery/jquery-ui.min.js"></script>
+
+    <script src="js/es/schedule.js"></script>
+
+    <script>
+    $(function() {
+        $( "#rt1" ).spinner({min: 1, max: 20}).spinner("value", 8)
+        $( "#rt2" ).spinner({min: 1, max: 20}).spinner("value", 3)
+        $( "#rt3" ).spinner({min: 1, max: 20}).spinner("value", 1)
+
+        $( "#per1" ).spinner({min: 1, max: 20}).spinner("value", 16)
+        $( "#per2" ).spinner({min: 1, max: 20}).spinner("value", 12)
+        $( "#per3" ).spinner({min: 1, max: 20}).spinner("value", 4)
+
+        $( "#pri1" ).spinner({min: 1, max: 3}).spinner("value", 1)
+        $( "#pri2" ).spinner({min: 1, max: 3}).spinner("value", 2)
+        $( "#pri3" ).spinner({min: 1, max: 3}).spinner("value", 3)
+    });
+    </script>
+
 </head>
 
 <body class="impress-not-supported">
@@ -140,13 +163,31 @@ We have only considered scheduling where all threads are <b>hard real time</b>. 
         <div class="notes">We will, however, see one practical implementation when we examine the Linux Kernel’s scheduler</div>
     </div>
 
+    <div class="step" id="tryit" data-x='2000' data-y='1800' data-scale="0.6">
+        <h1>Try It!</h1>
+        <center><table id="sched_input"><tr><th>Task</th><th>Run Time</th><th>Period</th><th>Priority</th></tr>
+               <tr><th>1</th><td><input id="rt1"></input></td><td><input id="per1"></input></td><td><input id="pri1"></input></td></tr>
+               <tr><th>2</th><td><input id="rt2"></input></td><td><input id="per2"></input></td><td><input id="pri2"></input></td></tr>
+               <tr><th>3</th><td><input id="rt3"></input></td><td><input id="per3"></input></td><td><input id="pri3"></input></td></tr></table>
+
+        <button id="go" onclick="schedule()">GO</button></center>
+
+        <canvas style="border:2px solid black" width="950px" height="200px" id="sched"></canvas>
+
+        <div><h2>Missed</h2>
+        <p>FPS: <span id="fps_missed"></span></p>
+        <p>EDF: <span id="edf_missed"></span></p>
+        </div>
+    </div>
+
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
-	<div id="overview" class="step" data-x="1275" data-y="658.0" data-scale="2.8">&nbsp</div>
+	<div id="overview" class="step" data-x="1275" data-y="850.0" data-scale="3.0">&nbsp</div>
 </div>
 
 <script src="js/impress.js"></script>
 <script src="js/impressConsole.js"></script>
 <script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
 <script src="js/google-code-prettify/lang-verilog.js"></script>
 <script>
 // Call Impress even if it won't be initialized so we at least
