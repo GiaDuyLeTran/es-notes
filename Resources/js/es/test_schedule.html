@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>jQuery UI Demo</title>
+
+    <link rel="stylesheet" href="../jquery/jquery-ui.min.css">
+    <script src="../jquery/external/jquery/jquery.js"></script>
+    <script src="../jquery/jquery-ui.min.js"></script>
+
+    <script src="schedule.js"></script>
+
+    <script>
+    $(function() {
+        $( "#rt1" ).spinner({min: 1, max: 20}).spinner("value", 8)
+        $( "#rt2" ).spinner({min: 1, max: 20}).spinner("value", 3)
+        $( "#rt3" ).spinner({min: 1, max: 20}).spinner("value", 1)
+
+        $( "#per1" ).spinner({min: 1, max: 20}).spinner("value", 16)
+        $( "#per2" ).spinner({min: 1, max: 20}).spinner("value", 12)
+        $( "#per3" ).spinner({min: 1, max: 20}).spinner("value", 4)
+
+        $( "#pri1" ).spinner({min: 1, max: 3}).spinner("value", 1)
+        $( "#pri2" ).spinner({min: 1, max: 3}).spinner("value", 2)
+        $( "#pri3" ).spinner({min: 1, max: 3}).spinner("value", 3)
+    });
+    </script>
+
+</head>
+
+<body>
+    <div><h1>Settings</h1>
+
+        <table><tr><th>Run Time</th><th>Period</th><th>Priority</th></tr>
+               <tr><td><input id="rt1"></div></td><td><input id="per1"></div></td><td><input id="pri1"></div></td></tr>
+               <tr><td><input id="rt2"></div></td><td><input id="per2"></div></td><td><input id="pri2"></div></td></tr>
+               <tr><td><input id="rt3"></div></td><td><input id="per3"></div></td><td><input id="pri3"></div></td></tr></table>
+
+        <button id="go" onclick="schedule()">GO</button>
+
+    </div>
+
+    <canvas style="border:2px solid black" width="1024px" height="200px" id="sched"/>
+
+</body>
+</html>
+
