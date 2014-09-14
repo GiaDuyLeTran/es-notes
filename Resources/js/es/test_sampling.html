@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>jQuery UI Demo</title>
+
+    <link rel="stylesheet" href="../jquery/jquery-ui.min.css">
+    <script src="../jquery/external/jquery/jquery.js"></script>
+    <script src="../jquery/jquery-ui.min.js"></script>
+
+    <script src="sampling.js"></script>
+
+    <script>
+    $(function() {
+        $( "#wave" ).on( "spinchange", function (event, ui) { sample() } )
+        $( "#sample" ).on( "spinchange", function (event, ui) { sample() } )
+        $( "#wave" ).on( "spin", function (event, ui) { p.wave = ui.value; sample() } )
+        $( "#sample" ).on( "spin", function (event, ui) { p.sample = ui.value; sample() } )
+
+        p.wave = 5;
+        p.sample = 10;
+
+        $( "#wave" ).spinner({min: 1, max: 20}).spinner("value", p.wave)
+        $( "#sample" ).spinner({min: 1, max: 40}).spinner("value", p.sample)
+
+        sample()
+    });
+    </script>
+
+</head>
+
+<body>
+    <div><h1>Settings</h1>
+
+        <table><tr><th>Wave</th><th>Sampling</th></tr>
+               <tr><td><input id="wave"></input></td><td><input id="sample"></input></td></tr>
+                <tr><td><div id="fw"></div></td><td><div id="fs"></div></td></tr>
+                <tr><td>F Alias</td><td><div id="fa"></div></td></tr></table>
+
+    </div>
+
+    <canvas style="border:2px solid black" width="950px" height="300px" id="sample_canvas"/>
+
+</body>
+</html>
+
