@@ -129,7 +129,7 @@ function edf(ctx, runqueue, tw, tmax, x, y, col) {
 }
 
 function schedule() {
-    var c = document.getElementById("sched");
+    var c = $( "#sched" )[0];
     var ctx = c.getContext("2d");
 
     var lh = 25, startX = 40;
