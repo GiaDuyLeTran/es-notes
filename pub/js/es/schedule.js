@@ -110,7 +110,7 @@ function edf(ctx, runqueue, tw, tmax, x, y, col) {
         // Draw missed deadline if applicable
         for (m in missed) {
             var id = runqueue[missed[m]].id - 1
-            drawMissed(ctx, x + 2 * m, y + 2 * m, col[id], t, tw);
+            drawMissed(ctx, x + 3 * m, y + 3 * m, col[id], t, tw);
         }
 
         // No eligable tasks
