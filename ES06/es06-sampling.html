@@ -85,7 +85,7 @@ Fundamentally, processing is performed in a digital domain however the inputs ar
 * but it might have <b>implicit</b> sensors. More on this later</div>
     </div>
 
-    <div class="step" data-x-rel="0" data-y-rel="500" data-scale="0.6">
+    <div class="step" data-x-rel="800" data-y-rel="0" data-scale="0.6">
         <h1>Sample Path</h1>
         <img src="images/interfacing/sample-path.png" class="naked" style="width:100%"/>
     </div>
@@ -154,7 +154,77 @@ Bandwidth in this case can be thought of as the highest frequency present in the
         <h1>Frequency Folding</h1>
         <center><img src="images/interfacing/aliases.png" class="naked"/></center>
 
-        <div class="notes">Aliased frequencies are <b>folded</b> around the sample frequency. For a given sample frequency \( f_s \), input waves at \(0.4 f_s, 0.6 f_s, 1.4 f_s, 1.6 f_s\)&hellip; will all look the same.
+        <div class="notes">Aliased frequencies are <b>folded</b> around the sample frequency. For a given sample frequency \( f_s \), input waves at \(0.4 f_s, 0.6 f_s, 1.4 f_s, 1.6 f_s\)&hellip; will all look the same.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.6">
+        <h1>Example: AD10200</h1>
+        The AD10200 is an Analogue to Digital Converter from Analog Devices.  Here it samples a sine wave at 105MSPS (mega-samples per second). We examine the frequency spectrum of the sampled signal.
+    </div>
+
+    <div class="step" data-x-rel="-300" data-y-rel="150" data-scale="0.3">
+        <div style="float:left;width:40%">\[ f_s / 2 = 52.5MHz \\ B=41MHz \] 41MHz is <b>not aliased</b></div>
+        <div style="float:left"><img src="images/interfacing/adc-41mhz.png"></div>
+    </div>
+
+    <div class="step" data-x-rel="300" data-y-rel="0" data-scale="0.3">
+        <div style="float:left;width:40%">\[ f_s / 2 = 52.5MHz \\ B=71MHz \] The wave frequency is <b>folded</b> around the sample frequency. \[ 71 - 52.5 = 18.5 \\ 52.5 - 18.5 = 34MHz \] 71MHz <b>is aliased</b> to \( 34 MHz \).</div>
+        <div style="float:left"><img src="images/interfacing/adc-71mhz.png"></div>
+    </div>
+
+    <div class="step" data-x-rel="300" data-y-rel="0" data-scale="0.3">
+        <div style="float:left;width:40%">\[ f_s / 2 = 52.5MHz \\ B=121MHz \] The wave frequency is higher than the sample frequency, but lower than \(3 f_s / 2\). \[ 121 - 2 \times 52.5 = 16 \] 121MHz <b>is aliased</b> to \( 16 MHz \).</div>
+        <div style="float:left"><img src="images/interfacing/adc-121mhz.png"></div>
+        <div class="notes">Also note here that we see harmonics of the aliased frequency at 32, 48MHz.</div>
+    </div>
+
+    <div class="step" data-x="1000" data-y="500" data-scale="0.6">
+        <h1>Quantization Noise</h1>
+        A sampled signal is quantized. This effect can be modelled as a noise source.  For a Sine Wave input and \(N\) bit sampling:
+
+        \[ SNR_{ideal} = 20 N \log(2) + 10 \log\frac{3}{2} \]
+
+        <div class="notes">The Ideal Signal to Noise Ratio is the best possible ratio that one can achieve, given the quantization. Any electrical noise much smaller than this can be ignored; any electrical noise much larger than this can cause the quantization effects to be ignored.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.6">
+        <h1>Effective Number of Bits</h1>
+        Instead of the ideal SNR and actual number of bits, we can put in the <b>actual</b> SNR and get an <b>effective</b> number of bits (ENOB).
+
+        \[ ENOB = \frac{SNR_{actual} - 10 \log\frac{3}{2}}{20\log 2} \]
+
+        <div class="notes">The ENOB reflects the fact that there is no use having high resolution samples if you have lots of noise - all you'll be sampling is noise. If you have more bits that the ENOB for a given noise level, then those extra bits are completely wasted.</div>
+    </div>
+
+    <div class="step point" data-x-rel="0" data-y-rel="300" data-scale="0.6">
+        <p>In a real-world example, a manufacturer claimed 12-bits, 4MSPS; however they were <b>not be achievable at once</b>. Running at high speed increased noise and therefore decreased the ENOB.</p><p>In practice, the ENOB was 4 when running at full speed.  <b>Two-thirds</b> of the bits were noise!</p>
+    </div>
+
+    <div class="step" data-x="2000" data-y="500" data-scale="0.6">
+        <h1>Non-linearity</h1>
+        Ideally ADC output codes would increase linearly with input voltage. In practice, this is not the case.
+    </div>
+
+    <div class="step" data-x-rel="-200" data-y-rel="200" data-scale="0.3">
+        <h1>Differential Non-Linearity</h1>
+        <div style="float:left;width:40%;"><p>DNL describes an error between successive codes.</p><p>\(DNL \lt 1\) means there are no codes missed or repeated</p></div>
+        <div style="float:right"><img src="images/interfacing/dnl.png"></div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="150" data-scale="0.3">
+        <div style="float:left;width:40%">The DNL of the AD10200 from previous examples is always less than \(\pm 0.5\).</div>
+        <div style="float:right"><img src="images/interfacing/dnl-2.png"></div>
+    </div>
+
+    <div class="step" data-x-rel="400" data-y-rel="-150" data-scale="0.3">
+        <h1>Integral Non-Linearity</h1>
+        <div style="float:left;width:40%"><p>INL is the deviation between the middle of a code and the voltage that point is supposed to represent.</p><p>\( INL \lt 1\) means that no voltage that's supposed to be in the middle of a code can trigger an adjacent code.</p></div>
+        <div style="float:right"><img src="images/interfacing/inl.png"></div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="150" data-scale="0.3">
+        <div style="float:left;width:40%">The AD10200 has an INL between \( \pm 0.9 \)</div>
+        <div style="float:right"><img src="images/interfacing/inl-2.png"></div>
     </div>
 
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
