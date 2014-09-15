@@ -254,12 +254,15 @@ body {
   padding: 20px 25px 20px 30px; }
 
 /* Really the above should inherit from this.. */
-.simplecard, .rightbox {
+.simplecard, .ccard, .rightbox {
   background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   padding: 15px 20px 15px 20px; }
+
+.ccard {
+  text-align: center; }
 
 .rightbox {
   color: #aa5712;
