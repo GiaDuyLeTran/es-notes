@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 6: Sampling</title>
+
+    <script src="MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es06.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="js/jquery/jquery-ui.min.css">
+    <script src="js/jquery/external/jquery/jquery.js"></script>
+    <script src="js/jquery/jquery-ui.min.js"></script>
+
+    <script src="js/es/sampling.js"></script>
+
+    <script>
+    $(function() {
+        $( "#wave" ).on( "spinchange", function (event, ui) { sample() } )
+        $( "#sample" ).on( "spinchange", function (event, ui) { sample() } )
+        $( "#wave" ).on( "spin", function (event, ui) { p.wave = ui.value; sample() } )
+        $( "#sample" ).on( "spin", function (event, ui) { p.sample = ui.value; sample() } )
+
+        p.wave = 15;
+        p.sample = 1;
+
+        $( "#wave" ).spinner({min: 1, max: 30, step: 0.5}).spinner("value", p.wave)
+        $( "#sample" ).spinner({min: 1, max: 30, step: 0.5}).spinner("value", p.sample)
+
+        sample()
+    });
+    </script>
+
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say"></div>
+        <div class="titlebox">
+            <h1>Sampling</h1>
+        </div>
+        <div id="say2"></div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes"></div>
+    </div>
+
+    <div class="step" id="pint" data-x="1000" data-y="0">
+        <h1>Physical Interfacing</h1>
+        <p class="ccard">Embedded Systems interact with their environment.</p>
+        <p class="ccard">They must sense aspects of their environment.</p>
+        <p class="ccard">The environment is an analogue domain, the ES is digital.</p>
+        <p class="ccard">The ES must <b>sample</b> the environment.</p>
+        <div class="notes">We have argued that Embedded Systems are physical instantiations of embodied phenomena. In short: Embedded Systems can’t be defined outside of their interactions with their environment. Given that, the Embedded System certainly must be able to sense environmental state around them.
+
+Remember, the environment includes the user and other connected systems – one particular set of hardware may not have any explicit sensors*, but it still will sense and interact with its environment. We assert that effectively interfacing with the user is very important, however we won’t look at this in any depth. This lecture will focus on the physical aspects of interfacing.
+
+Fundamentally, processing is performed in a digital domain however the inputs are typically analogue.
+<ul><li>Temperature</li><li>Distance</li><li>Depth</li><li>&hellip;</li></ul>
+
+* but it might have <b>implicit</b> sensors. More on this later</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="500" data-scale="0.6">
+        <h1>Sample Path</h1>
+        <img src="images/interfacing/sample-path.png" class="naked" style="width:100%"/>
+    </div>
+
+    <div class="step sp" data-x-rel="-220" data-y-rel="50" data-scale="0.2">
+        <div style="height:600px"></div>
+        Amplify and convert the signal to an appropriate voltage range (converting from other signals, e.g. current, if required).
+    </div>
+
+    <div class="step sp" data-x-rel="60" data-y-rel="0" data-scale="0.2">
+        <div style="height:600px"></div>
+        Electrical noise is removed if possible. This must be done in the analogue domain to prevent <b>aliasing</b>.
+    </div>
+
+    <div class="step spw" data-x-rel="75" data-y-rel="0" data-scale="0.2">
+        <div style="height:650px"></div>
+        Sample and Hold keeps the input voltage to the ADC steady while it's converted. The Analogue to Digital Converter (ADC) is the core of the domain conversion, giving a digital output for the analogue input.
+    </div>
+
+    <div class="step sp" data-x-rel="80" data-y-rel="0" data-scale="0.2">
+        <div style="height:600px"></div>
+        The CPU sees discrete numbers - digitized samples. It will process in this domain.
+    </div>
+
+    <div class="step spw" data-x-rel="75" data-y-rel="0" data-scale="0.2">
+        <div style="height:650px"></div>
+        The latch holds a digital sample constant while the DAC converts it to an analogue signal. The Digital to Analogue Converter (DAC) is responsible for the actual domain conversion in this direction.
+    </div>
+
+    <div class="step sp" data-x-rel="75" data-y-rel="0" data-scale="0.2">
+        <div style="height:600px"></div>
+        The output of the DAC may &ldquo;glitch&rdquo; as it changes value. This should be removed.
+    </div>
+
+    <div class="step sp" data-x-rel="60" data-y-rel="0" data-scale="0.2">
+        <div style="height:600px"></div>
+        Finally the signal is filtered to remove high frequency artifacts left over from the step output of the DAC.
+    </div>
+
+    <div class="step" data-x="0" data-y="500" data-scale="0.6">
+        <h1>Nyquist</h1>
+
+        \[ f_s \lt 2 \times B \]
+
+        <div class="simplecard" style="margin:0 auto; width:400px">One must sample more than <b>twice</b> as fast as any frequency contained within the signal.</div>
+
+        <div class="notes">This phenomenon is called ‘aliasing’. Sampling at a lower frequency has given us the wrong picture of the original signal.
+
+With sampling frequency F s and signal Bandwidth B, Nyquist’s criterion states \[ f_s \lt 2 \times B \]
+
+Also sometimes called the Nyquist Limit. The sampling frequency must be at least twice the analog signal bandwidth in order that no information be lost.
+
+Bandwidth in this case can be thought of as the highest frequency present in the input frequency.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="350" data-scale="0.6">
+        <h1>Try It!</h1>
+        <table id="sample_table"><tr><th></th><th>Wave Period</th><th>Sampling Period</th></tr>
+               <tr><td></td><td><input id="wave"></input></td><td><input id="sample"></input></td></tr>
+               <tr><td>Frequency:</td><td><div id="fw"></div></td><td><div id="fs"></div></td></tr>
+               <tr><td>F Alias:</td><td><div id="fa"></div></td><td></td></tr></table>
+        <canvas width="950px" height="300px" id="sample_canvas"/>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="400" data-scale="0.6">
+        <h1>Frequency Folding</h1>
+        <center><img src="images/interfacing/aliases.png" class="naked"/></center>
+
+        <div class="notes">Aliased frequencies are <b>folded</b> around the sample frequency. For a given sample frequency \( f_s \), input waves at \(0.4 f_s, 0.6 f_s, 1.4 f_s, 1.6 f_s\)&hellip; will all look the same.
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step"/>
+
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+

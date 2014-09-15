@@ -67,7 +67,7 @@ function sample() {
         phase = -1
     }
 
-    if (Math.abs(2 * fa - fs) < 0.000001) {
+    if (Math.abs(2 * fa - fs) < 0.001) {
         fa = 0
     }
 
@@ -76,7 +76,7 @@ function sample() {
 
     ctx.clearRect(0, 0, c.width, c.height)
 
-    console.log(fw, fs, fa, wave_period, sample_period, aliased_period)
+    console.log(wave_period, sample_period, aliased_period)
 
     draw_axes(c, ctx)
 
@@ -85,9 +85,9 @@ function sample() {
 
     plot_samplepoints(c, ctx, wave_period, sample_period, "green")
 
-    $( "#fs" ).html(fs.toFixed(4))
-    $( "#fw" ).html(fw.toFixed(4))
-    $( "#fa" ).html(fa.toFixed(4))
+    $( "#fs" ).html(fs.toFixed(2))
+    $( "#fw" ).html(fw.toFixed(2))
+    $( "#fa" ).html(fa.toFixed(2))
 
 };
 
