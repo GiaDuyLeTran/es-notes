@@ -1,11 +1,11 @@
-var tw = 50;
+var tw = 25;
 var tmax;
 
 var p = {wave: 0, sample: 0}
 
 function draw_axes(c, ctx) {
     ctx.beginPath()
-    ctx.strokeStyle = "black"
+    ctx.strokeStyle = "grey"
 
     for(i = 0; i < tmax; i++) {
         ctx.moveTo(i * tw, 0)
@@ -65,6 +65,10 @@ function sample() {
     if (fa > fs / 2) {
         fa = fs - fa
         phase = -1
+    }
+
+    if (Math.abs(2 * fa - fs) < 0.001) {
+        fa = 0
     }
 
     // js deals correctly with the Infinity if fa == 0
