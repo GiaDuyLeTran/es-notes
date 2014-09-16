@@ -132,13 +132,13 @@ Fundamentally, processing is performed in a digital domain however the inputs ar
 
         <div class="simplecard" style="margin:0 auto; width:400px">One must sample more than <b>twice</b> as fast as any frequency contained within the signal.</div>
 
-        <div class="notes">This phenomenon is called ‘aliasing’. Sampling at a lower frequency has given us the wrong picture of the original signal.
-
-With sampling frequency F s and signal Bandwidth B, Nyquist’s criterion states \[ f_s \lt 2 \times B \]
+        <div class="notes">With sampling frequency F s and signal Bandwidth B, Nyquist’s criterion states \[ f_s \lt 2 \times B \]
 
 Also sometimes called the Nyquist Limit. The sampling frequency must be at least twice the analog signal bandwidth in order that no information be lost.
 
-Bandwidth in this case can be thought of as the highest frequency present in the input frequency.</div>
+Bandwidth in this case can be thought of as the highest frequency present in the input frequency.
+
+If you do not sample at least this quickly, information is lost and the input waveform will appear to be a different frequency. This is called <b>aliasing</b>.</div>
     </div>
 
     <div class="step" data-x-rel="0" data-y-rel="350" data-scale="0.6">
