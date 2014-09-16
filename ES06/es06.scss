@@ -6,7 +6,7 @@
 @import 'embedded-systems';
 
 #title h1 {
-    padding-top:150px;
+    padding-top:75px;
 }
 
 
@@ -20,7 +20,7 @@
 }
 
 #title #say2 {
-    margin-top: 40px;
+    margin-top: 80px;
     text-align:right;
     font-size:10px;
     text-shadow:none;
@@ -29,10 +29,14 @@
 }
 
 #title .linkbox {
-    margin-top:200px;
+    margin-top:100px;
 }
 
 #pint {width:800px;}
+
+@each $i in (1, 2, 3, 4, 5, 6, 7) {
+    .impress-on-sp#{$i} #samplepath { @include opacity (0.6) }
+}
 
 .step.sp {width:350px; font-size:12pt;}
 .step.spw {width:450px; font-size:12pt;}

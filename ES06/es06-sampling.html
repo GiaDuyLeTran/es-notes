@@ -58,11 +58,11 @@
             <p>Research School of Engineering</p>
             <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
         </div>
-        <div id="say"></div>
+        <div id="say">We thought, is it a high-end perfume? A series of interrelated fortune cookies?<br/>A hat that if you turn it upside down, it's</div>
         <div class="titlebox">
             <h1>Sampling</h1>
         </div>
-        <div id="say2"></div>
+        <div id="say2">Voila! It is a bimonthly curated box of snacks</div>
         <div class="linkbox">
             <a href="?print">print view</a>
         </div>
@@ -70,7 +70,7 @@
     </div>
 
     <div class="step" id="pint" data-x="1000" data-y="0">
-        <h1>Physical Interfacing</h1>
+        <h1>Why Sample?</h1>
         <p class="ccard">Embedded Systems interact with their environment.</p>
         <p class="ccard">They must sense aspects of their environment.</p>
         <p class="ccard">The environment is an analogue domain, the ES is digital.</p>
@@ -85,42 +85,42 @@ Fundamentally, processing is performed in a digital domain however the inputs ar
 * but it might have <b>implicit</b> sensors. More on this later</div>
     </div>
 
-    <div class="step" data-x-rel="800" data-y-rel="0" data-scale="0.6">
+    <div class="step" id="samplepath" data-x-rel="800" data-y-rel="0" data-scale="0.6">
         <h1>Sample Path</h1>
         <img src="images/interfacing/sample-path.png" class="naked" style="width:100%"/>
     </div>
 
-    <div class="step sp" data-x-rel="-220" data-y-rel="50" data-scale="0.2">
+    <div class="step sp" id="sp1" data-x-rel="-220" data-y-rel="50" data-scale="0.2">
         <div style="height:600px"></div>
         Amplify and convert the signal to an appropriate voltage range (converting from other signals, e.g. current, if required).
     </div>
 
-    <div class="step sp" data-x-rel="60" data-y-rel="0" data-scale="0.2">
+    <div class="step sp" id="sp2" data-x-rel="60" data-y-rel="0" data-scale="0.2">
         <div style="height:600px"></div>
         Electrical noise is removed if possible. This must be done in the analogue domain to prevent <b>aliasing</b>.
     </div>
 
-    <div class="step spw" data-x-rel="75" data-y-rel="0" data-scale="0.2">
+    <div class="step spw" id="sp3" data-x-rel="75" data-y-rel="0" data-scale="0.2">
         <div style="height:650px"></div>
         Sample and Hold keeps the input voltage to the ADC steady while it's converted. The Analogue to Digital Converter (ADC) is the core of the domain conversion, giving a digital output for the analogue input.
     </div>
 
-    <div class="step sp" data-x-rel="80" data-y-rel="0" data-scale="0.2">
+    <div class="step sp" id="sp4" data-x-rel="80" data-y-rel="0" data-scale="0.2">
         <div style="height:600px"></div>
         The CPU sees discrete numbers - digitized samples. It will process in this domain.
     </div>
 
-    <div class="step spw" data-x-rel="75" data-y-rel="0" data-scale="0.2">
+    <div class="step spw" id="sp5" data-x-rel="75" data-y-rel="0" data-scale="0.2">
         <div style="height:650px"></div>
         The latch holds a digital sample constant while the DAC converts it to an analogue signal. The Digital to Analogue Converter (DAC) is responsible for the actual domain conversion in this direction.
     </div>
 
-    <div class="step sp" data-x-rel="75" data-y-rel="0" data-scale="0.2">
+    <div class="step sp" id="sp6" data-x-rel="75" data-y-rel="0" data-scale="0.2">
         <div style="height:600px"></div>
         The output of the DAC may &ldquo;glitch&rdquo; as it changes value. This should be removed.
     </div>
 
-    <div class="step sp" data-x-rel="60" data-y-rel="0" data-scale="0.2">
+    <div class="step sp" id="sp7" data-x-rel="60" data-y-rel="0" data-scale="0.2">
         <div style="height:600px"></div>
         Finally the signal is filtered to remove high frequency artifacts left over from the step output of the DAC.
     </div>

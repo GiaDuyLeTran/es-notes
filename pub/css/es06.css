@@ -1047,7 +1047,7 @@ pre {
     padding: 20px;
     font-size: 18px; } }
 #title h1 {
-  padding-top: 150px; }
+  padding-top: 75px; }
 
 #title #say {
   margin-top: 150px;
@@ -1058,7 +1058,7 @@ pre {
   letter-spacing: initial; }
 
 #title #say2 {
-  margin-top: 40px;
+  margin-top: 80px;
   text-align: right;
   font-size: 10px;
   text-shadow: none;
@@ -1066,10 +1066,38 @@ pre {
   letter-spacing: initial; }
 
 #title .linkbox {
-  margin-top: 200px; }
+  margin-top: 100px; }
 
 #pint {
   width: 800px; }
+
+.impress-on-sp1 #samplepath {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+  opacity: 0.6; }
+
+.impress-on-sp2 #samplepath {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+  opacity: 0.6; }
+
+.impress-on-sp3 #samplepath {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+  opacity: 0.6; }
+
+.impress-on-sp4 #samplepath {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+  opacity: 0.6; }
+
+.impress-on-sp5 #samplepath {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+  opacity: 0.6; }
+
+.impress-on-sp6 #samplepath {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+  opacity: 0.6; }
+
+.impress-on-sp7 #samplepath {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+  opacity: 0.6; }
 
 .step.sp {
   width: 350px;
