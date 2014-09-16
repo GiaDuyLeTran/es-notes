@@ -21,18 +21,11 @@
         '</head><body>' + 
         '<div id="console">' +
           '<div id="views">' +
-            '<iframe id="slideView" scrolling="no"></iframe>' +
-            '<iframe id="preView" scrolling="no"></iframe>' +
-            '<div id="blocker"></div>' + 
+            '<div id="viewWrapper">' +
+              '<iframe id="slideView" scrolling="no"></iframe>' +
+            '</div>' +
           '</div>' +
           '<div id="notes"></div>' +
-        '</div>' +
-        '<div id="controls"> ' +
-          '<div id="prev"><a  href="#" onclick="impress().prev(); return false;" />Prev</a></div>' +
-          '<div id="next"><a  href="#" onclick="impress().next(); return false;" />Next</a></div>' +
-          '<div id="clock">00:00:00 AM</div>' +
-          '<div id="timer" onclick="timerReset()">00m 00s</div>' +
-          '<div id="status">Loading</div>' +
         '</div>' +
         '</body></html>';
 
@@ -85,7 +78,7 @@
                 if (newNotes) {
                     newNotes = newNotes.innerHTML;
                 } else {
-                    newNotes = 'No notes for this step';
+                    newNotes = '';
                 }
                 consoleWindow.document.getElementById('notes').innerHTML = newNotes;
 
@@ -98,12 +91,6 @@
                 if (slideView.src !== slideSrc) {
                     slideView.src = slideSrc;
                 }
-                var preView = consoleWindow.document.getElementById('preView');
-                if (preView.src !== preSrc) {
-                    preView.src = preSrc;
-                }
-                
-                consoleWindow.document.getElementById('status').innerHTML = '<span style="color: red">Moving</span>';
             }
         };
     
@@ -117,7 +104,7 @@
                 if (newNotes) {
                     newNotes = newNotes.innerHTML;
                 } else {
-                    newNotes = 'No notes for this step';
+                    newNotes = '';
                 }
                 var notes = consoleWindow.document.getElementById('notes');
                 notes.innerHTML = newNotes;
@@ -132,12 +119,6 @@
                 if (slideView.src !== slideSrc) {
                     slideView.src = slideSrc;
                 }
-                var preView = consoleWindow.document.getElementById('preView');
-                if (preView.src !== preSrc) {
-                    preView.src = preSrc;
-                }
-                
-                consoleWindow.document.getElementById('status').innerHTML = '<span style="color: green">Ready</span>';
             }
         };
 
@@ -147,42 +128,6 @@
                notes.scrollTop = notes.scrollTop + notes.clientHeight * 0.8;
             } else {
                impress().next();
-            }
-        };
-        
-        var timerReset = function () {
-            consoleWindow.timerStart = new Date();
-        };
-        
-        // Show a clock
-        var clockTick = function () {
-            var now = new Date();
-            var hours = now.getHours();
-            var minutes = now.getMinutes();
-            var seconds = now.getSeconds();
-            var ampm = '';
-        
-            if (useAMPM) {
-                ampm = ( hours < 12 ) ? 'AM' : 'PM';
-                hours = ( hours > 12 ) ? hours - 12 : hours;
-                hours = ( hours === 0 ) ? 12 : hours;
-            }
-          
-            // Clock
-            var clockStr = zeroPad(hours) + ':' + zeroPad(minutes) + ':' + zeroPad(seconds) + ' ' + ampm;
-            consoleWindow.document.getElementById('clock').firstChild.nodeValue = clockStr;
-            
-            // Timer
-            seconds = Math.floor((now - consoleWindow.timerStart) / 1000);
-            minutes = Math.floor(seconds / 60);
-            seconds = Math.floor(seconds % 60);
-            consoleWindow.document.getElementById('timer').firstChild.nodeValue = zeroPad(minutes) + 'm ' + zeroPad(seconds) + 's';
-            
-            if (!consoleWindow.initialized) {
-                // Nudge the slide windows after load, or they will scrolled wrong on Firefox.
-                consoleWindow.document.getElementById('slideView').contentWindow.scrollTo(0,0);
-                consoleWindow.document.getElementById('preView').contentWindow.scrollTo(0,0);
-                consoleWindow.initialized = true;
             }
         };
 
@@ -213,14 +158,10 @@
 
 		// Firefox:
 		slideView.contentDocument.body.classList.add('impress-console');
-		preView.contentDocument.body.classList.add('impress-console');
 		
 		// Chrome:
 	        slideView.addEventListener('load', function() {
 		        slideView.contentDocument.body.classList.add('impress-console');
-	        });
-	        preView.addEventListener('load', function() {
-		        preView.contentDocument.body.classList.add('impress-console');
 	        });
         };        
     
@@ -237,16 +178,12 @@
                 consoleWindow.document.open();
                 // Write the template:
                 consoleWindow.document.write(consoleTemplate.replace("{{cssFile}}", cssFile));
-                consoleWindow.document.title = 'Speaker Console (' + document.title + ')';
+                consoleWindow.document.title = 'Notes (' + document.title + ')';
                 consoleWindow.impress = window.impress;
                 // We set this flag so we can detect it later, to prevent infinite popups.
                 consoleWindow.isconsoleWindow = true;
                 // Set the onload function:
                 consoleWindow.onload = consoleOnLoad;
-                // Add clock tick
-                consoleWindow.timerStart = new Date();
-                consoleWindow.timerReset = timerReset;
-                consoleWindow.clockInterval = setInterval('impressConsole("' + rootId + '").clockTick()', 1000 );
                 
                 // keyboard navigation handlers
                 // 33: pg up, 37: left, 38: up
@@ -256,11 +193,6 @@
                 // 32: space
                 registerKeyEvent([32], spaceHandler);
                 
-                // Cleanup
-                consoleWindow.onbeforeunload = function() {
-                    // I don't know why onunload doesn't work here.
-                    clearInterval(consoleWindow.clockInterval);
-                };
                 
                 // It will need a little nudge on Firefox, but only after loading:                
                 onStepEnter();
@@ -292,7 +224,7 @@
         };
                 
         // Return the object        
-        allConsoles[rootId] = {init: init, open: open, clockTick: clockTick, registerKeyEvent: registerKeyEvent};
+        allConsoles[rootId] = {init: init, open: open, registerKeyEvent: registerKeyEvent};
         return allConsoles[rootId];
         
     };
