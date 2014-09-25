@@ -212,6 +212,124 @@ I2C is also used as a control channel in parallel with data channels.
             </div>
     </div>
 
+    <div class="step" data-x="2100" data-y="800" data-scale="0.5">
+        <h1>USB</h1>
+        <img src="images/comm-mem/usb.png" class="naked">
+
+        <div class="notes">USB is by far the most commonly used interface for computer peripherals and devices, although its use in Embedded
+Systems is somewhat limited. USB is fairly complex to implement and, though the spec allows for guaranteed bandwidth or latency allocations, few devices take advantage of this.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="400" data-scale="0.5">
+        <h2>Logical Connection</h2>
+        <img src="images/comm-mem/usb-logical.png" class="naked">
+
+        <div class="notes">Everyone is familiar with the architecture of USB, with devices connected through hubs in a tree structure.
+Inside each physical device there are a number of logical ‘endpoints’. Endpoints in each device are logically connected by ‘pipes’.
+There’s always a pipe between Endpoint 0 at each end, referred to as the Control Pipe. This carries set up information at start up, including information about how the other endpoints are to be wired up.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h1>Pipe Types</h1>
+
+        <div class="notes">Pipes between endpoints can either by message pipes, like the control pipe, or stream pipes. Stream pipes are used for most data transfers.  Stream pipes in turn are divided in to three classes: Interrupt, Isochronous and Bulk.
+
+Stream pipes are unidirectional while message pipes are bi-directional.</div>
+    </div>
+
+    <div class="step" data-x-rel="-100" data-y-rel="100" data-scale="0.5">
+        <div style="float:left;width:400px;height:300px"><h3>Isochronous</h3><div class="simplecard" style="height:100%">
+            <ul><li>Guaranteed Bandwidth</li>
+                <li>Device can tolerate data loss, not latency</li>
+                <li>Allocation made on enumeration (connection)</li>
+                <li>Used for streaming devices, e.g. USB Speakers</li></ul>
+        </div></div>
+        <div class="notes">Isochronous transfers can tolerate data loss more than they can tolerate latency. USB speakers, webcams and the like use Isochronous transfers.
+
+Isochronous transfers have a guaranteed rate (which is generally, but not always, as fast as possible). This rate must be requested by the USB device when it is plugged in, in order for the OS to confirm that the guarantees can be satisfied. In order to make these guarantees, the computer must reserve the right to reject a device’s application for bandwidth; there isn’t an infinite amount of it around! In  ractice, it’s rare for one to try and connect so many webcams that the bandwidth is consumed and new devices get rejected, but it can happen.</div>
+    </div>
+
+    <div class="step" data-x-rel="100" data-y-rel="0" data-scale="0.5">
+        <div style="margin:0 auto;width:400px;height:300px"><h3>Interrupt</h3><div class="simplecard" style="height:100%">
+            <ul><li>Guaranteed Latency</li>
+                <li>Allocation made on enumeration (connection)</li>
+                <li>Reserved whether used or not</li>
+                <li>Small data sizes</li>
+                <li>Used for, e.g. USB Mice</li></ul>
+        </div></div>
+
+        <div class="notes">Interrupt transfers can provide bounded latency assuming a complete knowledge of the devices on the bus and that all other devices are well-behaved.
+
+Interrupt transfers are necessarily small amounts of data that must be delivered, such as information from USB mice and keyboards.</div>
+    </div>
+
+    <div class="step" data-x-rel="100" data-y-rel="0" data-scale="0.5">
+        <div style="float:right;width:400px;height:300px"><h3>Bulk</h3><div class="simplecard" style="height:100%">
+            <ul><li>Uses &ldquo;left-over&rdquo; bandwidth</li>
+                <li>Capable of transferring arbitrary amounts of data</li>
+                <li>No guarantees on latency or throughput</li></ul>
+        </div></div>
+
+        <div class="notes">Bulk transfers take up the ‘rest’. Any bandwidth that isn’t reserved for the other two classes is allocated to bulk transfers. This is designed to be used by things like USB storage devices, but in practice many devices that should use other types end up using bulk transfers anyway. For example, a USB to Serial converter</div>
+    </div>
+
+    <div class="step" data-x-rel="-100" data-y-rel="300" data-scale="0.5">
+        <h1>Example: USB to Serial</h1>
+        <div style="float:left;width:40%">
+            <p><b>Large data sizes:</b> Can't use Interrupt</p>
+            <p><b>Can't tolerate loss:</b> Can't use Isochronous</p>
+            <p><b>Must use Bulk transfers.</b></p>
+            <p>No guaranteed latency, bandwidth. The act of plugging in a mouse can ruin your serial communications latency.</p></div>
+        <div style="float:right;width:50%"><img src="images/comm-mem/usb-serial.png" style="width:100%" class="naked"></div>
+
+        <div class="notes">A common USB peripheral in Embedded Systems are “USB to Serial Converters”. These replace the standard serial ports that were present on most older computers with USB versions. This same concept is extended to “USB to I2C Converters”, “USB to
+SPI” etc.
+
+These devices cannot tolerate loss, they carry a lot of data; therefore they do not fit in to Isochronous or Interrupt categories. They use Bulk transfers.
+
+Because they use bulk transfers, they have neither guaranteed latency or bandwidth. This means that an Embedded System using such a converter for communications can’t make any real time guarantees about delivery. In practice, the simple act of plugging in a mouse can ruin your communications channel.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h1>Connectors</h1>
+
+        <div style="float:left;width:50%"><p>USB mandates connector types for upstream (host) and downstream (device) ports.</p>
+            <p>Proprietary connectors exist (e.g. Apple iPhone) but cannot use the USB logo.</p></div>
+        <div style="float:right"><img src="images/comm-mem/Types-usb_th1.png" class="naked"></div>
+
+        <div class="notes">"Types-usb th1" by Darx, Damian Yerrick, et al - http://commons.wikimedia.org/wiki/File:Types-usb_new.svg. Licensed under Creative Commons Attribution-Share Alike 3.0 via Wikimedia Commons - http://commons.wikimedia.org/wiki/File:Types-usb_th1.svg#mediaviewer/File:Types-usb_th1.svg</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+        <h2>Type C</h2>
+        <center><img src="images/comm-mem/usb-3-type-c.jpg"></center>
+        <div class="notes">Type C connectors are expected around 2015, at the time of writing. These will be reverseable, easing the mating with mobile devices.
+
+            Some connector types may also be able to carry large amounts of power (~100 Watts), suitable for the charging of a laptop.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+        <h1>Power</h1>
+        <center>
+            <table id="usbpower">
+                <tr><th>Specification</th><th>Current</th><th>Voltage</th><th>Power</th></tr>
+                <tr><td rowspan=2>USB 1.0<br/>USB 2.0</td><td>150mA</td><td>5V</td><td>0.75W</td></tr>
+                <tr><td>500mA</td><td>5V</td><td>2.5W</td></tr>
+                <tr><td>USB 3.0</td><td>900mA</td><td>5V</td><td>4.5W</td></tr>
+                <tr><td rowspan=3>USB 3.1</td><td>2A</td><td>5V</td><td>10W</td></tr>
+                <tr><td>5A</td><td>12V</td><td>60W</td></tr>
+                <tr><td>5A</td><td>20V</td><td>100W</td></tr>
+            </table>
+        </center>
+
+        <div class="notes">USB also specifies an amount of power that must be available to a down-stream device through the connector.
+A device must draw no more than 500mA from a USB 1.x or 2.0 port or 900mA from a USB 3.0 port, all at 5 volts.
+
+USB 3.0 includes power delivery up to 100W to allow for a single connector on a laptop carrying all docking signals, including battery charging.
+
+This simple requirement has meant that USB is specified as more than a communications bus, many devices use it just for power!</div>
+    </div>
+
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
     <div id="overview" class="step"/>
 

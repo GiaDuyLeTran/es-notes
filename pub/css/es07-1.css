@@ -1080,3 +1080,15 @@ sup {
 
 #title .linkbox {
   margin-top: 130px; }
+
+#usbpower th {
+  color: #aa5712;
+  font-weight: bold; }
+
+#usbpower td, th {
+  padding: 5px 40px;
+  text-align: center;
+  vertical-align: middle; }
+
+#usbpower tr {
+  border-bottom: 2px solid #aa5712; }
