@@ -48,6 +48,10 @@ $badshadow: 0px 0px 20px $badhighlight;
     letter-spacing: -1px;
 }
 
+.thin {
+    width: 650px;
+}
+
 /* Card element that displays contained data within a slide */
 .card {
     @extend .slide;
@@ -305,6 +309,13 @@ code {
 
 pre {
     border-style:none;
+}
+
+sup {
+    position: relative;
+    display: inline-block;
+    font-size: 60%;
+    vertical-align: top;
 }
 
 #title .logo {

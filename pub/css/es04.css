@@ -242,6 +242,9 @@ body {
   line-height: 36px;
   letter-spacing: -1px; }
 
+.thin {
+  width: 650px; }
+
 /* Card element that displays contained data within a slide */
 .card, .listcard {
   width: auto;
@@ -1003,6 +1006,12 @@ img.naked {
 
 pre {
   border-style: none; }
+
+sup {
+  position: relative;
+  display: inline-block;
+  font-size: 60%;
+  vertical-align: top; }
 
 #title .logo {
   float: left;
