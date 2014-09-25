@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 6: GNSS</title>
+
+    <script src="MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es07-1.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="500" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say">Here's a tip - aluminum foil makes a lovely hat and it blocks out the government's</div>
+        <div class="titlebox">
+            <h2>Communication</h2>
+            <h1>Busses</h1>
+        </div>
+        <div id="say2">Got to keep you guys outta trouble.</div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes"></div>
+    </div>
+
+    <div class="step" data-x-rel="800" data-y-rel="0" data-scale="0.5">
+        <h1>OSI Model</h1>
+        <center><img src="images/comm-mem/osi.png" class="naked"/></center>
+
+        <div class="notes">
+        Within each device, the network stack can be defined in terms of the 7-layer OSI Model.
+        </div>
+    </div>
+
+    <div class="step" data-x-rel="-40" data-y-rel="-70" data-scale="0.15">
+        <div style="float:right">The data the end application wants transported</div>
+        <div class="notes">The application layer is the uppermost in the stack.
+Conceptually this means that it shouldn’t carry data on behalf of another protocol. Application layer protocols are things like HTTP, NTP etc. They are ‘final products’.
+
+Some application protocols have been subverted to carry other protocols; for example, web applications use HTTP to carry data associated with other protocols e.g. JSON which is in fact a presentation layer protocol itself.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="33" data-scale="0.15">
+        <div style="float:right">Data is formatted correctly (e.g. Endianness)</div>
+        <div class="notes">This ensures that both ends of the protocol agree on data formats, that is, the data is ‘presented’ in the same way. This layer is rarely implemented separately from the application layer, as the presentation of data is dependent on the data itself which in turn is heavily dependent on what the application’s actually trying to say.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="33" data-scale="0.15">
+        <div style="float:right">Inter-host communication, session management.</div>
+        <div class="notes">Responsible for controlling ‘conversations’ between each end. This synchronizes the applications at each end and ensures that the data that’s transferred doesn’t fall on deaf ears. Most of the functionality of TCP counts as a session layer.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="33" data-scale="0.15">
+        <div style="float:right">Reliable delivery of packets in a network</div>
+        <div class="notes">Relied on for end-to-end transmission, error correction, reliable transmission. The rest of TCP fits in here, ensuring that packets that leave one end actually arrive at the other, retransmitting as necessary.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="33" data-scale="0.15">
+        <div style="float:right">Data is routing between <b>logical</b> machines</div>
+        <div class="notes">Logical Addressing. Allows applications to request connections to particular logical locations like IP addresses.
+
+There isn’t much that seems logical about IP addresses, but in fact they’re hierarchical identifiers that originally could location particular machines in particular labs, companies, countries etc. As the number of computers wanting IP addresses outstripped the number actually available, this model was broken and the IP address is now pretty arbitrary.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="33" data-scale="0.15">
+        <div style="float:right">Data is routing between <b>physical</b> machines or devices</div>
+        <div class="notes">Physical Addressing. Logical addresses are associated with an entity like “the server for web page X”, physical addresses are associated with particular interfaces on particular machines. In common computer networks, the physical address is the ‘MAC’ address.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="33" data-scale="0.15">
+        <div style="float:right">Physically modulates something to transfer the data</div>
+        <div class="notes">Responsible for actually twiddling electrical/light/radio states. Generally also able to detect connection to a network, collision between data sent from the local device to the interface medium.</div>
+    </div>
+
+    <div class="step" data-x="500" data-y="700" data-scale="0.5">
+        <h1>SPI</h1>
+        <img src="images/comm-mem/spi.png" class="naked">
+
+        <div class="notes">Serial Peripheral Interface: SPI
+
+One master, many slaves. One ‘slave select’ line per slave (or ‘chip select’) provides addressing: Only the selected slave should receive and transmit data.
+
+Full-duplex, synchronous serial protocol. SPI is in many ways the most simply communication interface out there – no clock recovery,  addressing has its own, broken out wires, separate wires for data in and out etc.</div>
+    </div>
+
+    <div class="step thin" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+        <h2>Used For</h2>
+        <ul><li>Serial memories</li>
+            <li>SD Cards</li>
+            <li>Sensors</li>
+            <li>Interface devices</li>
+            <li>&hellip;</li></ul>
+
+        <div class="notes">Can be run at several MHz if required, so useful for high rate ADCs and memories.</div>
+    </div>
+
+    <div class="step thin" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>Defines</h2>
+        <p><b>Data Link:</b> Physical Addressing</p>
+        <p><b>Physical Layer:</b> Data transmission/reception</p>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <div style="float:left;width:250px">
+            <h2>Clock Edge</h2>
+            <p>Only defines the Physical Layer up to two parameters: Clock Phase and Clock Polarity.</p></div>
+        <div style="float:right"><img src="images/comm-mem/spi-pol.png" class="naked"/></div>
+        <div class="notes">The combination of phase and polarity gives two pieces of information: Rising or Falling Edge; and whether the clock idles Low or High. Most devices care only about the edge; e.g. a device may work with POL/PHA = (0,0) or (1,1) as both of them use the rising edge.</div>
+    </div>
+
+    <div class="step" data-x="1300" data-y="700" data-scale="0.5">
+        <h1>I<sup>2</sup>C</h1>
+        <center><img src="images/comm-mem/i2c.png" class="naked"></center>
+
+        <div class="notes">More tightly standardized than SPI, it defines the required clock rate, a multi-master arbitration protocol and even the type of data to be transferred.
+
+I2C was trademarked by Phillips, but rather than jump through licensing hoops, many manufacturers chose instead to implement exactly the same protocol but call it something different. A common alternative name to the same bus is ‘TWI’, the two-wire interface.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h2>Open-Drain</h2>
+        <img src="images/comm-mem/i2c-wave.png" class="naked">
+        <p>Lines are driven to ground but left to &ldquo;float&rdquo; to VCC; the devices stop driving the bus and let the termination resistors pull the lines high.</p>
+        <p>Capacitance on the lines can cause an &ldquo;Opera House&rdquo; effect.</p>
+        <div class="notes">I2C has two wires, a clock and a data line. As such, it is half duplex.
+
+Both lines are ‘Open Drain’, which means that they are driven low but never driven high, instead, pull-up resistors must be fitted to the bus. This means that whenever nothing is explicitly pulling the lines low, the bus idles high.
+
+The open drain design means that when ever a device expects the bus to be high, it must check this fact. If the bus isn’t in the expected state, this means that another device is driving the bus at the same time. Either this is another bus master fighting for the bus, or an expected slave acknowledgement.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h2>Clock Timing</h2>
+        <img src="images/comm-mem/i2c1.png">
+        <p>Data must be valid while the clock is high.</p>
+        <p>Data is <b>not</b> latched at a particular edge.</p>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h2>Start and Stop</h2>
+        <img src="images/comm-mem/i2c2.png">
+        <p>If Data does change while clock is high, this signals the beginning or end of a transfer.</p>
+        <p>In this way (and along with addresses in the data stream), no Slave Select pin is required.</p>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h2>Acknowledgements</h2>
+        <img src="images/comm-mem/i2c3.png">
+        <p>Every byte is acknowledged by the receiver, by means of pulling the data line low.</p>
+        <p>This allows the master to confirm a slave is present and accepting data.</p>
+
+        <div class="notes">In fact the ACK slot plays another role. If the master is reading from the slave, then the master will acknowledge the receipt of a byte if and only if it wishes to receive another.  That is, when the master is finished reading, it will not acknowledge the final byte.
+
+            In this way, the lack of an acknowledge is not always an error condition.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h2>Clock Stretching</h2>
+        <img src="images/comm-mem/i2c4.png">
+        <p>The slave may choose to hold the clock low, not allowing the master to send more data.</p>
+        <p>This would usually happen if the slave requires more time to process a request.</p>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h2>Addressing</h2>
+        <img src="images/comm-mem/i2c5.png">
+        <p>The first byte after a start condition contains an address and a direction (read/write).</p>
+        <p>If there is a slave at that address, it will acknowledge the address and the transfer can proceed.</p>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h2>Used For</h2>
+        <ul><li>Power Management</li>
+            <li>System Management</li>
+            <li>Display Data from a Computer Monitor</li>
+            <li>Control Channels for other peripherals
+                <ul><li>Audio Codecs</li>
+                    <li>Camera Modules</li>
+                    <li>LCD Screens</li>
+                    <li>&ldquo;DIMM&rdquo; memory modules</li>
+                </ul>
+            </li></ul>
+        <div class="notes">Many other protocols are built in top of I2C.
+            <ul><li>PMBus: Power Management Bus is specified to carry messages regarding voltages, currents, power transfers and the like</li><li>SMBus: The System Management bus is commonly found on computer motherboards, communicates simple messages such as ON/OFF</li><li>DDC: Display Data Channel lives inside VGA, DVI and HDMI connectors and allows the video card to query display parameters such as resolution, supported colour depth and the like.</li></ul>
+
+I2C is also used as a control channel in parallel with data channels.
+            <ul><li>Camera modules commonly use I2C for configuration and a parallel colour bus for the picture information</li><li>LCD screens often use I2C (or SPI) for configuration and a parallel colour bus for the picture information</li><li>Audio CODECs use I2C for configuration and I2S for data transfer (you should know that from labs!)</li><li>Standard computer memory modules use I2C for presence, capacity and error correction information while the parallel memory bus carries the read and write operations.</li></ul>
+
+            </div>
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step"/>
+
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+
