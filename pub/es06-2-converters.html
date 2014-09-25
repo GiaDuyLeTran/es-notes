@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 6: Converters</title>
+
+    <script src="MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es06-2.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say">How ironic, Tony! Trying to rid the world of</div>
+        <div class="titlebox">
+            <h1>Converters</h1>
+        </div>
+        <div id="say2">you gave it its best one ever! And now, I'm going to kill you with it!</div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes"></div>
+    </div>
+
+    <div class="step" data-x="1000" data-y="0">
+        <h1>Trade-offs</h1>
+        <center><img src="images/interfacing/converter-trade.png" class="naked"/></center>
+        <div class="notes"></div>
+    </div>
+
+    <div class="step" data-x="0" data-y="600" data-scale="0.6">
+        <h1>Flash Converters</h1>
+        <div style="float:left;width:40%">
+            <p>One comparator per output value: <b>one-hot</b></p>
+            <ul><li>Fast</li><li>Expensive</li></ul>
+        </div>
+        <div style="float:right"><img src="images/interfacing/flash.png" class="naked"/></div>
+
+        <div class="notes">Each output value is independent. Quick Quiz: Would this be good or bad for DNL and INL?</div>
+    </div>
+
+    <div class="step" data-x='600' data-y='600' data-scale="0.6">
+        <h1>Successive Approximation Converters</h1>
+        <div><center><img src="images/interfacing/sar.png" class="naked"/></center></div>
+        <div>
+            <p>Takes a guess of the input value and uses a comparator to check whether the guess is too high or low. This is used to refine the guess and try again.</p><p>This gives one bit of resolution per clock cycle.</p>
+            <ul><li>Slow</li><li>Cheap</li></ul>
+        </div>
+
+        <div class="notes">Each output value is built on the previous value. Quick Quiz: Would this be good or bad for DNL and INL?</div>
+    </div>
+
+
+    <div class="step" data-x='1200' data-y='600' data-scale="0.6">
+        <h1>Sigma-Delta (\(\Sigma\Delta\)) Converters</h1>
+        <div><center><img src="images/interfacing/sigdelt.png" class="naked"/></center></div>
+        <div>
+            <p>Keeps a running integral of the error between the current output and input value.</p><p>The output is not given as distinct digital numbers but just by the density of <b>1's</b> in the stream.</p>
+            <ul><li>Trade off Latency/Accuracy when reading the stream</li><li>Robust</li></ul>
+        </div>
+    </div>
+
+    <div class="step" data-x='1200' data-y='1000' data-scale="0.6">
+        <h1>\(\Sigma\Delta\) Decoding</h1>
+        <div style="float:left;width:40%">Record the <b>average</b> value of the signal over the sample time.</div>
+        <div style="float:right;width:45%"><pre class="prettyprint simplecard bad">while(sampling) {	
+    if (input_pin)
+        hcount++;	
+    else
+        lcount++;	
+}	
+
+v = hcount / (hcount + lcount);</pre><p><b>Doesn't work!</b> Branch Delays.</p></div>
+    </div>
+
+    <div class="step" data-x='1200' data-y='1300' data-scale="0.6">
+        <div style="float:left;width:45%"><pre class="prettyprint simplecard">while(sampling) {	
+    if (input_pin)
+        hcount++;	
+    else
+        lcount++;	
+}	
+v = hcount / (hcount + lcount);</pre></div>
+
+        <div style="float:right;width:45%"><pre class="prettyprint simplecard">while(sampling) {	
+    if (!input_pin)
+        lcount++;	
+    else
+        hcount++;	
+}	
+v = hcount / (hcount + lcount);</pre></div>
+
+        <div style="clear:both"><p>The above snippets should produce the same output but they <b>don't</b>. The time taken to execute the <code>if</code> and <code>else</code> branches is not the same.</p></div>
+    </div>
+
+    <div class="step" id="sd-sol" data-x='1200' data-y='1600' data-scale="0.6">
+        <div style="margin:0 auto;width:90%" class="simplecard"><pre class="prettyprint">while(sampling) { 
+    if (input_pin)
+        hcount++;
+    else
+        lcount++;
+
+    delay_until(next_sample);
+    next_sample += interval;
+}   
+v = hcount / (hcount + lcount);</pre></div>
+        <div style="clear:both"><p>This is a typical Real Time problem and should be solved using the correct delay structures. See <a href="es04-2-uc-rt.html#/step-25">Absolute Delays</a>.</p></div>
+    </div>
+
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+	<div id="overview" class="step" data-x="600" data-y="670.0" data-scale="2.6">&nbsp</div>
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+

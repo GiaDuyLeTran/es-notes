@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=1024" />
-    <title>ENGN8537 Lecture 6: Sampling</title>
+    <title>ENGN8537 Lecture 6: Converters</title>
 
     <script src="MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
@@ -11,7 +11,7 @@
     <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
     <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
     <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
-    <link href="css/es06.css" rel="stylesheet" />
+    <link href="css/es06-2.css" rel="stylesheet" />
 </head>
 
 <body class="impress-not-supported">
@@ -34,11 +34,11 @@
             <p>Research School of Engineering</p>
             <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
         </div>
-        <div id="say"></div>
+        <div id="say">How ironic, Tony! Trying to rid the world of</div>
         <div class="titlebox">
             <h1>Converters</h1>
         </div>
-        <div id="say2"></div>
+        <div id="say2">you gave it its best one ever! And now, I'm going to kill you with it!</div>
         <div class="linkbox">
             <a href="?print">print view</a>
         </div>
@@ -93,7 +93,7 @@
         lcount++;	
 }	
 
-v = hcount / (hcount + lcount);</pre><b>Doesn't work!</b> Branch Delays.</div>
+v = hcount / (hcount + lcount);</pre><p><b>Doesn't work!</b> Branch Delays.</p></div>
     </div>
 
     <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.6">
@@ -113,8 +113,23 @@ v = hcount / (hcount + lcount);</pre></div>
 }	
 v = hcount / (hcount + lcount);</pre></div>
 
-        <div style="clear:both">The above snippets should produce the same output but they <b>don't</b>. The time taken to execute the <code>if</code> and <code>else</code> branches is not the same.</div>
+        <div style="clear:both"><p>The above snippets should produce the same output but they <b>don't</b>. The time taken to execute the <code>if</code> and <code>else</code> branches is not the same.</p></div>
     </div>
+
+    <div class="step" id="sd-sol" data-x-rel="0" data-y-rel="300" data-scale="0.6">
+        <div style="margin:0 auto;width:90%" class="simplecard"><pre class="prettyprint">while(sampling) { 
+    if (input_pin)
+        hcount++;
+    else
+        lcount++;
+
+    delay_until(next_sample);
+    next_sample += interval;
+}   
+v = hcount / (hcount + lcount);</pre></div>
+        <div style="clear:both"><p>This is a typical Real Time problem and should be solved using the correct delay structures. See <a href="es04-2-uc-rt.html#/step-25">Absolute Delays</a>.</p></div>
+    </div>
+
 
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
     <div id="overview" class="step"/>

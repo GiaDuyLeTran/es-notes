@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 6: GNSS</title>
+
+    <script src="MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es06-4.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="1000" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say">Nothing bad ever happens when you work something called</div>
+        <div class="titlebox">
+            <h2>Global Navigation</h2>
+            <h1>Satellite Systems</h1>
+        </div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes"></div>
+    </div>
+
+    <div class="step" id="gnss" data-x="2200" data-y="0">
+        <h1>GNSS Systems</h1>
+    </div>
+
+    <div class="step" id="bd" data-x='1750' data-y='0' data-scale="0.4">
+        <h1>BeiDou 北斗</h1>
+        <div style="float:left"><img class="naked" src="images/interfacing/beidou.png"></div>
+        <div style="float:right;width:65%">
+            <ul><li>Covers China, Asia-Pacific</li>
+                <li>Global coverage by 2020</li>
+                <li>Targetted civilian accuracy of 10m</li>
+                <li>Targetted miliatry accuracy of 10cm</li>
+                <li>Prototype system used extensively in disaster recovery during the 2008 Sichuan earthquake</li></ul>
+        </div>
+        
+        <div class="notes">"Beidou navigation satellite system" by BeiDou Navigation Satellite System 北斗卫星导航系统 - http://www.beidou.gov.cn/2012/12/27/20121227cb6fdaf3f36d4de6afc3d1249be232ae.html. Licensed under Fair use of copyrighted material in the context of Beidou navigation satellite system via Wikipedia - https://en.wikipedia.org/wiki/File:Beidou_navigation_satellite_system.jpg#mediaviewer/File:Beidou_navigation_satellite_system.jpg</div>
+    </div>
+
+    <div class="step" data-x='2200' data-y='-250' data-scale="0.4">
+        <h1>GALILEO</h1>
+        <div style="float:left;width:35%"><img class="naked" src="images/interfacing/galileo.png" style="width:90%"></div>
+        <div style="float:right;width:65%">
+            <ul><li>Validated in orbit</li>
+                <li>Global coverage by 2019</li>
+                <li>Targetted open access accuracy of 1m</li>
+                <li>Premium, paid accuracy of 1cm</li>
+                <li>Includes extra features such as simple two-way communication, guaranteed precision etc.</li></ul>
+        </div>
+
+        <div class="notes">"Galileo logo" by from pdf at http://www.esa.int/. Licensed under Fair use of copyrighted material in the context of Galileo (satellite navigation) via Wikipedia - https://en.wikipedia.org/wiki/File:Galileo_logo.svg#mediaviewer/File:Galileo_logo.svg</div>
+    </div>
+
+    <div class="step" data-x='2400' data-y='-130' data-scale="0.2">
+        <img src="images/interfacing/galileo-orbit.png">
+    </div>
+
+    <div class="step" data-x='2650' data-y='0' data-scale="0.4">
+        <h1>GLONASS</h1>
+        <div style="float:left;width:35%"><img class="naked" src="images/interfacing/glonass.png" style="width:90%"></div>
+        <div style="float:right;width:65%">
+            <ul><li>First commissioned at the same time as GPS</li>
+                <li>Fell in to disrepair until around 2001</li>
+                <li>Global coverage since 2005</li>
+                <li>10m accuracy for all users</li></ul>
+        </div>
+
+        <div class="notes">"Glonass logo" by The logo may be obtained from GLONASS.. Licensed under Fair use of copyrighted material in the context of GLONASS via Wikipedia - https://en.wikipedia.org/wiki/File:Glonass_logo.jpg#mediaviewer/File:Glonass_logo.jpg</div>
+    </div>
+
+    <div class="step" data-x='2850' data-y='120' data-scale="0.2">
+        <img src="images/interfacing/glonass-fail-1.png">
+    </div>
+
+    <div class="step" data-x='2750' data-y='220' data-scale="0.2">
+        <img src="images/interfacing/glonass-fail-2.png">
+    </div>
+
+
+    <div class="step" data-x='2200' data-y='200' data-scale="0.4">
+        <h1>GPS</h1>
+        <div style="float:left;width:35%"><img class="naked" src="images/interfacing/gps.png" style="width:90%"></div>
+        <div style="float:right;width:65%">
+            <ul><li>Civilian accuracy of 10m</li>
+                <li>Military accuracy of 1m</li>
+                <li>&ldquo;Selective Availability&rdquo; reduced civilian accuracy to 100m, turned off in 2000</li>
+                <li>USA retains right to block or distort signals for national security</li>
+                <li>Civilian receivers cannot operate above 18km altitude or 515 m/s velocity</li></ul>
+        </div>
+
+        <div class="notes">"NAVSTAR GPS logo shield-official" by This file is lacking author information. - http://www.losangeles.af.mil/library/factsheets/factsheet.asp?fsID=5311. Licensed under Public domain via Wikimedia Commons - https://commons.wikimedia.org/wiki/File:NAVSTAR_GPS_logo_shield-official.jpg#mediaviewer/File:NAVSTAR_GPS_logo_shield-official.jpg</div>
+    </div>
+
+
+    <div class="step" id="op" data-x="1000" data-y="550">
+        <h1>Operational Principles</h1>
+    </div>
+
+    <div class="step" data-x='700' data-y='650' data-scale="0.4">
+        <h1>Space Vehicles</h1>
+    </div>
+
+    <div class="step" id="fc" data-x='700' data-y='750' data-scale="0.4">
+        <h2>Flying Clocks</h2>
+        <ul><li>On-board atomic clock synchronized to <b>GPS Time</b></li>
+            <li>Deviation between satellites \( \lt 1ns\)</li>
+            <li>Modulates <b>ranging code</b> on to <b>carrier</b></li>
+            <li>Modulates <b>data code</b> on to <b>ranging code</b></li>
+            <li>Ranging code has known alignment in time</li></ul>
+
+            <div class="notes">Known time alignment means that when you receive the ranging code, you can uniquely work out the time at which it was sent. By comparing that to the time at the receiver, you can work out how far the signal has travelled and therefore the distance to the satellite.</div>
+    </div>
+
+    <div class="step" data-x='700' data-y='950' data-scale="0.4">
+        <div style="float:left;width:40%">
+            <ul><li>Bi-Siderial Orbit</li>
+                <li>Satellites broadcast <b>Ephemeris</b> data describing their orbits</li>
+                <li>Travel at \(\approx 14000km/h\) with position known to \(\approx 1m\) at all times</li></ul></div>
+        <div style="float:right;width:55%"><img class="naked" src="images/interfacing/orbits.png" style="width:100%"></div>
+        <div class="notes">The Bi-Siderial orbit means that the same satellites are visible in the same location at the same time every day.
+
+            "Comparison satellite navigation orbits" by Cmglee, Geo Swan - Own work, Earth bitmap is File:North_pole_february_ice-pack_1978-2002.png by Geo Swan.. Licensed under Creative Commons Attribution-Share Alike 3.0 via Wikimedia Commons - http://commons.wikimedia.org/wiki/File:Comparison_satellite_navigation_orbits.svg#mediaviewer/File:Comparison_satellite_navigation_orbits.svg</div>
+    </div>
+
+    <div class="step" data-x='700' data-y='1250' data-scale="0.4">
+        <h1>Modulation</h1>
+        <img src="images/interfacing/prn.png" class="naked">
+
+        <div class="notes">The ranging code is a Gold Code: A pseudo-random sequence that doesn't repeat for a very long time. The phase of this code is flipped depending on the value of the data stream.  At the receiving end, the ranging code is retrieved; its position (in time) gives the distance to the satellite and its phase gives the value of one bit in the data stream.
+
+        The modified ranging code is similarly modulated on to a carrier wave by flipping the phase of the carrier wave.
+
+        The frequency of the carrier wave is a little over 1.5GHz for the primary civilian frequency (L1), ~1.2GHz for the L2 frequency used in high-end and military receivers.</div>
+    </div>
+
+    <div class="step" data-x='1000' data-y='650' data-scale="0.4">
+        <h1>Ground Segment</h1>
+    </div>
+
+    <div class="step" id="gs1" data-x='1000' data-y='750' data-scale="0.4">
+        <ul><li>Monitors all the satellites</li>
+            <li>Maintains the reference clock</li>
+            <li>Computes any drift in satellite clocks</li></ul>
+    </div>
+
+    <div class="step" data-x='1300' data-y='650' data-scale="0.4">
+        <h1>Receivers</h1>
+    </div>
+
+    <div class="step" id="r1" data-x='1300' data-y='770' data-scale="0.4">
+        <ul><li>Receives ranging signals from \(\ge 4\) satellites, called <b>pseudoranges</b></li>
+            <li>Uses satellite positions and pseudorange measurements to solve for receiver position <b>in time and space</b></li></ul>
+        \[r = \left[ X, Y, Z, T \right]^T \]
+        or
+        \[r = \left[ Lat, Lon, Alt, T \right]^T \]
+        <p>By a process called <b>Trilateration</b></p>
+    </div>
+
+    <div class="step" data-x='1300' data-y='1070' data-scale="0.4">
+        <h2>Trilateration</h2>
+        <img src="images/interfacing/trilateration.png" class="naked">
+        <div class="notes">In the GPS case, we are actually solving in four dimensions and therefore this technique should possibly be called quadlateration.</div>
+    </div>
+
+    <div class="step" id="err" data-x="2200" data-y="800">
+        <h1>Sources of Error</h1>
+    </div>
+
+    <div class="step thin" data-x='1800' data-y='800' data-scale="0.4">
+        <h1>Satellite Clock Errors</h1>
+        <ul><li>\(1 ns\) synchronization between satellites is still \(\approx 30cm\)</li>
+            <li>The satellites are moving quickly and experience less gravity</li></ul>
+
+        <h2>General Relativity!</h2>
+        Clocks on the satellites loose \(\approx 38\mu S = 11km \) per day relative to clocks on the ground.
+    </div>
+
+    <div class="step thin" data-x='1800' data-y='950' data-scale="0.4">
+        <h2>Receiver Clocks</h2>
+        Time at the receiver is solved, just like position.  Normal oscillators drift about \(100ns = 3m\) each second. Fitting receivers with atomic clocks is not feasible!
+    </div>
+
+
+    <div class="step thin" data-x='2200' data-y='550' data-scale="0.4">
+        <h1>Orbital Errors</h1>
+        <p>Satellites are \(20,000km\) away moving at \(14000km/h\). The data sent from the satellite describing its orbit is limited in precision. As such, the accuracy to which we know the position of a satellite is only a few metres.</p>
+    </div>
+
+
+    <div class="step thin" data-x='2650' data-y='800' data-scale="0.4">
+        <div style="float:left;width:45%">
+            <h1>Multipath</h1>
+            Obstructions and reflections combine to give longer-than-truth flight paths.</div>
+        <div style="float:right"><img src="images/interfacing/multipath.png" class="naked"></div>
+        <div class="notes">Satellite image Copyright GDAL Team http://commons.wikimedia.org/wiki/File:Satellite_of_GDAL.svg</div>
+    </div>
+
+
+    <div class="step" data-x='2200' data-y='1000' data-scale="0.4">
+        <div style="float:left;width:500px"><h1>Atmospheric Errors</h1>
+        <p>The Ionosphere is electrically-charged and interferes with the signal propagation.</p>
+        <p>The Troposphere is humid and varying temperatures; these change the air's refractive index.</p></div>
+        <div style="float:right"><img src="images/interfacing/iono.png" class="naked"></div>
+
+        <div class="notes">These both serve to increase the distance that the signal must travel. Typically, the error at the ground is around 10's of metres.</div>
+    </div>
+
+    <div class="step" id="cm" data-x="3800" data-y="800">
+        <h1>Correction Methods</h1>
+    </div>
+
+    <div class="step" data-x='3250' data-y='800' data-scale="0.4">
+        <h1>Differential GPS</h1>
+        <div style="float:left;width:45%"><p>Receivers near each other will see approximately the same errors.</p>
+            <p><ul><li>Same Atmosphere above them</li>
+                <li>Same satellite position errors</li>
+                <li>Same satellite clock errors</li></ul></p>
+
+            <p>A receiver with known position can measure these errors and send them to nearby mobile receivers.</p></div>
+        <div style="float:right"><img src="images/interfacing/dgps.png" class="naked"></div>
+    </div>
+
+    <div class="step point" data-x='3250' data-y='1050' data-scale="0.4">
+        The reference receiver will have a known position in space, <b>not in time</b>. It will still need to estimate the time at its location and any error in this estimation will stay in the system.
+    </div>
+
+    <div class="step thin" data-x='3250' data-y='1200' data-scale="0.4">
+        <h2>Post-Processing</h2>
+        The calculated errors may be stored, rather than transmitted, and the moving GPS can have their position &ldquo;fixed&rdquo; later. This is useful for post-activity analysis.
+    </div>
+
+    <div class="step thin" data-x='3250' data-y='1350' data-scale="0.4">
+        <h2>SBAS</h2>
+        Sometimes the errors can be transmitted back to the satellites, then back to roving receivers. These are called <b>Satellite-Based Augmentation Systems</b> (SBAS). SBAS cover the USA, Europe and Japan.
+
+        <div class="notes">Sometimes here in Australia, our receivers &ldquo;accidentally&rdquo; see SBAS signals from Japan. The Japanese signals are from so far away, and therefore so different to what we need, that they often act to make our position solutions <b>worse</b>. It is often prudent to disable SBAS on receivers in areas without formal coverage, such as Australia.</div>
+    </div>
+
+    <div class="step" data-x='3800' data-y='1000' data-scale="0.4">
+        <h1>Real-Time Kinematic</h1>
+        <div style="float:left;width:45%">By tracking the phase of the carrier signal, the position estimate can be refined (up to an integer ambiguity).</div>
+        <div style="float:right;width:45%"><img src="images/interfacing/rtk.png" class="naked" style="width:100%"></div>
+
+        <div class="notes">This is a simplification as phase is only a <b>relative</b> measurement and we do not know the phase of the signal at the satellite. As such, a second, fixed, receiver is used (like in DGPS) and the phase measurements are compared between that fixed receiver and the moveable one.</div>
+    </div>
+
+    <div class="step thin" data-x='4350' data-y='800' data-scale="0.4">
+        <h1>Multi-frequency</h1>
+        <p>The major errors are caused by atmospheric effects. These effects affect different frequencies in different ways.</p>
+        <p>High-end receivers track multiple frequencies from the GPS satellites and use all the measurements, along with atmospheric models, to work out and subtract the atmospheric effects without requiring a second, stationary receiver.</p>
+    </div>
+
+    <div class="step thin" data-x='3800' data-y='550' data-scale="0.4">
+        <h1>AGPS</h1>
+        <p><b>Assisted</b> GPS is a name for a number of related technologies, where information about the state of the GPS system is sent to receivers through secondary channels (e.g. the data connection of a phone).</p>
+        <p>This data can include correction data like DGPS, but also the current time and location of the satellites in order to speed up aquisition (time to first fix).</p>
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+	<div id="overview" class="step" data-x="2175" data-y="586.0" data-scale="4.3">&nbsp</div>
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+

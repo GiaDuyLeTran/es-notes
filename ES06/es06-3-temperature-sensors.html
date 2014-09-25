@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 6: Temperature Sensors</title>
+
+    <script src="MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es06-3.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="1000" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say">There's no greater passion than that between</div>
+        <div class="titlebox">
+            <h1>Temperature</h1>
+            <h2>Sensors</h2>
+        </div>
+        <div id="say2">and a ghost</div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes"></div>
+    </div>
+
+    <div class="step point" data-x="1000" data-y="800">
+        <b>Everything</b> is a temperature sensor. Some are just better than others.
+        <div class="notes"></div>
+    </div>
+
+    <div class="step" data-x="300" data-y="500">
+        <h1>Thermocouples</h1>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="150" data-scale="0.4">
+        <h1>Seebeck Effect</h1>
+        <center><img src="images/interfacing/seebeck.png" class="naked"></center>
+        \[ U_{th} = K(T_2-T_1) \]
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.4">
+        <center><img src="images/interfacing/thermocouple.png" class="naked"></center>
+        \[ U_{out} = (K_1 - K_2)(T_1 - T_2) \]
+
+        <ul><li>Uses two metals with different Seebeck Coefficients</li>
+            <li>Requires knowledge of the temperature of the <b>cold</b> end</li></ul>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.4">
+        <h1>Types</h1>
+        <center>
+            <table id="tcouple"><tr><th>Type</th><th>Metals</th><th>\(T_{max}\)</th><th>\(V_{max}\)</th></tr>
+                <tr><td>T</td><td>Cu-Constantin</td><td>400&deg;C</td><td>21.000mV</td></tr>
+                <tr><td>J</td><td>Fe-Constantin</td><td>700&deg;C</td><td>39.729mV</td></tr>
+                <tr><td>K</td><td>NiCr-Ni</td><td>1000&deg;C</td><td>41.310mV</td></tr>
+                <tr><td>S</td><td>PtRh-Pt</td><td>1300&deg;C</td><td>13.138mV</td></tr></table>
+        </center>
+        <div class="notes">The Seebeck effect is not very strong. As such, thermocouples require very high temperatures to reach their maximum output voltage; and that output voltage is very small. This can increase the complexity of integration as high quality ADCs and analogue circuitry are required to accurately detect such small voltages.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.4">
+        <h1>Linearity</h1>
+        <center><img src="images/interfacing/thermocouple-graph.png" class="naked"></center>
+
+        <div class="notes">Thermocouples are not very linear. As such, they must be calibrated and undergo quite complex calculations in order to get high accuracy temperature measurements.</div>
+    </div>
+
+    <div class="step" data-x="1000" data-y="1300">
+        <h1>Thermistors</h1>
+    </div>
+
+    <div class="step" data-x-rel="-100" data-y-rel="150" data-scale="0.4">
+        <h2>Negative Temperature Coefficient</h2>
+        <img src="images/interfacing/ntc.png" class="naked">
+        <ul><li>Resistance <b>decreases</b> with temperature</li>
+            <li>Non-linear at extreme temperatures</li>
+            <li>Fairly linear and nice around 25&deg;C</li>
+        </ul>
+        <div class="notes">This makes them suitable for use in ambient temperature sensing, such as the sensing of the "cold" end of a thermocouple.</div>
+    </div>
+
+    <div class="step" data-x-rel="300" data-y-rel="20" data-scale="0.4">
+        <h2>Positive Temperature Coefficient</h2>
+        <img src="images/interfacing/ptc.png" class="naked">
+        <ul><li>Resistance <b>increases</b> with temperature</li>
+            <li>Very non-linear response</li>
+            <li>Rises rapidly at &ldquo;failure&rdquo; type temperatures</li>
+        </ul>
+        <div class="notes">Because of this, they mainly find application as safety devices.</div>
+    </div>
+
+    <div class="step" data-x-rel="-200" data-y-rel="220" data-scale="0.4">
+        <h2>A Problem&hellip;</h2>
+        <ul><li>Thermistors change resistance with temperature</li>
+            <li>In order to measure resistance, a current must be applied and a voltage drop measured</li>
+            <li>The voltage drop will dissipate power</li>
+            <li>Power dissipation will generate heat</li>
+            <li>Generated heat will alter the reading</li>
+        </ul>
+
+        <b>Self-heating</b>
+    </div>
+
+    <div class="step" data-x="1700" data-y="500">
+        <h1>Semiconductor Sensors</h1>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="150" data-scale="0.4">
+        <p>Many aspects of semiconductor behaviour change with temperature. Measuring any one of these will allow measurement of the temperature.</p>
+        <p>The IRF9620S MOSFET for instance has at least <b>seven</b> different parameters that change with temperature.</p>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.4">
+        <img src="images/interfacing/irf.png" class="naked">
+
+        <div class="notes">Some of these parameters are things like "maximum power handling" so may not be immediately useful. That is, if you keep increasing the power through the device and measure when it explodes, you can know the ambient temperature. Once.
+
+        Many of the other parameters are directly (and non-destructively) testable.  This is just for a MOSFET (transistor) remember; something actually <b>designed</b> to measure temperature is going to be different again.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.4">
+        <div style="float:left;width:45%"><h2>Accuracy</h2>
+            Semiconductor sensors are not typically very accurate due to non-linearities in the effects measured. They may also need to be externally-compensated for self-heating</div>
+        <div style="float:right;"><img src="images/interfacing/mcp9700.png" class="naked"></div>
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step"/>
+
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+
