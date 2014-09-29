@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 6: GNSS</title>
+
+    <script src="MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es07-2.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="500" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say">Open the</div>
+        <div class="titlebox">
+            <h1>Memory Devices</h1>
+        </div>
+        <div id="say2">HAL!<br/>I'm sorry Dave. I'm afraid I can't do that.</div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes"></div>
+    </div>
+
+    <div class="step thin" data-x='1300' data-y='-150' data-scale="0.7">
+        <h1>Categorisation</h1>
+
+        <center><table id="cat">
+            <tr><td><b>Volatile</b></td><td> &#8596; </td><td><b>Non-Volatile</b></td></tr>
+            <tr><td><b>Parallel</b></td><td> &#8596; </td><td><b>Serial</b></td></tr>
+            <tr><td><b>Read-Only</b></td><td> &#8596; </td><td><b>Writeable</b></td></tr>
+        </table></center>
+
+
+        <div class="notes">Memory types can be categorised many different ways. On top of the categories shown, a memory selection must also take in to account things such as capacity, latency, throughput, lifetime etc.
+        </div>
+    </div>
+
+    <div class="step" data-x='1300' data-y='50' data-scale="0.7">
+        <center><table id="mem">
+            <tr><th>Memory</th><th>Interface</th><th>Volatile</th><th>Writeable</th></tr>
+            <tr><td>SRAM</td><td>Parallel</td><td class="b">Yes</td><td class="g">Yes</td></tr>
+            <tr><td>DRAM</td><td>Parallel</td><td class="vb">Super</td><td class="g">Yes</td></tr>
+            <tr><td>EPROM</td><td>Parallel/Serial</td><td class="g">No</td><td class="b">No</td></tr>
+            <tr><td>EEPROM</td><td>Parallel/Serial</td><td class="g">No</td><td class="g">Yes</td></tr>
+            <tr><td>FLASH</td><td>Parallel/Serial</td><td class="g">No</td><td class="g">Yes</td></tr>
+            <tr><td>FRAM</td><td>Serial</td><td class="g">No</td><td class="g">Yes</td></tr>
+        </table></center>
+
+
+        <div class="notes">
+        </div>
+    </div>
+
+
+    <div class="step" data-x="0" data-y="600" data-scale="0.5">
+        <h1>SRAM</h1>
+        <div style="float:left;"><h2>Static RAM</h2>
+            <p><ul><li>Volatile</li>
+                <li>Fast</li>
+                <li>Low Density</li>
+                <li>Low Power Consumption</li></ul></p>
+
+            <p>Used In:</p>
+            <p><ul><li>Cache</li>
+                <li>SoC-Internal RAM</li>
+                <li>FPGA Block Ram</li></ul>
+        </div>
+        <div style="float:right"><img src="images/comm-mem/sram.png"></div>
+
+        <div class="notes">Static RAM stores the bit value in a pair of cross-coupled inverters: A Flip-Flop. Combined with the access transistors, this requires 6 transistors per bit. This is a lot compared with DRAM which we will see shortly. As such, it is quite low-density.
+
+        The value is stored at full system voltage so is quick to access (low voltages propagate more slowly that high voltages).
+
+        The Word Line is asserted if the cell is to be read or written. This connects the internal cell state \(Q, \bar{Q}\) to the Bit Lines.
+
+        To see how the cell works, imagine that the cell is storing a logical '1'; i.e. \(Q\) is a high voltage. This is connected across to the two transistors on the left of the cell; a high voltage turns the lower transistor on and the upper transistor off (the circle on the gate indicates inversion). This means that \(\bar{Q}\) is connected to ground. \(\bar{Q}\) is connected across to the right-hand transistors where it turns the upper transistor on, connecting \(Q\) to a high voltage and reinforcing the state.</div>
+    </div>
+
+    <div class="step" data-x="600" data-y="650" data-scale="0.5">
+        <div style="float:left;">
+            <h1>DRAM</h1>
+            <h2>Dynamic RAM</h2>
+            <p><ul><li>Very Volatile</li>
+                <li>Moderately Fast</li>
+                <li>High Density</li>
+                <li>High Power Consumption</li></ul></p>
+
+            <p>Used In:</p>
+            <p><ul><li>Computer Main Memory</li></ul>
+        </div>
+        <div style="float:right"><img src="images/comm-mem/dram.png"></div>
+
+        <div class="notes">DRAM stores the bit value of each cell in a capacitor: Charged is a logical '1', uncharged is a logical '0'. Each cell needs one transistor, the access transistor, to connect the capacitor to the bit lines for reading or writing.
+
+        DRAM is arranged as a grid, with the address being latched in in two stages: Row and Column.
+
+        The Row address is latched in first. At this time, all the cells in a row have their capacitors connected to the bit lines and down to a set of amplifiers. These are required as the voltage in the capacitors is quite small, but also because the capacitors discharge over time so the longer it has been since last time the row was accessed, the lower their voltage will be.
+
+        Once the row has been amplified and latched, the column address selects the required bits out of the latch.
+
+        At the same time, the latched values from the row are written back to the original cells. The act of reading a row discharges the capacitors in to the amplifier stage, so they must be written back to their original value or the data will be lost.
+
+        As mentioned, the capacitors self-discharge over time and as such must be refreshed all the time. This means that DRAM must be continuously read, even if you don't care about the data, just to make sure the data isn't corrupted. This is the 'dynamic' in DRAM and the reason it generally consumes more power than SRAM. DRAM controller hardware such as found inside the CPU or FGPA usually takes care of this refresh operation, the programmer doesn't know it is happening.</div>
+    </div>
+
+    <div class="step thin" data-x="1200" data-y="600" data-scale="0.5">
+        <h1>PROM</h1>
+        <h2>Programmable Read-only Memory</h2>
+        <p><ul><li>Write-Once</li>
+                <li>Low-Capacity</li>
+                <li>One Fuse per Bit</li>
+                <li>Rarely used nowdays</li></ul></p>
+
+            <p><b>Historically</b> Used In:</p>
+            <p><ul><li>Microcontroller Program Storage</li></ul>
+
+        <div class="notes">PROM uses a series of fuses, one per bit. These are blown at programming time.  Fuses can't be "un-blown" so the device can only be written once.
+
+        The unblown state is a logical '1' so a unprogrammed bytes have the value 0xFF, not 0x00.</div>
+    </div>
+
+    <div class="step" data-x='1200' data-y='950' data-scale="0.5">
+        <h1>EPROM</h1>
+        <h2>Erasable/Programmable Read-only Memory</h2>
+        <div style="float:left">
+        <p><ul><li>Write-Once per Erase</li>
+                <li>Erase chip-at-a-time with UV Light</li>
+                <li>Low-Capacity</li>
+                <li>One FET per Bit</li>
+                <li>Rarely used nowdays</li></ul></p>
+
+            <p><b>Historically</b> Used In:</p>
+            <p><ul><li>Microcontroller Program Storage</li></ul>
+        <img src="images/comm-mem/eprom.png" style="width:300px">
+        </div>
+
+        <div style="float:right"><img src="images/comm-mem/eprom-chip.png"></div>
+
+        <div class="notes">EPROM is made up of special Field-Effect Transistors (FETs) with an extra piece of metal under the regular gate - the floating gate. A high voltage on the control gate can suck electrons off the floating gate and leave it with a permanent charge. This charge in turn keeps the FET permanently on or off; this is the state of the bit.
+
+        UV light has enough energy to ionise the silicon and allow the charge on the floating gate to diffuse, erasing the value. Each erasure damages the silicon so a maximum number of erase cycles are specified before the floating gate will discharge itself.
+
+        Like PROM, the unprogrammed state is a logical '1' so a unprogrammed bytes have the value 0xFF, not 0x00.
+
+        "EPROM Intel C1702A" by Author : Poil 01:10, 17 Apr 2005 (UTC) - Author personnal collection.. Licensed under Creative Commons Attribution-Share Alike 3.0 via Wikimedia Commons - https://commons.wikimedia.org/wiki/File:EPROM_Intel_C1702A.jpg#mediaviewer/File:EPROM_Intel_C1702A.jpg
+
+        "Floating gate transistor" by en:Ctennis - en wikipedia. Licensed under Public domain via Wikimedia Commons - https://commons.wikimedia.org/wiki/File:Floating_gate_transistor.png#mediaviewer/File:Floating_gate_transistor.png</div>
+    </div>
+
+    <div class="step thin" data-x='1200' data-y='1300' data-scale="0.5">
+        <h1>EEPROM</h1>
+        <h2>Electrically-Erasable/Programmable Read-only Memory</h2>
+        <p><ul><li>Write-Once per Erase</li>
+                <li>Low-Capacity</li>
+                <li>One FET per Bit</li>
+                <li>Long storage lifetime</li></ul></p>
+
+            <p>Used In:</p>
+            <p><ul><li>Microcontroller Non-Volatile Data Storage</li></ul>
+
+        <div class="notes">Compared to EPROM, EEPROM has an extra silicon layer that allows the floating gate charge to be dissipated electrically.
+
+        It is still used today for low-cost, low-capacity non-volatile data storage such as storing parameters in a microcontroller system.</div>
+    </div>
+
+    <div class="step thin" data-x="1800" data-y="600" data-scale="0.5">
+        <h1>FLASH</h1>
+        <p><ul><li>Write-Once per Erase</li>
+                <li>Page-Eraseable</li>
+                <li>High Capacity</li>
+                <li>Large number of erase cycles supported</li></ul></p>
+
+            <p>Used In:</p>
+            <p><ul><li>Microcontroller Program Storage</li>
+                <li>Solid-State Drives</li>
+                <li>Memory Cards</li>
+                <li>&hellip;</li></ul>
+    </div>
+
+    <div class="step" data-x='1800' data-y='900' data-scale="0.5">
+        <h1>NOR Flash</h1>
+            <center><img src="images/comm-mem/nor.png" class="naked"></center>
+        <div class="notes">NOR Flash is programmed by applying a voltage to both the word line and the bit line of a cell such that together, they are high enough to force charge on to the floating gate but individually they are not (i.e. they leave other cells unaffected).
+
+        To read, a charge is applied to a word line such that the sum of the charge on the word line and the floating gate is enough to turn the cell on (if it's programmed). If there is no charge on the floating gate (the cell is unprogrammed/ logical '1') then the word line voltage by itself is not enough to turn the cell on.
+
+        NOR Flash provides true random access (byte-level) so is suitable for storage of code, uncached data etc.  The structure takes up more space than NAND flash and so is lower density.
+
+        "NOR flash layout" by Cyferz (talk) - the English language Wikipedia (log). Licensed under Creative Commons Attribution-Share Alike 3.0 via Wikimedia Commons - https://commons.wikimedia.org/wiki/File:NOR_flash_layout.svg#mediaviewer/File:NOR_flash_layout.svg</div>
+    </div>
+
+   <div class="step" data-x='1800' data-y='1200' data-scale="0.5">
+        <h1>NAND Flash</h1>
+            <center><img src="images/comm-mem/nand.png" class="naked"></center>
+        <div class="notes">NAND Flash is programmed and read in the same way as NOR flash, however in order for a cell to be accessed, all the other cells in the chain need to be forced 'on' by applying a sufficiently high voltage to their word lines.
+
+        That is, to read cell '2' in a chain of 8, a high voltage is applied to the word lines of all the other cells in the chain as well as the ground select and access transistors. A 'read' voltage; a smaller voltage not enough to turn the transistor on by itself, is applied to cell 2.
+
+        In this way, the voltage at the bit line depends on the charge on the floating gate of cell 2 only: If there is enough charge there to combine with the word line read voltage to turn the cell on, the bit line will be pulled low. If not, the line will be left floating (logical '1').
+
+        This structure is more dense than NOR so higher capacity devices are built this way. A failure of a single cell in the chain corrupts all the cells in the chain, so NAND is less robust.
+
+        "Nand flash structure" by Cyferz - en wikipedia. Licensed under Creative Commons Attribution-Share Alike 3.0 via Wikimedia Commons - https://commons.wikimedia.org/wiki/File:Nand_flash_structure.svg#mediaviewer/File:Nand_flash_structure.svg</div>
+    </div>
+
+    <div class="step thin" data-x="2400" data-y="600" data-scale="0.5">
+        <h1>FRAM</h1>
+        <h2>Ferroelectric RAM</h2>
+        <p><ul><li>Speed of DRAM</li>
+                <li>Capacity of SRAM</li>
+                <li>Non-Volatile</li>
+                <li>Unlimited erase/program cycles</li></ul></p>
+
+            <p>Used In:</p>
+            <p><ul><li>Microcontroller Non-Volatile Data Storage</li></ul>
+
+        <div class="notes">Ferroelectric RAM (FRAM/FeRAM) is a relatively new technology. It boasts non-volatility but is not limited in erase cycles like flash and is also much faster.
+
+        Over the next several years, it is likely that FRAM will scale to take the place of traditional DRAM applications such as computer main memory, but with lower running power consumption (no refresh required) and data retention across power cycles. This will give faster boot times.
+
+        At the moment, FRAM devices are limited to several hundred kB.</div>
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+	<div id="overview" class="step" data-x="1200" data-y="589.0" data-scale="2.7">&nbsp</div>
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+
