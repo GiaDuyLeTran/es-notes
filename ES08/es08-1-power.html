@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 8: Power Considerations</title>
+
+    <script src="MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es08-1.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="500" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say">You can't conquer</div>
+        <div class="titlebox">
+            <h1>Power Considerations</h1>
+        </div>
+        <div id="say2">with a shoddy olive.<br/>Hitler found that out.</div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes"></div>
+    </div>
+
+    <div class="step thin" data-x-rel="800" data-y-rel="-150" data-scale="0.7">
+        <h1>Categorisation</h1>
+
+        <div class="notes">
+        </div>
+    </div>
+
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step"/>
+
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+
