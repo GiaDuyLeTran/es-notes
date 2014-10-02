@@ -100,7 +100,7 @@
         To see how the cell works, imagine that the cell is storing a logical '1'; i.e. \(Q\) is a high voltage. This is connected across to the two transistors on the left of the cell; a high voltage turns the lower transistor on and the upper transistor off (the circle on the gate indicates inversion). This means that \(\bar{Q}\) is connected to ground. \(\bar{Q}\) is connected across to the right-hand transistors where it turns the upper transistor on, connecting \(Q\) to a high voltage and reinforcing the state.</div>
     </div>
 
-    <div class="step" data-x="600" data-y="650" data-scale="0.5">
+    <div class="step" data-x-rel="0" data-y-rel="350" data-scale="0.5">
         <div style="float:left;">
             <h1>DRAM</h1>
             <h2>Dynamic RAM</h2>
@@ -127,7 +127,7 @@
         As mentioned, the capacitors self-discharge over time and as such must be refreshed all the time. This means that DRAM must be continuously read, even if you don't care about the data, just to make sure the data isn't corrupted. This is the 'dynamic' in DRAM and the reason it generally consumes more power than SRAM. DRAM controller hardware such as found inside the CPU or FGPA usually takes care of this refresh operation, the programmer doesn't know it is happening.</div>
     </div>
 
-    <div class="step thin" data-x="1200" data-y="600" data-scale="0.5">
+    <div class="step thin" data-x="600" data-y="600" data-scale="0.5">
         <h1>PROM</h1>
         <h2>Programmable Read-only Memory</h2>
         <p><ul><li>Write-Once</li>
@@ -187,7 +187,7 @@
         It is still used today for low-cost, low-capacity non-volatile data storage such as storing parameters in a microcontroller system.</div>
     </div>
 
-    <div class="step thin" data-x="1800" data-y="600" data-scale="0.5">
+    <div class="step thin" data-x="1200" data-y="600" data-scale="0.5">
         <h1>FLASH</h1>
         <p><ul><li>Write-Once per Erase</li>
                 <li>Page-Eraseable</li>
@@ -227,7 +227,7 @@
         "Nand flash structure" by Cyferz - en wikipedia. Licensed under Creative Commons Attribution-Share Alike 3.0 via Wikimedia Commons - https://commons.wikimedia.org/wiki/File:Nand_flash_structure.svg#mediaviewer/File:Nand_flash_structure.svg</div>
     </div>
 
-    <div class="step thin" data-x="2400" data-y="600" data-scale="0.5">
+    <div class="step thin" data-x="1800" data-y="600" data-scale="0.5">
         <h1>FRAM</h1>
         <h2>Ferroelectric RAM</h2>
         <p><ul><li>Speed of DRAM</li>
@@ -243,6 +243,90 @@
         Over the next several years, it is likely that FRAM will scale to take the place of traditional DRAM applications such as computer main memory, but with lower running power consumption (no refresh required) and data retention across power cycles. This will give faster boot times.
 
         At the moment, FRAM devices are limited to several hundred kB.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="400" data-scale="0.5">
+        <h1>Core Rope Memory</h1>
+        <div style="float:left;width:400px">
+            <ul><li>ROM</li>
+                <li>Used for the Apollo flight computer</li>
+                <li>Ferrite beads threaded on copper wire</li>
+                <li>Logical '1' encoded by a bit line and word line going through the same bead</li></ul>
+        </div>
+        <div style="float:right"><img src="images/comm-mem/rope-mem.jpg"></div>
+        <div class="notes">The ferrite beads act as a transformer, coupling an AC signal (typically a single pulse) between wires.  A pulse applied to a word line would either be returned along a bit line ('1') or not ('0') depending whether the two wires had been woven through the same bead.
+
+        "Apollo guidiance computer ferrit core memory" by Nova13 - Own work. Licensed under Creative Commons Attribution-Share Alike 3.0 via Wikimedia Commons - http://commons.wikimedia.org/wiki/File:Apollo_guidiance_computer_ferrit_core_memory.jpg#mediaviewer/File:Apollo_guidiance_computer_ferrit_core_memory.jpg</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="350" data-scale="0.5">
+        <h1>Magnetic Core Memory</h1>
+        <div style="float:left;width:400px">
+            <ul><li>RAM</li>
+                <li>Used in many early computers</li>
+                <li>Ferrite beads threaded on copper wire</li>
+                <li>Beads magnetically polarized clockwise or counter-clockwise to encode the bit</li></ul>
+        </div>
+        <div style="float:right"><img src="images/comm-mem/core-mem.jpg" style="width:500px"></div>
+        <div class="notes">The X and Y lines are address lines, a third line called the "inhibit/sense" line weaves through every bead in the grid.
+
+        The memory works because it takes a certain amount of current to change the magnetic state of the bead (the "select" current). By passing half this much current through each of the X and Y lines, only the bead where the two intersect will have enough current to have its state flipped.
+
+        To write, the select current is passed through the X and Y lines then an extra current is passed through the inhibit/sense line. The sum of these three is chosen to alter the magnetic state to the right value.
+
+        To read, the X and Y line currents are chosen to be strong enough to write the bead to a logical '0'. If the cell was already at this state, nothing happens. If the bead was previously in the '1' state though, a brief pulse of current will be induced in the inhibit/sense line which can be sensed.
+
+        The read is destructive.
+
+        "Ferrite core memory" by Orion 8 - Combined from Magnetic core memory card.jpg and Magnetic core.jpg.. Licensed under Creative Commons Attribution 2.5 via Wikimedia Commons - http://commons.wikimedia.org/wiki/File:Ferrite_core_memory.jpg#mediaviewer/File:Ferrite_core_memory.jpg</div>
+    </div>
+
+    <div class="step" data-x="2400" data-y="600" data-scale="0.5">
+        <h1>Hard Disk Drives</h1>
+        <div style="float:left;width:400px">
+            <p><ul><li>High Capacity</li>
+                <li>Low Speed</li>
+                <li>Non-deteministic latency</li></ul></p>
+            <p>Used In:</p>
+            <p><ul><li>Computer Secondary Storage</li>
+                <li>Data Archiving</li></ul></p>
+        </div>
+        <div style="float:right"><img src="images/comm-mem/hdd.jpg"></div>
+
+        <div class="notes">Hard drives store data in the magnetic state of a ferromagnetic material on platters. The data is read and written by a head that must physically move across the platter to the radial location of the data, and wait for the platter to rotate such that the data is underneath the head.  This movement means that the latency to access data depends on the last data access location but also environmental effects such as temperature, exact system voltage etc.
+
+        The heads sit very close to the platter, typically 10s of nanometres. If they ever touch the platter, they can damage the platters and destroy the data. As such, HDDs are sensitive to vibration and shock, with the heads automatically moved away from the platter if the drive is detected to be in free-fall or if there is too much vibration.</div>
+    </div>
+
+    <div class="step thin" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+        <h1>Future HDD Technologies</h1>
+        <ul><li>Microwave-Assisted Writing</li>
+            <li>Heat-Assisted Writing</li>
+            <li>Patterned Media</li>
+            <li>Shingled-Magnetic Recording</li></ul>
+
+        <div class="notes">Using heat or microwaves, the magnetic material directly under the head can be made more sensitive and able to be written with a smaller magnetic field. This minimises the effect on surrounding bits and allows them to be packed closer together.
+
+        Patterned media etches the surface of the HDD in to little 'islands', each capable of storing a single bit. Because there is no magnetic material directly joining adjacent islands, there is less magnetic coupling and once again, the density can be increased.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+        <h1>Shingled-Magnetic Recording</h1>
+        <div style="float:left;width:400px"><ul><li>High Density by overlapping tracks</li>
+            <li>Must be written sequentially</li>
+            <li>Require HDD or OS support to enforce thing</li>
+            <li>Split in to several SMR zones and, often, several traditional zones.</li></ul></div>
+        <div style="float:right"><img src="images/comm-mem/smr.png" style="width:450px"></div>
+
+        <div class="notes">SMR is different from other modern HDD technologies as it changes the performance characteristics of the drive significantly.
+
+        SMR works by overlapping successive tracks, leaving data bits much smaller than can be written individually with a write head.
+
+        This means that the data must be written strictly sequentially; one cannot go back to arbitrary written data and change the value. This makes the technology useful for backups and data archiving, but less so for typical random-access patterns.
+
+        Solid-state drives are excellent at random access, much better than even traditional HDDs. In this way, SMR is quite a complementary technology to SSDs.
+
+        SMR Image credit IEEE SCV MagSoc Oct 19th 2010.</div>
     </div>
 
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
