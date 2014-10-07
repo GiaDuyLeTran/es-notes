@@ -25,7 +25,7 @@
 
 <div id="impress">
     <!-- Title slide -->
-    <div id="title" class="step slide" data-x="500" data-y="0">
+    <div id="title" class="step slide" data-x="0" data-y="0">
         <div class="logo">
             <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
         </div>
@@ -34,18 +34,18 @@
             <p>Research School of Engineering</p>
             <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
         </div>
-        <div id="say"></div>
+        <div id="say">Don't ever</div>
         <div class="titlebox">
             <h1>Manufacture</h1>
         </div>
-        <div id="say2"></div>
+        <div id="say2">here. Or I'll beat you up each time.<br/>Careful, mind the step.</div>
         <div class="linkbox">
             <a href="?print">print view</a>
         </div>
         <div class="notes"></div>
     </div>
 
-    <div class="step" data-x-rel="1000" data-y-rel="0" data-scale="0.7">
+    <div class="step" data-x-rel="1000" data-y-rel="300" data-scale="0.7">
         <h1>Printed Circuit Board</h1>
         <center><img src="images/manufacture/stackup.png" class="naked"> </center>
     </div>
@@ -71,7 +71,7 @@
         <div class="notes">Core may be aluminium for thermal properties. Most commonly the same material as the prepreg.</div>
     </div>
 
-    <div class="step" data-x-rel="400" data-y-rel="0" data-scale="0.5">
+    <div class="step" data-x-rel="-700" data-y-rel="400" data-scale="0.5">
         <h1>Etching</h1>
         <div style="float:left;width:400px">
             <p>Process:</p>
@@ -92,6 +92,96 @@
         This process introduces minimum track and space widths. A track that’s too thin might etch completely through and form an open circuit; a space too thin might not provide enough surface area for the etchant to work and cause a short circuit between adjacent traces.</div>
     </div>
 
+    <div class="step" data-x-rel="600" data-y-rel="0" data-scale="0.5">
+        <h1>Vias</h1>
+        <div style="float:left;width:350px">
+            <p>Interconnects between layers are called <b>Vias</b>.</p>
+            <p>Many different styles:
+            <ul><li>Through</li>
+                <li>Blind</li>
+                <li>Buried</li>
+                <li>Microvia</li></ul></p>
+
+            <p>Can also be
+                <ul><li>Plugged/Unplugged</li>
+                    <li>Tented/Untented</li></ul></p>
+        </div>
+        <div style="float:right"><img src="images/manufacture/vias.png" style="width:550px"></div>
+
+        <div class="notes">Through vias are made with a drill through the whole stack. The same process is used for making mounting holes, through-hole component pads etc.
+
+        Blind and Buried vias are exposed on one side of the PCB or completely inside the PCB respectively. Blind vias have to be drilled before the final sandwich is made; buried vias have to be drilled and plated before the sandwich is made. This adds to costs significantly.
+
+        Microvias are not made with a drill, nor plated in the usual way. The innermost layer to which the via connects is left as a solid copper pad, the outer layers just have rings of copper. A laser is used to burn away the prepreg material in the middle of the ring, but it isn't strong enough to burn away the copper on the final layer so that's where it stops. Once the hole is made in this way, it is completely filled with copper to make the connection.
+
+        Plugged (also called Filled) vias have extra copper plugged in the top in order to form a solid top surface. This top surface can be soldered to, so this type of via is suitable for putting directly underneath a component connection pad. If you do not plug the via, some solder from the joint may be sucked down in to that via as you're trying to mount the component, leading to a bad joint.
+
+        Tented vias have a "solder mask" deposited over the top of them. This means that they are not electrically exposed to the outside world so cannot short out against things (e.g. they're safe to put against a sheet of metal when mounting).</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h2>Aspect Ratio</h2>
+        <div style="float:left;width:300px">
+            <p>High aspect ratio can lead to poor or no connection between layers.</p>
+        </div>
+        <div style="float:right"><img src="images/manufacture/via-aspect.png" class="naked"></div>
+
+        <div class="notes">Manufacturing houses often give a minimum via diameter that they can manufacture. In fact, the aspect ratio is just as important.  This is the ratio between the depth and diameter of the via.
+
+        When a via is made, it must be electroplated internally to deposit the copper. If the via is too narrow, the electroplating solution may not make it all the way inside.
+
+        This leaves less copper there than intended. This thin copper may "fuse out" when you pass normal amounts of current through it; or the copper may fatigue and break due to thermal expansion.</div>
+    </div>
+
+    <div class="step" data-x="1800" data-y="300" data-scale="0.5">
+        <h1>Thermal Expansion</h1>
+        <center><img src="images/manufacture/expansion.png"></center>
+
+        <div class="notes">On a typical circuit board, there will be a number of different types of device all made from different materials. Moreover, the board itself is made from at least two materials (prepreg and copper) and all boards use solder to connect parts as well.
+
+            The different coefficients of thermal expansion of these materials mean that joints are put under stress every time the temperature changes.
+
+            A reliable electronic system must take in to account the maximum operating temperature range and ensure that all materials used are compatible.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="400" data-scale="0.5">
+        <h2>BGA</h2>
+        <center>
+            <img src="images/manufacture/bga1.png" style="width:50%">
+            <img src="images/manufacture/bga2.png">
+        </center>
+
+        <div class="notes">BGAs are common sources of thermal problems. The cases are plastic or ceramic, the balls are solder, the traces are copper, the board to which it will be soldered is (typically) fibreglass. BGAs can be physically quite large meaning that a relatively small mismatch in expansion coefficient adds up to a significant lateral deviation at the edges.
+
+        BGAs in high reliability environments are often glued to the board. While this doesn't stop thermal issues, it does mean that the glue takes the bulk of the strain rather than the solder. This can prevent broken solder joints.
+
+        Image Credits: The Computer Desktop Encyclopedia; Rainer Knapper</div>
+    </div>
+
+    <div class="step" data-x="2400" data-y="250" data-scale="0.5">
+        <h1>RoHS</h1>
+        <div style="float:left;width:500px">
+            The RoHS directive states that certain chemicals cannot be used in
+consumer electronics:
+            <ul><li>Lead (Pb)</li>
+                <li>Mercury (Hg)</li>
+                <li>Cadmium (Cd)</li>
+                <li>Hexavalent chromium (Cr 6+ )</li>
+                <li>Polybrominated biphenyls (PBB)</li>
+                <li>Polybrominated diphenyl ether (PBDE)</li></ul>
+        </div>
+        <div style="float:right">
+            <img src="images/manufacture/rohs.png" class="naked">
+        </div>
+
+        <div class="notes">As Systems Engineers, all designs should consider factors such as the system lifecycle cost and environmental impact. In the electronics industry, you’re forced to consider the environment in at least one way: The European Union Reduction of Hazardous Substances directive (RoHS).
+
+        Most electronic devices imported in to the EU (and some other juristictions) must conform to the RoHS standard.
+
+        There is an exception for some classes of electronics, e.g. Defence-related equipment.
+
+        Historically, solder has been made from Lead and Tin (SnPb). This is not RoHS-compliant; modern solder is made from other alloys of Tin, Copper, Silver and more exotic materials. Many electronics professionals speak of RoHS derisively as the quality of Lead-free solder is only recently  approaching that of old-school SnPb. It’s generally harder to rework, doesn’t flow as smoothly, is more brittle and doesn’t look as nice.</div>
+    </div>
 
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
     <div id="overview" class="step"/>
