@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 8.2: Manufacture</title>
+
+    <script src="MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es08-2.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="500" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say"></div>
+        <div class="titlebox">
+            <h1>Manufacture</h1>
+        </div>
+        <div id="say2"></div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes"></div>
+    </div>
+
+    <div class="step" data-x-rel="1000" data-y-rel="0" data-scale="0.7">
+        <h1>Printed Circuit Board</h1>
+        <center><img src="images/manufacture/stackup.png" class="naked"> </center>
+    </div>
+
+
+    <div class="step" data-x-rel="390" data-y-rel="-30" data-scale="0.2">
+        <h2>Copper</h2>
+        Starts off a solid copper set and will be selectively etched to form traces.
+    </div>
+
+
+    <div class="step" data-x-rel="0" data-y-rel="30" data-scale="0.2">
+        <h2>Prepreg</h2>
+        Pre-impregnated material. Usually glass fibre preimpregnated with expoxy.
+
+        <div class="notes">Substrates may also include Teflon for good RF performance, Aluminium for good thermal properties etc.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="30" data-scale="0.2">
+        <h2>Core</h2>
+        Core material gives mechanical stability and strength.
+
+        <div class="notes">Core may be aluminium for thermal properties. Most commonly the same material as the prepreg.</div>
+    </div>
+
+    <div class="step" data-x-rel="400" data-y-rel="0" data-scale="0.5">
+        <h1>Etching</h1>
+        <div style="float:left;width:400px">
+            <p>Process:</p>
+            <p><ol><li>Laminate Copper to Prepreg</li>
+                <li>Deposit Resist</li>
+                <li>Expose to Etchant</li>
+                <li>Clean Resist</li></ol></p>
+
+            <p>Etchant creeps under resist, causing trapezoidal traces.</p>
+        </div>
+        <div style="float:right">
+            <img src="images/manufacture/etch-before.png" class="naked"><br/>
+            <img src="images/manufacture/etch-after.png" class="naked">
+        </div>
+
+        <div class="notes">Each pair of layers comes precoated with copper foil on each side. A resist material is coated on each side in the correct pattern for the traces and the board exposed to an etching chemical. The chemical gets under the resist so the traces end up trapezoidal rather than the ideal rectangle.
+
+        This process introduces minimum track and space widths. A track that’s too thin might etch completely through and form an open circuit; a space too thin might not provide enough surface area for the etchant to work and cause a short circuit between adjacent traces.</div>
+    </div>
+
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step"/>
+
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+
