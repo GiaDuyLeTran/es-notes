@@ -1076,3 +1076,11 @@ sup {
 
 #title .linkbox {
   margin-top: 130px; }
+
+.impress-on-prot2 #prot1 {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+  opacity: 0.8; }
+
+.impress-on-dc2 #dc1 {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1; }

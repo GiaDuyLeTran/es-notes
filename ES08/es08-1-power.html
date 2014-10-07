@@ -46,12 +46,309 @@
     </div>
 
     <div class="step thin" data-x-rel="800" data-y-rel="-150" data-scale="0.7">
-        <h1>Categorisation</h1>
+        <h1>A Little Maths</h1>
+        \[ P = V\times I\]
+        \[ V = I \times R\]
+        \[ P = I^2 \times R\]
 
-        <div class="notes">
+        <ul><li>Minimizing current minimizes power lost for a given resistance.</li>
+        <li>Lower current for the same power throughput requires higher voltage.</li></ul>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="350" data-scale="0.5">
+        <center><img src="images/power/substation.jpg"></center>
+
+        <div class="notes">This is why power is transferred at high voltages (kV) across long distances then reduced to 240V near the end premesis.
+
+        Patrick Finnegan South Prarie substation transformer/HV side
+        https://www.flickr.com/photos/vax-o-matic/3808936344/in/photostream/
+        </div>        
+    </div>
+
+    <div class="step" id="volt" data-x="2000" data-y="0" data-scale="0.5">
+        <h1>Common Voltages</h1>
+    </div>
+
+    <div class="step thin" data-x-rel="volt:0" data-y-rel="volt:-80" data-scale="0.25">
+        <h1>12V</h1>
+        <ul><li>Common input voltage for
+            <ul><li>Embedded Systems</li>
+                <li>Automotive systems</li></ul>
+            <li>Regulated down before use</li>
+            <li>Historically programming voltage of EPROMs</li></ul>
+
+        <div class="notes">A typical Embedded System with decent computing power may draw 10-20W or roughly 1-2A at 12V. This makes it a good input voltage for the system, as 1-2A is easily able to be carried along the small wires from a plug pack to the device.</div>
+    </div>
+
+    <div class="step thin" data-x-rel="volt:-200" data-y-rel="volt:0" data-scale="0.25">
+        <h1>5V</h1>
+        <ul><li>Transistor-Transistor Logic (<b>TTL</b>)</li>
+            <li>Most older ICs</li>
+            <li>Most current high-reliability ICs (e.g. automotive)</li>
+            <li>USB</li>
+            </ul>
+
+        <div class="notes">5V was historically the right voltage to drive silicon transistor-based logic. As transistors got better, the required drive voltages decreased but 5V has stayed a common voltage. It is used many systems that connect directly to USB, as it is the supplied voltage of choice there.
+
+        In automotive applications, there is often quite a bit of noise and this can be interpretted as signal for lower-voltage systems. As such, 5V is still common there as well.</div>
+    </div>
+
+    <div class="step thin" data-x-rel="volt:0" data-y-rel="volt:80" data-scale="0.25">
+        <h1>3.3V</h1>
+        <ul><li>Low-Voltage Transistor-Transistor Logic (<b>LVTTL</b>)</li>
+            <li>Most modern microcontrollers and ICs</li>
+            <li>By far the most common voltage in Embedded Systems</li>
+            </ul>
+
+        <div class="notes">Moving to physically smaller transistors meant they required lower voltages to turn on and off; and also that they could be more easily damaged by higher voltages.  Most modern ICs use 3.3V for almost all functions</div>
+    </div>
+
+    <div class="step thin" data-x-rel="volt:250" data-y-rel="volt:0" data-scale="0.25">
+        <h1>\(\le\)1.8V</h1>
+        <ul><li>Processor/FGPA core voltage</li>
+            </ul>
+
+        <div class="notes">The even smaller transistors inside modern cores require voltages around 1-1.8V.  It is still common that external interfaces (e.g. to memory, peripherals) be at 3.3V.</div>
+    </div>
+
+    <div class="step" data-x="0" data-y="600" data-scale="0.5">
+        <h1>Level Translation</h1>
+        <center><img src="images/power/ttl-lvttl.png" class="naked"></center>
+
+        <div class="notes">Logical '1' and '0' (high and low) are both defined in terms of a range of voltages for TTL and LVTTL devices.
+
+        A high voltage of a TTL device may blow up an LVTTL device if they are directly connected.
+
+        A high voltage of an LVTTL device may or may not be high enough to be registered on a TTL device.
+
+        Devices interfacing across voltage boundaries will require level translation.</div>
+    </div>
+
+    <div class="step" data-x-rel="350" data-y-rel="0" data-scale="0.5">
+        <h1>&nbsp;</h1>
+        <center><img src="images/power/ttl-lvttl-res.png" class="naked"></center>
+
+        <div class="notes">Unidirectional high-to-low conversion of slowly changing signals is easy - just use a pair of resistors (resistive divider).
+
+        The signal must be slowly-changing as the resistors for an RC network with any stray capacitance on the board, limiting the speed at which the signal can change.</div>
+    </div>
+
+    <div class="step" data-x-rel="400" data-y-rel="0" data-scale="0.5">
+        <h1>&nbsp;</h1>
+        <center><img src="images/power/ttl-lvttl-trans.png" class="naked"></center>
+
+        <div class="notes">Uni/Bidirectional, arbitrary voltage is done best by specialist level translator ICs.</div>
+    </div>
+
+    <div class="step" data-x="0" data-y="1000" data-scale="0.5">
+        <h1>Protection Diodes</h1>
+        <center><img src="images/power/prot-diode.png"></center>
+        <div style="margin:0 auto;width:50%"><ul>
+            <li>Input higher than VCC is shorted to that rail</li>
+            <li>Input lower than ground is shorted to ground</li></ul></div>
+
+        <div class="notes">Almost all digital inputs, and many outputs, have protection diodes. These clamp the input and output voltages to the ground and VCC rails, ensuring that sensitive electronics further inside the chip are never exposed to these voltages.
+
+        They are designed to withstand short bursts of high or low voltage, such as might be experienced from a static shock or another "transient" event.  They will not withstand continuous exposure to out of range voltages.</div>
+    </div>
+
+    <div class="step" id="prot1" data-x-rel="400" data-y-rel="0" data-scale="0.5">
+        <h1>Sequencing</h1>
+        <center><img src="images/power/reg-parallel.png" class="naked">
+
+            <img src="images/power/reg-bringup.png" class="naked" style="padding-top:50px">
+        </center>
+
+        <div class="notes">Regulators may be connected in parallel from a common bus in series or parallel. The parallel configuration here is useful if the lower voltage draws significant current as in a series configuration, the higher voltages need to supply the current for their own rails <b>plus</b> the lower voltage rails.
+
+        All regulators have different startup times - times from the voltage being applied to the output voltage being correct.  If the regulators are in parallel, this can cause issues. In the example case, the 3.3V regulator is turned on slightly before the 5V regulator.</div>
+    </div>
+
+    <div class="step" id="prot2" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+        <div class="uarrow-m-h" style="width:50px;margin-left:275px;margin-bottom:50px"></div>
+        <div style="margin-left:200px"><img src="images/power/prot-diode-in.png" style="padding:20px;"></div>
+
+        <div class="notes">Suppose the input on a 5V device is being driven by a 3.3V device. Further assume for the example that the voltage ranges are such that no translation is necessary.
+        During startup, there will be a period when the 3.3V line is up and the 5V rail is still at 0V.
+
+        During this period, the high protection diode on the input of the device is forward-biased, shorting 3.3V to ground.  If this condition lasts for long enough, the protection diode can be damaged, destroying the device.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <center><img src="images/power/reg-parallel-en.png" class="naked"></center>
+        <div class="notes">The solution is either to use serial regulators where the higher voltages always come up before the lower ones (because the lower are derived from the higher), or use the higher voltage as an enable signal back to the lower voltage regulator.</div>
+    </div>
+
+
+    <div class="step" data-x="1400" data-y="600" data-scale="0.5">
+        <h1>Non-Ideal Impedance</h1>
+        <div style="float:left;width:400px"><p>All traces have a complex impedance: They dissipate power but also store it in an electric and/or magnetic field.</p></div>
+        <div style="float:right">
+            <img src="images/power/board.png" style="width:450px"><br/>
+            <img src="images/power/trace.png" class="naked">
+            \[Z_0 = \frac{87.0}{\sqrt{\epsilon_r+1.41}}\ln{\frac{5.98h}{0.8w+t}} \]
+        </div>
+
+        <div class="notes">That is, a trace acts as a small resistor, capacitor and inductor.
+
+        Image/Eqn credits: Calculation of PCB Track Impedance: Andrew J Burkhardt, Christopher S Gregg and J Alan Staniforth http://www.polarinstruments.com/support/cits/IPC1999.pdf
         </div>
     </div>
 
+    <div class="step thin" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+        <h2>Inductance</h2>
+        <div style="float:left;width:400px">Recall: Instant change in current in an inductor would require infinite voltage.
+            \[v(t)=L\frac{\partial i(t)}{\partial t}\]</div>
+
+        <div class="notes">In practice, this means that the current in a PCB trace cannot change very quickly. Any attempt by a device on the board to suddenly draw more or less current will cause the voltage on that trace to rise and fall significantly.
+
+        Here we are not worried about what happens when current falls and voltage rises, those spikes are generally taken care of by protection diodes on the parts. Of more interest is when current demand increases, voltage on the trace can fall dramatically.</div>
+    </div>
+
+    <div class="step thin" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>Gate Capacitance</h2>
+        <img src="images/power/logic-gate.png" class="naked">
+        <p>Logic gates have a slight capacitance. Every high voltage charges it, every low discharges.</p>
+
+        <div class="notes">If a gate is clocked then, every clock period charges and discharges a capacitor. The power that was stored in that capacitor is dissipated as heat.</div>
+    </div>
+
+    <div class="step thin" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <p>Power dissipated in this way is related to:</p>
+        <ul><li>Voltage</li>
+            <li>Number of Gates</li>
+            <li>Size of Gate Capacitance</li>
+            <li>Clock Rate</li></ul>
+
+        <div class="notes">As chips get more complicated, the number of gates increases.
+
+        In an effort to offset this, drive voltages have been decreasing. The size of transistors has been decreasing (which helps lower their capacitance). Clock rate has been steady or decreasing.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <div style="float:left;width:300px">Transistor sizes have shrunk \(\approx 1000\times\) since the early days of microcontrollers</div>
+        <div style="float:right"><img src="images/power/gate-size.png" class="naked"></div>
+    </div>
+
+    <div class="step" id="dc1" data-x="2000" data-y="600" data-scale="0.5">
+        <h1>Decoupling</h1>
+        <div style="float:left;width:350px">
+            Recall:
+            <ul><li>Trace Inductance means that fast change in current causes voltage drops</li>
+                <li>Gate Capacitance means that clocked device draw current in bursts each clock period</li></ul>
+        </div>
+        <div style="float:right">
+            <img src="images/power/decoupling-before.png"><br/>
+            Before <b>Decoupling</b>
+        </div>
+
+        <div class="notes">The oscilloscope trace shows a power rail near a clocked device. 10mV/div; the voltage spikes off the screen; \(\approx 100mV\) peak to peak.
+
+        Image ref Intersil Application Note 1325</div>
+    </div>
+
+    <div class="step" id="dc2" data-x-rel="300" data-y-rel="0" data-scale="0.5">
+        <h1>&nbsp;</h1>
+        <div style="float:right"><img src="images/power/decoupling-after.png"><br/>
+            After <b>Decoupling</b></div>
+    </div>
+
+    <div class="step" data-x-rel="-150" data-y-rel="300" data-scale="0.5">
+        <h2>What is Decoupling?</h2>
+        <div style="float:left;width:450px">
+            <p>Add <b>Capacitance</b> near the source of the current draw.</p>
+            <p>This acts as a &ldquo;tank&rdquo;, providing current until the power trace can catch up.</p>
+        </div>
+        <div style="float:right"><img src="images/power/processor-decouple.jpg" style="width:450px"></div>
+
+        <div class="notes">If the device draws a lot of current, the decoupling may have to be built in to the package of the device itself. This can be seen on the bottom of this Intel Pentium 4 processor.
+
+        If the capacitor is too far away from the device drawing the power, the inductance of the trace between the capacitor and device will act to reduce the effect of having the capacitor there in the first place.
+
+        Less obvious is that the capacitor itself has some inductance, mainly due to its leads or contacts, which can act to make it less useful. A good decoupling capacitor should be physically small to minimize these effects, but large capacitance to provide enough power.
+
+        This dichotomy leads to the use of several decoupling capacitors on one device: A small, low value one close and one or more physically and electrically-larger ones as you move further away from the device.
+
+        "Intel CPU Pentium 4 640 Prescott bottom" by Eric Gaba (Sting - fr:Sting) - Own work. Licensed under Creative Commons Attribution-Share Alike 3.0 via Wikimedia Commons - https://commons.wikimedia.org/wiki/File:Intel_CPU_Pentium_4_640_Prescott_bottom.jpg#mediaviewer/File:Intel_CPU_Pentium_4_640_Prescott_bottom.jpg</div>
+    </div>
+
+    <div class="step point" data-x-rel="0" data-y-rel="300" data-scale="0.7">
+        Decoupling problems lead to noise and to processor brownout/failure. These problems can be very hard to debug.
+    </div>
+
+    <div class="step" data-x="2900" data-y="500" data-scale="0.5">
+        <h1>Clock Rate</h1>
+        <div style="text-align:center">How do you minimize power consumption for a given piece of work?</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="150" data-scale="0.5">
+        <div style="float:left;width:45%;height:200px" class="simplecard">
+            <h3>Tortoise</h3>
+            <ul><li>Slow the clock</li>
+                <li>Less power per unit time</li></ul>
+        </div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="0" data-scale="0.5">
+        <div style="float:right;width:45%;height:200px" class="simplecard">
+            <h3>Hare</h3>
+            <ul><li>Fast clock until done</li>
+                <li>Go to &ldquo;sleep&rdquo; when finished</li></ul>
+        </div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>Race to Idle</h2>
+        <p>&ldquo;Hare&rdquo; Strategy.</p>
+        <p>Works as you can turn off any fixed power drains such as
+            <ul><li>Peripherals</li>
+                <li>Non-Volatile Memory</li>
+                <li>Regulators</li>
+                <li>&hellip;</li></ul>
+        </p>
+        <div class="notes">Race to Idle is generally the preferred strategy, depending on the power-down and sleep modes of the microcontroller or processor in question.  The power consumption then becomes a function of duty cycle: How long the processor is on, doing work vs how long it is in a sleep mode (and which sleep mode).</div>
+    </div>
+
+    <div class="step thin" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h1>Example</h1>
+        <b>PIC</b> vs <b>AVR</b>
+        <ul><li>1% On-Time</li>
+            <li>3.3V</li>
+            <li>Room Temperature</li>
+            <li>8MHz</li>
+            <li>CPU-Only</li></ul>
+    </div>
+
+    <div class="step" data-x-rel="-150" data-y-rel="200" data-scale="0.3">
+        <h3>AVR</h3>
+        <div style="float:left">
+            \[I_{sleep}=0.25\mu A \\
+            I_{wake}=1.5mA \\
+            P_{total}=3.3V \times \left(0.99 I_{sleep} + 0.01 I_{wake}\right)\\
+            P_{total}=0.05mW \]
+        </div>
+        <div style="float:right;width:400px">
+            <img src="images/power/avr1.png" style="width:100%">
+            <img src="images/power/avr2.png" style="width:100%">
+        </div>
+    </div>
+
+    <div class="step" data-x-rel="300" data-y-rel="0" data-scale="0.3">
+        <h3>PIC</h3>
+        <div style="float:left">
+            \[I_{sleep}=30\mu A \\
+            I_{wake}=2.5mA \\
+            P_{total}=3.3V \times \left(0.99 I_{sleep} + 0.01 I_{wake}\right)\\
+            P_{total}=0.18mW \]</div>
+        <div style="float:right;width:400px">
+            <img src="images/power/pic1.png" style="width:100%">
+            <img src="images/power/pic2.png" style="width:100%">
+        </div>
+
+        <div class="notes">The PIC draws 60% more power than the AVR when running, but draws 500% more power in this particular work load.
+
+        In some cases, the running power of a part may be lower than a comptetitor but a higher-power sleep mode makes for overall higher consumption.</div>
+    </div>
 
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
     <div id="overview" class="step"/>
