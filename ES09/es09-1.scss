@@ -1,0 +1,37 @@
+
+/* ES06 slide specific styling */
+@import 'compass/css3/opacity';
+
+@import 'anu-impress';
+@import 'embedded-systems';
+
+#title h1 {
+    padding-top:80px;
+}
+
+#title #say {
+    margin-top: 150px;
+    text-align:right;
+    font-size:10px;
+    text-shadow:none;
+    color: rgba(0,0,0,0.3);
+    letter-spacing:initial;
+}
+
+#title #say2 {
+    margin-top: 40px;
+    text-align:right;
+    font-size:10px;
+    text-shadow:none;
+    color: rgba(0,0,0,0.3);
+    letter-spacing:initial;
+}
+
+#title .linkbox {
+    margin-top:130px;
+}
+
+.impress-on-prot2 #prot1 { @include opacity(0.8)}
+
+.impress-on-dc2 #dc1 { @include opacity(1.0) }
+
