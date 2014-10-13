@@ -940,12 +940,18 @@ h2 {
   text-indent: 20px;
   padding: 20px 0 10px; }
 
+h2.c {
+  text-align: center; }
+
 h3 {
   font-size: 28px;
   text-indent: 0px;
   padding: 20px 0 5px;
   color: #aa5712;
   font-weight: bold; }
+
+h3.c {
+  text-align: center; }
 
 .card h3, .listcard h3 {
   text-align: center; }
@@ -1075,12 +1081,4 @@ sup {
   letter-spacing: initial; }
 
 #title .linkbox {
-  margin-top: 130px; }
-
-.impress-on-prot2 #prot1 {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
-  opacity: 0.8; }
-
-.impress-on-dc2 #dc1 {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
-  opacity: 1; }
+  margin-top: 150px; }
