@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 10: Effective Embedded Systems</title>
+
+    <script src="MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es10-1.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say"></div>
+        <div class="titlebox">
+            <h1>Effective</h1>
+            <h2>Embedded Systems</h2>
+        </div>
+        <div id="say2"></div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes"></div>
+    </div>
+
+    <div class="step thin" data-x="1000" data-y="-200" data-scale="0.5">
+        <h1>Measures of Success</h1>
+        <p>Embedded Systems are designed and implemented to a specification to meet <b>technical</b> outcomes, but the success of the Embedded System though is defined with respect to <b>business</b> outcomes.</p>
+        <p>The design of an Embedded System is to design a <b>technical solution to a business problem</b>.</p>
+
+        <div class="notes">We all hope that our Embedded Systems are going to be successful, but what makes an Embedded System design and implementation successful?</div>
+
+    </div>
+
+    <div class="step thin" data-x='1000' data-y='0' data-scale="0.5">
+        Two equally important tasks:
+        <ol><li>Producing a good technical solution to the specified problem</li>
+            <li>Ensuring that the technical solution actually solves the business problem</li></ol>
+
+        <div class="notes">As Engineers, the student would be forgiven for believing that their duty lies entirely in the creation of a technical solution and that any shortfall with respect to the business goals will be due to poor specification from the Business Analyst, Client Liaison etc.
+
+        This is arguably true in theory, however in a small organisation the specification is likely to be drafted by the Engineer themselves. In larger organisations where a Business Analyst can and does draw the specification, it is rarely technically complete and the Engineer must be able to make choices that satisfy business goals.</div>
+    </div>
+
+    <div class="step" id="abc" data-x="1500" data-y="-100" data-scale="0.5">
+        <h1>Architecture Business Cycle</h1>
+        <center><img src="images/effective/abc.png" class="naked"> </center>
+    </div>
+
+    <div class="step" data-x='1400' data-y='60' data-scale="0.2">
+        Business opportunity identified
+        <div class="notes">The ABC starts with requirements from sales and marketing; they have identified a new business opportunity and require a piece of technology to exploit it. Their requirements are added to industry standard requirements (such as the RoHS directive discussed in previous lectures) and the complete set of requirements are discussed by all stakeholders.</div>
+    </div>
+
+
+    <div class="step" data-x='1380' data-y='20' data-scale="0.2">
+        Industry Expectations
+    </div>
+ 
+
+    <div class="step" data-x='1350' data-y='-80' data-scale="0.2">
+        Customer expectations<br/>
+        Initial technical input.
+    </div>
+
+
+    <div class="step" data-x='1360' data-y='-120' data-scale="0.2">
+        Reliability and Manufacturability
+    </div>
+
+
+    <div class="step" data-x='1380' data-y='-150' data-scale="0.2">
+        Formulation of Technical Specification
+    </div>
+
+    <div class="step" style="text-align:right" data-x='1600' data-y='-110' data-scale="0.2">
+        System Design
+    </div>
+
+    <div class="step" style="text-align:right" data-x='1630' data-y='-70' data-scale="0.2">
+        Prototype Production
+    </div>
+
+    <div class="step" data-x='2100' data-y='-300' data-scale="0.5">
+        <h1>Pitfalls</h1>
+
+        <div class="notes">The ABC might be seen as competing with the System Engineering principles introduced through the rest of the degree, however this is not the case. The ABC is a minimal abstraction of the common elements of many other Systems Engineering processes, it’s the necessary and sufficient subset for our discussions.
+
+        If a more detailed and formal process is required to implement the assessment of ‘Sales and Marketing Requirements’, draw out a ‘System Architecture’ etc., refer to a Systems text such as Blanchard and Fabricky."></div>
+    </div>
+
+    <div class="step" data-x='2100' data-y='-200' data-scale="0.5">
+    <p><b>Don’t examine industry requirements separately from the sales and marketing ones.</b></p>
+    <p>Engineers may assume that the client is sufficiently well versed in the field to identify environmental targets, required interoperability, required manufacturing process etc. This is rarely the case, the client and Engineer should both identify (potentially) relevant standards and bring their research together during the stakeholder meeting.</p>
+    </div>
+
+
+    <div class="step" data-x='2100' data-y='-60' data-scale="0.5">
+        <p><b>Focus on getting a good technical solution, assuming that such a solution will be of high quality.</b></p>
+        <p>Quality goals should be an input to the technical design process, not a byproduct. Quality will almost certainly have to be traded off against other variables and the value of the trade will be set by business outcomes.</p>
+    </div>
+
+    <div class="step" data-x='2100' data-y='80' data-scale="0.5">
+        <p><b>Asking stakeholders to commit to positions during a single stakeholder meeting.</b></p>
+        <p>An Engineer may not know whether something is technically possible off the top of their heads. Similarly, a marketer may not have all their client research to hand and a customer may have an impulse reaction to a concept quite different from if they think about it for a while. One of the most dangerous things in design is committing to something too early.</p>
+    </div>
+
+    <div class="step" data-x='2100' data-y='330' data-scale="0.5">
+        <h1>Trade-Offs</h1>
+        <p>Some obvious ones:</p>
+        <h3>Cost</h3>
+        <p>Always minimised within the other requirements.</p>
+        <h3>Schedule, Time to Market</h3>
+        <p>Always minimised within the other requirements.</p>
+        <h3>Risk Profile</h3>
+        <p>Always minimised within the other requirements.</p>
+    </div>
+
+    <div class="step" data-x='2100' data-y='530' data-scale="0.5">
+        <h3>Capability</h3>
+        <p>Should all features be implemented immediately or will some be held back to motivate a client upgrade later? Should the upgrade functionality be by unit replacement or firmware/software upgrade?</p>
+        <p>Should multiple versions be offered with different capabilities, and what technical mechanism should control this?</p>
+    </div>
+
+    <div class="step" data-x='2100' data-y='660' data-scale="0.5">
+        <h3>Device Lifetime</h3>
+        <p>Should the devices have a target lifetime that isn’t simply the maximum within the other bounds? For example, should a poor quality battery be used to motivate the client upgrading in the future?</p>
+
+        <div class="notes">Capability and Device Lifetime are interesting in that they are technical parameters that may be primarily or directly driven by business requirements.
+
+        Other requirements in this category might be portability (especially w.r.t software), availability, conformance to standards etc.</div>
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+	<div id="overview" class="step" data-x="1050" data-y="356.0" data-scale="2.5">&nbsp</div>
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+
