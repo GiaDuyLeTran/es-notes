@@ -11,7 +11,7 @@
     <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
     <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
     <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
-    <link href="css/es08-1.css" rel="stylesheet" />
+    <link href="css/es09-1.css" rel="stylesheet" />
 </head>
 
 <body class="impress-not-supported">
@@ -34,11 +34,11 @@
             <p>Research School of Engineering</p>
             <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
         </div>
-        <div id="say">You can't conquer</div>
+        <div id="say">If you have</div>
         <div class="titlebox">
             <h1>Reliability</h1>
         </div>
-        <div id="say2">with a shoddy olive.<br/>Hitler found that out.</div>
+        <div id="say2">You wear the pants!</div>
         <div class="linkbox">
             <a href="?print">print view</a>
         </div>
@@ -58,7 +58,7 @@
 
     <div class="step" data-x-rel="500" data-y-rel="0" data-scale="0.7">
         <h1>Definitions</h1>
-        <p><b>Reliability</b>: How well a system conforms to its specification</p>
+        <p><b>Reliability</b>: How well a system conforms to its specification of behaviour</p>
         <p><b>Failure</b>: A deviation from that specification</p>
         <p><b>Error</b>: The internal problem that results in failure</p>
         <p><b>Fault</b>: The mechanical or algorithmic cause of the error</p>
@@ -66,7 +66,144 @@
         <p>If a subsystem fails, this can be a fault in the outer system.</p>
         <p>Fault &#8594; Error &#8594; Failure &#8594; Fault &#8594; Error &#8594; Failure &hellip;</p>
 
-        <div class="notes"></div>
+        <div class="notes">A failure is a deviation from specification of behaviour which is an external property. If something goes wrong inside a system but its behaviour doesn't change, then it is not a failure.
+
+        This is important for reliability as it means that we can examine methods to identify and contain faults before they lead to an error and cause a system failure.</div>
+    </div>
+
+    <div class="step" data-x-rel="-250" data-y-rel="400" data-scale="0.5">
+        <h1>Faults</h1>
+        <h3>Transient</h3>
+        <p>A fault condition that comes and goes.</p><p><b>Example:</b> Interference on a communication line.</p>
+        <h3>Intermittent</h3>
+        <p>Occur repeatedly but not continuously.</p><p><b>Example:</b> Overheating.</p>
+        <h3>Persistent</h3>
+        <p>Stay in the system until removed by external means.</p><p><b>Example:</b> Damaged component.</p>
+    </div>
+
+    <div class="step" data-x-rel="500" data-y-rel="0" data-scale="0.5">
+        <h1>Failures</h1>
+        <div style="float:left;width:45%">
+        <h3>Time-Domain</h3>
+        <p>Result or Action occurs at the wrong time.</p>
+        <h3>Value-Domain</h3>
+        <p>Result or Action is incorrect or inappropriate.</p>
+        </div>
+
+        <div style="float:right;width:45%">
+        <h3>Fail Uncontrolled</h3>
+        <p>Failure is characterised by arbitrary behaviour of the system as a whole.</p>
+        <h3>Fail Soft/Safe</h3>
+        <p>Failure leads to well-defined, safe degredation of performance or shutdown.</p>
+        <h3>Fail Never</h3>
+        <p>Obviates the need for students to sit and listen to talks about reliability.</p>
+        </div>
+    </div>
+
+    <div class="step thin" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h3>Fault Prevention</h3>
+        Eliminate possible sources of fault before the system becomes operational.
+        <h3>Fault Tolerance</h3>
+        Provide correct function despite possible faults.  Faults are allowed, but isolated so as not to become errors (therefore cannot cause failure.)
+    </div>
+
+    <div class="step" id="prevention" data-x-rel="-300" data-y-rel="300" data-scale="0.5">
+        <h1>Fault Prevention</h1>
+        In order to prevent faults, the system must be understood.
+        <b>What might cause a fault?</b>
+        <ul><li>Understand material properties</li>
+            <li>Know boundary conditions on inputs, outputs</li>
+            <li>Contraints of processor and software systems</li>
+            <li>Real-time performance specifications</li></ul>
+    </div>
+
+    <div class="step" data-x-rel="-250" data-y-rel="250" data-scale="0.5">
+        <h2>Fault Avoidance</h2>
+        Prevent faults from entering the design and constructions.
+
+        <ul><li>Use high-reliability components</li>
+            <li>Use thoroughly tested methods and techniques for assembly and interconnect</li>
+            <li>Package hardware to prevent external interference</li>
+            <li>Rigorous/Formal specification of requirements and compliance procedures</li>
+            <li>Use proven design methodologies</li>
+            <li>Use standardised software and hardware engineering environments to manage complexity.</li></ul>
+    </div>
+
+    <div class="step" data-x-rel="500" data-y-rel="0" data-scale="0.5">
+        <h2>Fault Removal</h2>
+        Find and manage faults after construction but before operation.
+
+        <ul><li>Design Reviews</li>
+            <li>Testing Procedures</li>
+            <li>Program Verification</li>
+            <li>System Testing</li>
+            <li>Hardware Inspection</li>
+            <li>Code Inspection</li></ul>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h3>Production Fault Removal</h3>
+        <p>A subset of fault removal procedures may be used on production units, not just during the design phase.</p>
+
+        <div style="float:left;width:400px"><h3>PCB Test Tag</h3>
+            <p>A portion of the PCB with a special pattern on it. Snapped off the main PCB and saved for future reference if that board should develop a fault.</p></div>
+        <div style="float:right"><img src="images/reliability/pcb_cal.png"></div>
+
+        <div class="notes">Other production fault removal procedures may include the isolation of a representative sample of devices from each production run to undergo (potentially destructive) testing in order to ensure conformance to design specifications.</div>
+    </div>
+
+    <div class="step" data-x-rel="prevention:800" data-y-rel="prevention:0" data-scale="0.5">
+        <h1>Fault Tolerance</h1>
+        <p>Removal isn't completely effective:</p>
+        <p><ul><li>Testing can never be exhaustive</li>
+            <li>Test environments are not completely realistic</li>
+            <li>Specification may not be correct</li>
+            <li>Faults may develop at run-time anyway</li></ul></p>
+
+        <p><b>Fault Tolerance</b> is the concept of providing controlled behaviour in the face of unpredicted fault.</p>
+
+        <div class="notes">Failures are only defined with respect to the specification. Fault removal must therefore work with respect to the specification.  It may not be until the system becomes operational that a deviation between the specification and the real system is detected and in that case, the system may be required to continue to operate (or at least fail safely).
+
+        Of course there is always the likelihood of faults developing in the field. For example, part damage.</div>
+    </div>
+
+    <div class="step thin" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h3>Important For</h3>
+        Systems that are:
+        <p><ul><li>Remote</li>
+            <li>Unmanned</li>
+            <li>Inaccessible&hellip;</li></ul></p>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h3>Full Tolerance</h3>
+        <p>System continues to function without failure. System parameters (e.g. lifetime) may be affected.</p>
+
+        <h3>Fail-Soft</h3>
+        Graceful Degredation. The system continues to operate in the face of all &ldquo;foreseeable&rdquo; fault conditions, accepting a reduction in functionality or performance.
+
+        <h3>Fail-Safe</h3>
+        System shuts down safely at fault. Can be thought of as fail-soft degredation to zero functionality.
+
+        <div class="notes">The level of fault tolerance required will depend on the Embedded System.  Many systems will request full fault tolerance but will accept graceful degredation.  For example, Rovers on Mars often have a single wheel fail. This subsystem failure is a fault for the rover as a whole with graceful degredation to slower movement.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h2>Tolerance by Redundancy</h2>
+        <p>Redundancy may be used in order to</p>
+        <p><ul><li>Detect faults early</li>
+            <li>Handle exceptional situations</li>
+            <li>Functional replacements for entire failed (sub-)systems.</li></ul></p>
+        <p>We examine redundancy in detail in the next module.</p>
+    </div>
+
+    <div class="step" data-x-rel="400" data-y-rel="0" data-scale="0.5">
+        <h2>Other Methods</h2>
+        <ul><li>Watchdog Timer: Detects when a hardware device hasn't &ldquo;checked in&rdquo; for some time and restarts it.</li>
+            <li>Limit Switch: Physically detect mechanical drive issues such as an actuator being instructed to move past its capabilities.</li>
+            <li>Redundant Sensors: Provide sanity checks for each other</li>
+            <li>Transient Recording Systems: &ldquo;Black Box&rdquo; that at least allows failure analysis and hopefully prevention of future occurances</li>
+            <li>&hellip;</li></ul>
     </div>
 
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->

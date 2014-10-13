@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 9-2: Redundancy</title>
+
+    <script src="MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es09-2.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say"></div>
+        <div class="titlebox">
+            <h1>Redundancy</h1>
+        </div>
+        <div id="say2"></div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes"></div>
+    </div>
+
+    <div class="step thin" data-x="1000" data-y="-200" data-scale="0.7">
+        <h1>Static Redundancy</h1>
+
+        <p><ul><li>Unit of Failure: Whole Subsystems</li>
+            <li>Three or more Subsystems installed</li>
+            <li>Failure detected and isolated (<b>fault tolerant</b>)</li>
+            <li>Failed Subsystem removed from operation</li></ul></p>
+
+        <p><b>TMR</b>: Triple-module Redundancy</p>
+        <p><b>NMR</b>: n-module Redundancy</p>
+    </div>
+
+    <div class="step thin" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+        <h2>Comparison</h2>
+        <p>Failure must be detected. Usually done by <b>majority vote</b>.</p>
+        <p>Implies comparison between subsystem behaviours.</p>
+    </div>
+
+    <div class="step thin" data-x-rel="-150" data-y-rel="100" data-scale="0.3">
+        <h3 class="c">Integer Output</h3>
+        \[ 1 == 1 \\
+           1 \ne 2 \]
+    </div>
+
+    <div class="step thin" data-x-rel="150" data-y-rel="0" data-scale="0.3">
+        <h3 class="c">Floating Point Output</h3>
+        \[ 1.0 == 1.0 \\
+           1.0 \stackrel{?}{=} 1.0000000000001 \]
+        <center>Requires tolerance bounds.</center>
+    </div>
+
+    <div class="step thin" data-x-rel="150" data-y-rel="20" data-scale="0.3">
+        <h3 class="c">Binary Output</h3>
+        <div class="simplecard" style="width:300px;margin:0 auto"><pre class="prettyprint">
+bool turn_fan_on(float temp) {
+    if (temp > 50.0)
+        return True;
+    else
+        return False;
+}
+        </pre></div>
+        <center>Tolerance bounds don't work on the output. Comparison logic requires knowledge of the program dynamics.</center>
+    </div>
+
+    <div class="step thin" data-x-rel="-150" data-y-rel="150" data-scale="0.5">
+        <h2>Failure Types</h2>
+        <ul><li>TMR assumes only one module fails at a time.</li>
+            <li>NMR assumes that fewer than \(n / 2\) modules fail at a time.</li>
+            <li>If the failure is caused by input conditions, many (all) modules may fail at once.</li>
+            <li>Diversity required in implementation.</li></ul>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+        <h2>Diversity</h2>
+        <div style="height:400px">
+        <div style="float:left;width:45%;height:100%"><h3>Same</h3>
+            <div class="simplecard" style="height:100%">
+                <ul><li>Specification</li></ul>
+            </div>
+        </div>
+        <div style="float:right;width:45%;height:100%"><h3>Different</h3>
+            <div class="simplecard" style="height:100%">
+                <ul><li>Computer Systems
+                        <ul><li>Processor</li>
+                            <li>Memory</li>
+                            <li>Comms Interfaces</li>
+                            <li>Storage</li>
+                            <li>&hellip;</li></ul></li>
+                    <li>Programming Language</li>
+                    <li>Compiler</li>
+                    <li>Run-time Environment</li>
+                    <li>Operating System</li>
+                    <li>&hellip;</li></ul>
+            </div>
+        </div>
+        </div>
+        <div class="notes">Even the communication between separate development teams may be controlled so that no incorrect assumption about the specification can be passed around.</div>
+    </div>
+
+    <div class="step" data-x-rel="-300" data-y-rel="350" data-scale="0.5">
+        <h2>Example: Boing 777</h2>
+            <p>Three identical primary flight computers, each consisting of:</p>
+            <p><ul><li>Three processors: AMD 29050, Motorola 68040, Intel 80486.
+                <li>Independent power sources and inertia measurements</li>
+                <li>Code built by three different ADA compilers</li>
+                <li>The same ADA software source code (called ‘the specification’)</li>
+                <li>Different ‘monitor’ functions written to supervise correct operation.</li></ul></p>
+
+            <p>Targeted failure probability \(\lt 10^{-10} /h\): Over 1 million flight years per failure!
+            (e.g. UK Seizewell B Nuclear Reactor (emerg.): \(10^{-3} /h\))</p>
+            <p>No single fault onboard a 777 should occur without failure identification.</p>
+            <p>No single fault onboard a 777 should result in the failure of more than one flight computer.</p>
+    </div>
+
+    <div class="step" data-x-rel="600" data-y-rel="100" data-scale="0.5">
+        <img src="images/reliability/a5-0.png" style="width:40%">
+        <img src="images/reliability/a5-1.png" style="width:40%">
+        <img src="images/reliability/a5-2.png" style="width:40%">
+        <img src="images/reliability/a5-3.png" style="width:40%">
+        <img src="images/reliability/a5-4.png" style="width:40%">
+        <img src="images/reliability/a5-5.png" style="width:40%">
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="400" data-scale="0.5">
+        <h2>Example: Ariane 5</h2>
+        <p>The Ariane 5 rocket is a heavy-lifting platform designed to move satellites in to low-earth or geostationary orbit.</p>
+        <p>In 1996, after 37 seconds of flight, the maiden launch of this platform ended in a self-destruct of the system at a cost of over $300 Million.</p>
+
+        <ul><li>The Ariane 5 shared its inertial reference system with the proven Ariane 4</li>
+            <li>Ariane 5 followed a different launch trajectory to Ariane 4</li>
+            <li>&hellip; but this trajectory had not been programmed in to the system simulators.</li>
+            <li>Shortly after launch, the inertial reference system crashed as a result of an input velocity that was too high</li>
+            <li>This specification mistake was common across all three redundant systems, each failed in turn, the rocket become unstable and was ripped apart due to aerodynamic forces before exploding.</li></ul>
+
+        <div class="notes">The software had explicitly removed the error checking in this part of the code to get better efficiency. It was deemed that input values that were too high were physically impossible (which they were for Ariane 4, just not 5).
+
+        Worse, the actual piece of code that crashed wasn't even being used by the Ariane 5 platform, it was not needed.  I was not removed from the code only so the engineers didn't have to retest the whole software system.</div>
+    </div>
+
+    <div class="step" data-x-rel="-300" data-y-rel="400" data-scale="0.5">
+        <h1>NMR Issues</h1>
+        <h3>Specification</h3>
+        <p>N-Version modules are built to the same specification so won’t help if that specification is incorrect.</p>
+        <h3>Diversity Assumption</h3>
+        <p>Diversity can be enforced in some areas, while coincident errors are observed in others. Rigorous identification of adequate domains for N-version programming is a current source of research.</p>
+        <h3>Project Costs</h3>
+        <p>The development costs will increase by N times, plus the cost of coordination.</p>
+    </div>
+
+    <div class="step thin" data-x="1700" data-y="-200" data-scale="0.5">
+        <h1>Six-Language Project</h1>
+        Joint project between UCLA and the Honeywell Commercial Flight Systems Division (1992) to determine which programming language provided the most reliable system outcomes.
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+        <h2>The Challenge</h2>
+        <ul><li>Specifications (about a flight controller) were original system specification documents provided by Honeywell.</li>
+            <li>Specifications were enhanced by additional cross-check points and included some forced diversity elements.</li>
+            <li>Development teams were isolated and communication strictly defined and controlled by a central team.</li>
+            <li>Specified tests were performed by the coordinating team before a version was accepted for integration.</li>
+            <li>The N-Version paradigm was applied to all stages of the development cycle.</li>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h2>The Results</h2>
+        <table id="sixl">
+            <tr><th>Language</th><th>Source Size (l.o.c)</th><th>Test Runs</th><th>Errors</th><th>Failure Rate</th></tr>
+            <tr class="g"><td>Ada</td><td>2256</td><td>5127400</td><td>0</td><td>\(0\)</td></tr>
+            <tr class="m"><td>C</td><td>1531</td><td>5127400</td><td>568</td><td>\(1.108 \times 10^{-4}\)</td></tr>
+            <tr class="g"><td>Modula-2</td><td>1562</td><td>5127400</td><td>0</td><td>\(0\)</td></tr>
+            <tr class="g"><td>Pascal</td><td>2331</td><td>5127400</td><td>0</td><td>\(0\)</td></tr>
+            <tr class="b"><td>Prolog</td><td>2228</td><td>5127400</td><td>680</td><td>\(1.326 \times 10^{-4}\)</td></tr>
+            <tr class="b"><td>T</td><td>1568</td><td>5127400</td><td>680</td><td>\(1.326 \times 10^{-4}\)</td></tr>
+            <tr class="av"><td>Average</td><td>1913</td><td>5127400</td><td>321</td><td>\(0.627 \times 10^{-4}\)</td></tr>
+        </table>
+    </div>
+
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h2>Multiple Failure</h2>
+        <table id="sixl2">
+            <tr><th>Errors</th><th>Single</th><th>Three-Version</th><th>Five-Version</th></tr>
+            <tr class="av"><td>None</td><td>\(0.99993733\)</td><td>\(0.9998409\)</td><td>\(0.9997807\)</td></tr>
+            <tr><td>Single</td><td class="b">\(6.27 \times 10^{-5}\)</td><td class="g">\(13.05 \times 10^{-5}\)</td><td class="g">\(19.15 \times 10^{-5}\)</td></tr>
+            <tr><td>Two, Distinct</td><td></td><td class="m">\(0.20 \times 10^{-5}\)</td><td class="g">\(0.23 \times 10^{-5}\)</td></tr>
+            <tr><td>Two, Coincident</td><td></td><td class="b">\(2.65 \times 10^{-5}\)</td><td class="g">\(2.21 \times 10^{-5}\)</td></tr>
+            <tr><td>Three</td><td></td><td></td><td class="b">\(0.34 \times 10^{-5}\)</td></tr>
+        </table>
+
+        <div class="notes">Distinct errors may be able to be recovered from, as failure can still be detected. Coindicent failures may make it look like the failure value is in fact correct and the failure may not be detected.
+
+        Coincident failures involving more than two versions were never detected.
+
+        The three- and five-version systems showed better failure rates than the single-version &ldquo;Gold Standard&rdquo; prepared by Honeywell.
+
+        Having five independent systems designed in this fashion provides a failure rate 20x better than a single unit (though of course probably at 5x the cost).</div>
+    </div>
+
+
+    <div class="step thin" id="dr" data-x="2400" data-y="-150" data-scale="0.7">
+        <h1>Dynamic Redundancy</h1>
+        <p>The process of identifying fault conditions at run-time and taking controlled action to rectify the fault before a system failure occurs.</p>
+
+        <p><ol><li>Error Detection</li>
+            <li>Damage Confinement and Assessement</li>
+            <li>Error Recovery</li>
+            <li>Fault Treatment</li></ol></p>
+    </div>
+
+    <div class="step" data-x-rel="dr:-100" data-y-rel="dr:300" data-scale="0.3">
+        <h2>Error Detection</h2>
+        <p>May be reported by:</p>
+        <h3>CPU</h3>
+        <p>Over-temperature, Divide-by-zero &hellip;</p>
+        <h3>Interface Controllers</h3>
+        <p>Out-of-bounds signal &hellip;</p>
+        <h3>Communication Systems</h3>
+        <p>Transmission failure, Corrupted reception &hellip;</p>
+        <h3>Runtime Environment</h3>
+        <p>Null-pointer dereference, Illegal memory access &hellip;</p>
+
+        <div class="notes">Error Detection is the first and most critical step of dynamic redundancy. In order to act correctly to rectify a fault before it causes a failure, the nature of the error must be understood.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.3">
+        <h2>Self-Monitoring</h2>
+        <p>Application software may self-monitor and report inconsistencies:</p>
+        <p><b>Replication</b>: Employ N-Version programming to detect error states</p>
+        <p><b>Timing</b>: Watchdog Timers and overrun detectors</p>
+        <p><b>Reversal</b>: Apply inverse function and compare, i.e. \(a \stackrel{?}{=} f^{-1} (f(a))\)</p>
+        <p><b>Coding</b>: Apply error check functions such as CRCs</p>
+        <p><b>Reasonableness</b>: Apply coded ‘sanity checks’ or ‘assertions’ to results</p>
+        <p><b>Structural</b>: Check structural integrity of data structures, e.g. File Systems, Lists, Databases etc.</p>
+        <p><b>Continuity</b>: Assume a maximum allowable delta between successive result values.</p>
+    </div>
+
+    <div class="step" data-x-rel="dr:200" data-y-rel="dr:300" data-scale="0.3">
+        <h2>Damage Confinement and Assessement</h2>
+        <h3>Confine:</h3>
+        <p><ul><li>Atomic Action</li>
+            <li>Firewall</li></ul></p>
+
+        <h3>Assess:</h3>
+        <p><ul><li>Where did it come from?</li>
+            <li>Where did it propagate to?</li>
+            <li>Can we directly observe the fault?</li></ul></p>
+
+        <div class="notes">An error, once detected, cannot be allowed to propagate and become a failure.
+
+        By defining the program in terms of atomic actions, intermediate and error states are never seen from the outside. As such, the error value is contained inside the action.
+
+        Firewalls can be employed to separate two domains (systems). Data can be held at the firewall until it has passed all checks.
+
+        Assessment of the error is required by analyzing the location of the error and the possible paths of propagation both towards the error state and from it. The root cause of the error may not be able to be directly measured so the reverse paths from the error location must be analyzed in order to try and determine where the root fault might lie.
+
+        The forward paths are analyzed as well in order to determine what effects the error may have had before the containment could be enacted.</div>
+    </div>
+
+    <div class="step" data-x-rel="dr:500" data-y-rel="dr:280" data-scale="0.3">
+        <h2>Backwards Error Recovery</h2>
+        <p><ul><li>Set checkpoints of system state at known-good times</li>
+            <li>On error, roll back to a checkpoint.</li></ul></p>
+
+        <p>Applicable even if the fault cannot be discovered.</p>
+        <p>Not applicable if any portion of the system is non-reversible, resettable or controllable (such as if a bad value gets sent across a communications channel before the system is checkpointed).</p>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="150" data-scale="0.3">
+        <h2>Forwards Error Recovery</h2>
+        <p><ul><li>Retry erroneous process</li>
+            <li>Expect fault to be transient.</li></ul></p>
+
+        <p>Doesn't work for persistant faults.</p>
+        <p>May break real-time constraints, turning a value error in to a timing error.</p>
+    </div>
+
+    <div class="step" data-x-rel="dr:850" data-y-rel="dr:280" data-scale="0.3">
+        <h2>Fault Treatment</h2>
+        <p>Once the system has recovered from error, the risk is over from that fault.</p>
+        <p>The final step is to try and identify and fix the fault itself.</p>
+        <p><ul><li>Mark sensor/storage/device as untrustworthy</li>
+            <li>Modify the environment (turn on a fan, slow the system down)</li>
+            <li>Switch a redundant unit to a backup</li>
+            <li>&hellip;</li></ul></p>
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step"/>
+
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+
