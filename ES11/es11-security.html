@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>ENGN8537 Lecture 11: Security</title>
+
+    <script src="MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <link href="fonts/roboto/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/droidsans-mono/stylesheet.css" rel="stylesheet" />
+    <link href="fonts/fontello/css/fontello.css" rel="stylesheet" />
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <link href="css/es11.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<a class="ov-link" href="#overview">Overview</a>
+<a class="notes-link" onclick="impressConsole().open()">Notes</a>
+
+<div id="impress">
+    <!-- Title slide -->
+    <div id="title" class="step slide" data-x="0" data-y="0">
+        <div class="logo">
+            <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
+        </div>
+
+        <div class="headbox">
+            <p>Research School of Engineering</p>
+            <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
+        </div>
+        <div id="say">Oh, wait, wait, wait, wait. 18th-century</div>
+        <div class="titlebox">
+            <h1>Secure</h1>
+            <h2>Embedded Systems</h2>
+        </div>
+        <div id="say2">but I guess it’s all the same principles. Let me ask you, are you at all concerned about an uprising?</div>
+        <div class="linkbox">
+            <a href="?print">print view</a>
+        </div>
+        <div class="notes"></div>
+    </div>
+
+    <div class="step thin" data-x="1000" data-y="-200" data-scale="0.7">
+        <h1>Security</h1>
+        <p>An attack on an Embedded System is likey to want to either:</p>
+        <p><ul><li>Gain Data</li>
+            <li>Modify Functionality</li></ul></p>
+
+        <div class="notes"></div>
+    </div>
+
+    <div class="step thin" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>Why Me?</h2>
+        <p><ul><li>Untargetted Attack</li>
+            <li>High-value data</li>
+            <li>High-value functionality</li>
+        </ul></p>
+
+        <div class="notes">You and your attacker may not have the same definition of value. The first step in designing a secure Embedded System is to understand the threats to that system.</div>
+    </div>
+
+    <div class="step thin" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>Embedded Systems</h2>
+        <p>Provide an easy target:</p>
+        <p><ul><li>Small, Resource-constrained</li>
+            <li>Low-performance</li>
+            <li>Firmware-updateable</li>
+            <li>Intmittant updates</li>
+            <li>Ubiquitous</li></ul></p>
+
+        <div class="notes">Resource and performance constraints in Embedde Systems mean that they are relatively easy to overload and trigger denial-of-service events, crashes or timing overruns. Further, the low performance makes it likely that they will not perform high-end encryption.
+
+        The firmware can be updated, which provides a vector by which an attacker may make their attack permanent. The frequency with which most users actually perform updates though is pretty low - when was the last time you updated the firmware in your modem/router? This often means that security problems can exist in devices for a long time after they're widely known.
+
+        Embedded Systems are in charge of a wide range of high-value situations. An attacker may be able to take down power stations, public transport, traffic systems, factories etc. Embedded Systems are also entrusted with all the world's most trusted data through network switches, routers, gateways etc.</div>
+    </div>
+
+
+    <div class="step thin" id="tm" data-x="1500" data-y="0" data-scale="0.5">
+        <h1>Threat Model</h1>
+
+        <div class="notes">Before one can design a secure ES, one must know the threat that is going to be posed to it.  Casual hackers, untargetted attack, after data that your system doesn't even have?  Well-funded, state-sponsored attack with physical access to the devices?  They will all lead to very different responses.
+
+        Resources: Klocwork White Paper: Threat Modeling for Secure Embedded Software.</div>
+    </div>
+
+    <div class="step" data-x-rel="tm:150" data-y-rel="tm:-260" data-scale="0.3" data-rotate="-60">
+        <h3>Security Objectives</h3>
+        <ul><li>What level of security is required?</li>
+            <li>What data is allowed to be lost?</li>
+            <li>How much can the functionality be allowed to change?</li></ul>
+
+        <div class="notes">A fully-secure system against all possible threats is at best expensive (at worst, impossible). The goal of the security review must be known from the first.  This is likely to be traded off against cost, usability etc as part of the overall system design.</div>
+    </div>
+
+    <div class="step" data-x-rel="tm:260" data-y-rel="tm:-150" data-scale="0.3" data-rotate="-30">
+        <h3>System Overview</h3>
+        <ul><li>What data of value does the system contain?</li>
+            <li>What action of value does the system perform?</li>
+            <li>Are &ldquo;soft assets&rdquo; such as reputation, trust an issue?</li></ul>
+
+        <div class="notes">Product defacement for example may not have much of an impact on data or action but may weaken a brand's trust.</div>
+    </div>
+
+    <div class="step" data-x-rel="tm:300" data-y-rel="tm:0" data-scale="0.3">
+        <h3>Decompose Design</h3>
+        <ul><li>&ldquo;Abuse Cases&rdquo;</li>
+            <li>Which areas are susceptible to abuse?</li>
+            <li>Where and how is data stored?</li>
+            <li>Where and how are inputs processed?</li></ul>
+    </div>
+
+    <div class="step" data-x-rel="tm:260" data-y-rel="tm:150" data-scale="0.3" data-rotate="30">
+        <h3>Identify Threats</h3>
+        <ul><li>What value in terms of <b>C</b>onfidentiality, <b>I</b>ntegrity or <b>A</b>vailiability does each asset have?</li>
+            <li>What type of attack could lead to exposure of these assets?</li>
+            <li>What conditions or techniques could be used to make such an attack?</li></ul>
+
+        <div class="notes">The value of an asset (e.g. data) may not be immediately apparent. For example, a system that records POS transactions may have data that can leak a user's credit card details but if you collect data from several of these they can be used to track a user's movements; quite a different set of data of interest to quite a different class of potential attacker.</div>
+    </div>
+
+    <div class="step" data-x-rel="tm:150" data-y-rel="tm:260" data-scale="0.3" data-rotate="60">
+        <h3>Identify Vulnerabilities</h3>
+        <ul><li>Is the system susceptible to the conditions or techniques identified previously?</li>
+            <li>Which ones are not permissable under the Security Objectives laid out previously?</li>
+            <li>Which ones are feasible to be performed by groups laid out in the Security Objectives?</li></ul>
+
+        <div class="notes">A vulnerability may be discovered which only exposes "acceptable" data, or will only expose it if the attacker has sufficient resources that it isn't worth the effort to protect against further.</div>
+    </div>
+
+    <div class="step thin" data-x="0" data-y="600" data-scale="0.5">
+        <h1>Stuxnet</h1>
+
+        <div class="notes"></div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="100" data-scale="0.5">
+        <ul><li>Virus targeted Iranian nuclear refinement facilities</li>
+            <li>Infected the Embedded Systems that controlled the centrigues</li>
+            <li>Thought to have destroyed ~20% of Iran's centrifuges</li>
+            <li>Thought to have been created be a state-sponsored agency, probably Israel or the US</li></ul>
+
+        <div class="notes">The damage caused by the virus and who wrote it have not been (and cannot be confirmed).  <a href="http://www.businessinsider.com.au/stuxnet-was-far-more-dangerous-than-previous-thought-2013-11">Source</a></div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h3>Identify Security Objectives</h3>
+        <p>No possibility of destruction due to the actions of an outside agent.</p>
+        <h3>Create a System Overview</h3>
+        <p>Complex, but would have included Programmable Logic Controllers.</p>
+        <h3>Decompose Design</h3>
+        <p>The PLCs and susceptible to abuse.
+            <ul><li>Firmware-upgradeable</li>
+                <li>Directly in control of critical infrastructure</li></ul></p>
+        <h3>Identify Threats</h3>
+        <p>Several well-known opponents to Iran's nuclear program</p>
+        <h3>Identify Vulnerabilities</h3>
+        <p>An outside agent must not have the ability to change the PLC programming.</p>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>Vulnerability Mitigation</h2>
+        <p>The Engineers ensured that the PLCs were not accessible from outside.</p>
+        <p>The Engineers ensured that the computers that generated the new PLC firmware were not accessible from the outside.</p>
+        <p>No way to access the PLCs or their firmware generation from remote locations.</p>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>What Went Wrong?</h2>
+        <ol><li>Stuxnet infected computers over a network</li>
+            <li>It would install itself on USB sticks</li>
+            <li>If it didn't find the PLC Firmware software, it shut itself down</li>
+            <li>It was programmed to limit its rate of spread and to delete itself on a date to avoid detection</li></ol>
+    </div>
+
+    <div class="step point" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        The computer responsible for creating the PLC firmware did not have network access, but Engineers did occasionally move data to it using a USB stick.
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>Once Infected&hellip;</h2>
+        <p>Stuxnet:</p>
+        <p><ul><li>Installed itself to intercept firmware programming requests</li>
+            <li>Wrote itself in to the PLC alongside the valid program</li>
+            <li>Spoofed responses if the PC asked to read PLC memory where Stuxnet had been written</li>
+            <li>Commanded the centrifuges to rapidly change speed, destroying them</li>
+            <li>Faked sensor data so these speed changes could not be seen by technicians.</li></ul></p>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>Lessons</h2>
+        <ul><li>Unsigned firmware update is a risk, even if you trust the programming computer</li>
+            <li>There are many attack vectors other than networks</li>
+            <li>Stuxnet relied on four different vulnerabilities in Windows and the PLC software
+                <ul><li>Unusually high</li>
+                    <li>Implies high value target</li>
+                    <li>Shows that such major vulnerabilities do exist in common software</li>
+                    <li>Shows that one cannot trust underlying software and vulnerability analysis must account for this.</li></ul></li></ul>
+    </div>
+
+    <div class="step thin" data-x="800" data-y="600" data-scale="0.5">
+        <h1>Carna</h1>
+
+        <div class="notes"></div>
+    </div>
+        
+    <div class="step thin" data-x="1600" data-y="600" data-scale="0.5">
+        <h1>Bad USB</h1>
+
+        <div class="notes"></div>
+    </div>
+
+    <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
+    <div id="overview" class="step"/>
+
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/impressConsole.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/google-code-prettify/lang-verilog.js"></script>
+<script>
+// Call Impress even if it won't be initialized so we at least
+// get .impress-disabled set up and testable from CSS
+impress()
+prettyPrint()
+if ( !window.location.search.match(/print/) ) {
+    impress().init();
+    impressConsole().init();
+}</script>
+
+</body>
+</html>
+
