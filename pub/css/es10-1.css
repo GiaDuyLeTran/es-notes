@@ -1084,4 +1084,25 @@ sup {
   letter-spacing: initial; }
 
 #title .linkbox {
-  margin-top: 150px; }
+  margin-top: 120px; }
+
+th {
+  color: #aa5712;
+  font-weight: bold; }
+
+td, th {
+  padding: 5px 15px;
+  text-align: center;
+  vertical-align: middle; }
+
+tr.av, td.av {
+  background: rgba(50, 50, 50, 0.3); }
+
+tr.g, td.g {
+  background: rgba(50, 250, 0, 0.3); }
+
+tr.m, td.m {
+  background: rgba(150, 150, 0, 0.3); }
+
+tr.b, td.b {
+  background: rgba(250, 50, 0, 0.3); }

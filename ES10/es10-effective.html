@@ -34,12 +34,12 @@
             <p>Research School of Engineering</p>
             <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
         </div>
-        <div id="say"></div>
+        <div id="say">Oh, wait, wait, wait, wait. 18th-century</div>
         <div class="titlebox">
             <h1>Effective</h1>
             <h2>Embedded Systems</h2>
         </div>
-        <div id="say2"></div>
+        <div id="say2">but I guess it’s all the same principles. Let me ask you, are you at all concerned about an uprising?</div>
         <div class="linkbox">
             <a href="?print">print view</a>
         </div>
@@ -152,6 +152,165 @@
         <div class="notes">Capability and Device Lifetime are interesting in that they are technical parameters that may be primarily or directly driven by business requirements.
 
         Other requirements in this category might be portability (especially w.r.t software), availability, conformance to standards etc.</div>
+    </div>
+
+    <div class="step thin" id="proto" data-x="500" data-y="600" data-scale="0.5">
+        <h1>Prototyping</h1>
+        The process of creating preliminary systems or subsystems in order to evaluate implementation options and feature sets.
+
+        <div class="notes">The ABC defines a circular pattern, implying that there must be different stages of prototyping and testing.
+
+It’s rare that a specification is complete and correct at the beginning of a project; the marketplace may change, a feature may be modified once it’s seen in action, new influences may be thought of and integrated. The specification is often a living document, although of course its life should be strictly controlled.
+
+The key to keeping the specification evolving in a sensible way is to control the prototyping and testing of the system. Prototyping is the process of making preliminary systems, or parts of systems, in order to evaluate particular options for implementation. Minimising the number of prototype cycles is often seen as an effective way to minimise cost, however it is often a false economy as the end product may fall short of requirements.</div>
+    </div>
+
+    <div class="step" data-x-rel="proto:-200" data-y-rel="proto:120" data-scale="0.3">
+        <h2>Functional Prototypes</h2>
+        <ul><li>Created early in the design</li>
+            <li>Specifically for evaluating a single choice
+                <ul><li>Interface Design</li>
+                    <li>Sensor</li>
+                    <li>Microcontroller</li>
+                    <li>&hellip;</li></ul></li></ul>
+        <div class="notes">Functional prototypes are created during early iterations and don’t share much in the way of technology with a final system. They are designed to allow rapid evaluation of design choices, everything from user interface design to data quality from particular sensors.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="150" data-scale="0.3">
+        <h3>Example</h3>
+        <div style="float:left;width:400px">Use a commercial touchscreen or tablet to demonstrate UI concepts.</div>
+        <div style="float:right"><img src="images/effective/uLCD-43.png" class="naked"></div>
+        <div class="notes">A common functional prototype for Embedded Systems is to use an off the shelf hardware design and simulated peripherals to allow software development to commence.
+
+An example would be the use of an off the shelf consumer tablet as a development system for a touchscreen medical device, even though the final system will be unlikely to share the same hardware, or even library sets.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="120" data-scale="0.3">
+        <div style="float:left">Use of sensor evaluation kits to confirm performance.</div>
+        <div style="float:right"><img src="images/effective/evk_6t.jpg"></div>
+        <div class="notes">The recording and comparison of data from supplied evaluation kits when assessing GPS module performance, even if the final system will be much more tightly integrated.</div>
+    </div>
+
+    <div class="step thin" data-x-rel="0" data-y-rel="120" data-scale="0.3">
+        <h2>Key Points</h2>
+        <p>A functional prototype must be</p>
+        <ul><li>As high fidelity as required, no more</li>
+            <li>Easy to debug</li>
+            <li>Focused on the core purpose</li></ul>
+
+        <div class="notes">A good functional prototype is as high fidelity as can reasonably be expected, but no more. It should be cheap, quick and easy to debug.
+
+Focus must be kept on its core purpose, the phrase “while we’re at it, let’s just add X as well” doesn’t often lead to good prototypes as unforeseen  interactions between untested parts may end up taking time away from the actual purpose for which the prototype was created. For the same reason, it should not attempt to fit inside final enclosures or exactly represent final choices of components unrelated to the purpose of the prototype.</div>
+    </div>
+
+    <div class="step" data-x-rel="proto:200" data-y-rel="proto:120" data-scale="0.3">
+        <h2>Technical Prototypes</h2>
+        <ul><li>Focused on component interaction</li>
+            <li>Final technical prototype may be production-ready</li>
+            <li>Includes interactions such as
+                <ul><li>Interface/User</li>
+                    <li>Circuit Board/Enclosure</li>
+                    <li>Device/Internet</li>
+                    <li>&hellip;</li></ul></li></ul>
+
+        <div class="notes">Once functional prototypes determine the best components and interfaces, technical prototypes can be employed to start testing interactions.
+
+These interactions may be between different subsystems or between components and enclosures.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="120" data-scale="0.3">
+        <h3>Testing Standards</h3>
+
+        <p><b>Mil-STD-180G</b> Dynamic (vibration and shock) and Environmental tests for electronic equipment</p>
+        <p><b>Mil-STD-202</b> Test methods for electronic components</p>
+        <p><b>Mil-STD-750</b> Test methods for semiconductors</p>
+        <p><b>IPC-610</b> Acceptability of Electronic Assemblies</p>
+
+        <div class="notes">Prototypes exist in order to be tested. Like interfaces, there’s often no need to re-invent the wheel when you can standardise</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="120" data-scale="0.3">
+        <h3>Testing What?</h3>
+        <p>Testing must be done to the specification.</p>
+
+        <p><b>Quality better than competitor X</b>&#8594; How do you measure the quality? Under what conditions?</p>
+        <p><b>Lifetime more than Y under normal use</b>&#8594; What's normal use? Is lifetime an average, minimum; 95%, 1\(\sigma\)&hellip;</p>
+        <p>Driven by the Engineer, answered by the client.</p>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.3">
+        <h2>Example: GNSS Modules</h2>
+        <h3>From the Data Sheet</h3>
+        <table id="gnss">
+            <tr><th></th><th>uBlox MAX7</th><th>Fastrax IT600</th><th>Skytraq Venus</th></tr>
+            <tr><td>Power Consumption</td><td class="m">69mW</td><td class="b">170mW</td><td class="g">60mW</td></tr>
+            <tr><td>Accuracy</td><td class="g">2.5M RMS</td><td class="m">3M RMS</td><td class="g">2.5M RMS</td></tr>
+            <tr><td>TTFF</td><td class="g">29s</td><td class="m">35s</td><td class="g">29s</td></tr>
+            <tr><td>Sensitivity</td><td class="m">-162dBm</td><td class="m">-161dBm</td><td class="g">-165dBm</td></tr>
+            <tr><td>Update Rate</td><td class="m">10Hz</td><td class="m">10Hz</td><td class="g">20Hz</td></tr>
+            <tr><td>Constellations</td><td class="m">GPS, GLONASS</td><td class="g">GPS, GLONASS,<br/>BAIDU, GALLILEO</td><td class="m">GPS</td></tr>
+        </table>
+
+        <div class="notes">On paper, the Skytraq module looks to be the best. Lowest power, fastest update rate, equal-best on the rest.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.3">
+        <h3>From Testing</h3>
+        <table id="gnss">
+            <tr><th></th><th>uBlox MAX7</th><th>Fastrax IT600</th><th>Skytraq Venus</th></tr>
+            <tr class="av"><td>Power Consumption</th><td colspan=3><b>Not Significant</b></td></tr>
+            <tr class="g"><td>Accuracy</td><td class="g">2-5M</td><td class="m">3-7M</td><td class="b">10-15M</td></tr>
+            <tr class="g"><td>TTFF</td><td class="g">~30s</td><td class="g">~30s</td><td class="m">30-60s</td></tr>
+            <tr class="av"><td>Sensitivity</td><td colspan=3>Not Relevant</td></tr>
+            <tr class="av"><td>Update Rate</td><td colspan=3>Spec calls for 5Hz only</td></tr>
+            <tr class="av"><td>Constellations</td><td colspan=3>Spec calls for GPS only</td></tr>
+        </table>
+
+        <div class="notes">In actual testing, and against the metrics that actually mattered, the Skytraq did not perform to expeectations while the uBlox excelled.
+
+        The values given in data sheets are usually theoretical, or at least “best case”. Testing the GNSS modules in situ with actual update rate settings, antenna choice and limiting the constellation to just GPS changed the performance of the modules significantly. When tested against the specified product goals, the front-runner on paper was the worst performing in the application.
+
+        Note: Figures based loosely on actual data, modified a little for illustration.</div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="150" data-scale="0.3">
+        <h3>Client Feedback</h3>
+        <p><b>How about Skytraq, we might want 20Hz in the future!</b> Consider the likelihood and time frame against the degraded performance in the short term.</p>
+        <p><b>How about Fastrax, it’d be great to say that our stuff works with GALILEO and BAIDU!</b> The lifespan of the product is such that it’s expected to be obsolete before those systems are operational.</p>
+        <div class="notes">Stick to the specification. If 20Hz or other constellations are genuinely good things, modify the specification to reflect this and re-test from first principles.</div>
+    </div>
+
+    <div class="step" data-x="1200" data-y="600" data-scale="0.5">
+        <h1>System Maintenance</h1>
+        <ul><li>What will the warranty period be and how does that change component choices?</li>
+            <li>How maintainable must the system be, will it be upgraded in the future or is it disposable?</li>
+            <li>What’s the expected system lifetime?</li></ul>
+        <div class="notes">System maintenance and support come last in the product lifecycle, but must still be actively considered during the development phase.</div>
+
+    </div>
+
+    <div class="step thin" data-x-rel="0" data-y-rel="150" data-scale="0.3">
+        <h2>Planned Obsolescence</h2>
+        <p>Comparing two modules, Module A with a mean time between failure of 50,000 hours and Module B with MTBF 10,000 hours.</p>
+        <p>The product is expected to have a lifetime of 8,000 hours.</p>
+        <p><b>What does this mean for selection?</b></p>
+
+        <div class="notes">Module B may be expected to fail towards the end of the product lifetime. Will the client be put off the brand because their units start to fail right around the time they’re looking for new ones? Or will the failures encourage them to upgrade sooner? The MTBF is an average so Module B might fail more under warranty, does this impact costing strategy?</div>
+    </div>
+
+    <div class="step thin" data-x-rel="0" data-y-rel="120" data-scale="0.3">
+        <h2>Support Strategy</h2>
+        <p>Support strategies are often overlooked early in the design cycle.</p>
+        <p>&ldquo;Problem for the future&rdquo;</p>
+        <p>&ldquo;Take too long to formulate that, let's just get something to market&rdquo;</p>
+        <p><b>Support fundamentally affects choices in the earliest design phases.</b></p>
+        <div class="notes">Development questions such as these only have their answer in the maintenance and support strategy for the system.
+
+This, like everything else, must be specified and tested against as part of the core development procedure.
+
+The inclusion of maintenance strategies in design specifications seems intuitive, however it’s often overlooked. Sometimes accidentally as the actual field failure of a product seems so far away from development. Sometimes intentionally as the client wishes to get something to the market, what happens when it gets there is seen as incidental.
+
+Of course, what good is getting your foot in the door if the marketplace is going to react badly and cut it off?</div>
     </div>
 
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
