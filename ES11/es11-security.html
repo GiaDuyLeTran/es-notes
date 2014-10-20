@@ -25,7 +25,7 @@
 
 <div id="impress">
     <!-- Title slide -->
-    <div id="title" class="step slide" data-x="0" data-y="0">
+    <div id="title" class="step slide" data-x="0" data-y="500">
         <div class="logo">
             <img src='images/ANU_LOGO_cmyk_56mm-large.png' width='200' />
         </div>
@@ -34,19 +34,18 @@
             <p>Research School of Engineering</p>
             <p class="course">ENGN8537: Embedded Systems and Real Time Digital Signal Processing</p>
         </div>
-        <div id="say">Oh, wait, wait, wait, wait. 18th-century</div>
+        <div id="say">Well it's a good news/bad news situation.<br/>The bad news is that there's no good news. The other bad news is</div>
         <div class="titlebox">
-            <h1>Secure</h1>
             <h2>Embedded Systems</h2>
+            <h1>Security</h1>
         </div>
-        <div id="say2">but I guess it’s all the same principles. Let me ask you, are you at all concerned about an uprising?</div>
         <div class="linkbox">
             <a href="?print">print view</a>
         </div>
         <div class="notes"></div>
     </div>
 
-    <div class="step thin" data-x="1000" data-y="-200" data-scale="0.7">
+    <div class="step thin" data-x="1000" data-y="300" data-scale="0.7">
         <h1>Security</h1>
         <p>An attack on an Embedded System is likey to want to either:</p>
         <p><ul><li>Gain Data</li>
@@ -71,7 +70,7 @@
         <p><ul><li>Small, Resource-constrained</li>
             <li>Low-performance</li>
             <li>Firmware-updateable</li>
-            <li>Intmittant updates</li>
+            <li>Intermittant updates</li>
             <li>Ubiquitous</li></ul></p>
 
         <div class="notes">Resource and performance constraints in Embedde Systems mean that they are relatively easy to overload and trigger denial-of-service events, crashes or timing overruns. Further, the low performance makes it likely that they will not perform high-end encryption.
@@ -82,7 +81,7 @@
     </div>
 
 
-    <div class="step thin" id="tm" data-x="1500" data-y="0" data-scale="0.5">
+    <div class="step thin" id="tm" data-x="1500" data-y="500" data-scale="0.5">
         <h1>Threat Model</h1>
 
         <div class="notes">Before one can design a secure ES, one must know the threat that is going to be posed to it.  Casual hackers, untargetted attack, after data that your system doesn't even have?  Well-funded, state-sponsored attack with physical access to the devices?  They will all lead to very different responses.
@@ -134,7 +133,130 @@
         <div class="notes">A vulnerability may be discovered which only exposes "acceptable" data, or will only expose it if the attacker has sufficient resources that it isn't worth the effort to protect against further.</div>
     </div>
 
-    <div class="step thin" data-x="0" data-y="600" data-scale="0.5">
+
+    <div class="step thin" data-x="2400" data-y="300" data-scale="0.5">
+        <h1>Common Attacks</h1>
+
+        <div class="notes"></div>
+    </div>
+
+    <div class="step thin" id="ca1" data-x-rel="0" data-y-rel="100" data-scale="0.5">
+        <h2>Change of Software</h2>
+        <p><ul><li>Firmware update</li>
+            <li>Permanent infection of executables or libraries</li></ul></p>
+    </div>
+
+    <div class="step thin" data-x-rel="250" data-y-rel="0" data-scale="0.25">
+        <h3>Can some (all) of your executable code be read-only?</h3>
+        If all executable memory is read-only, then no infection can be permanent. The device may be power-cycled to restore original operation.
+    </div>
+
+    <div class="step thin" data-x-rel="200" data-y-rel="0" data-scale="0.25">
+        <h3>Can writeable memory (e.g. data, databases, files) change software behaviour?</h3>
+        The answer is almost certainly <b>yes</b>. Potentially treat all data as untrusted and code defensively. Never assume that data is &ldquo;sane&rdquo;.
+    </div>
+
+    <div class="step thin" data-x-rel="200" data-y-rel="0" data-scale="0.25">
+        <h3>Does any data need to be stored in a non-volatile fashion?</h3>
+        If all the data and code in your system is either non-volatile or read-only, then a power-cycle will remove any possible infection.
+    </div>
+
+
+    <div class="step thin" id="ca2" data-x-rel="ca1:0" data-y-rel="ca1:200" data-scale="0.5">
+        <h2>Impersonation</h2>
+        <p><ul><li>User impersonated to gain different privileges</li>
+            <li>Trusted computer impersonated to gain access to different data</li></ul></p>
+    </div>
+
+    <div class="step thin" data-x-rel="250" data-y-rel="0" data-scale="0.25">
+        <h3>How are your trusted users/computers identified?</h3>
+        <p>Commonly username/password but this can be stolen.</p>
+        <p>Two-factor authentication: Something you <b>have</b> and something you <b>know</b>. </p>
+        <p>Computers often given <b>certificates</b> to prove identitiy. </p>
+    </div>
+
+    <div class="step thin" data-x-rel="200" data-y-rel="0" data-scale="0.25">
+        <h3>How is that authentication performed?</h3>
+        <p>Can hack the process rather than the password.</p>
+        <p>Passwords, authentication tokens can be changed. Biometric identity may be more secure against theft but when it is stolen, it is impossible to subsequently change.</p>
+    </div>
+
+    <div class="step thin" data-x-rel="200" data-y-rel="0" data-scale="0.25">
+        <h3>Chain of Trust</h3>
+        <p>Do you directly know and trust your users/computers?</p>
+        <p>If not, do you know and trust someone who directly knows and trusts those users/computers?</p>
+        <p>Do you trust all the intermediate computers/routers that the information will pass through?</p>
+        <p>If not, can you protect (e.g. securely encrypt) the data so that it has no value to those intermediate computers?</p>
+        <div class="notes">For example, you don't know what computer your bank will use to serve its online banking page. You have to trust a third-party to verify a particular computer is serving a particular page.  This is what the "untrusted certificate" messages you may see in your browser are all about: Don't ignore them!</div>
+    </div>
+
+    <div class="step thin" id="ca3" data-x-rel="ca2:0" data-y-rel="ca2:200" data-scale="0.5">
+        <h2>Bug Triggers</h2>
+        <p><ul><li>Used to change behaviour or facilitate other attacks</li>
+            <li>Relies on untrusted data or interfaces not being treated with enough care</li></ul></p>
+    </div>
+
+    <div class="step thin" data-x-rel="250" data-y-rel="0" data-scale="0.25">
+        <h3>Do you have any untrusted data or interfaces?</h3>
+        <p>Do you have to have those interfaces?</p>
+        <div class="notes">The answer is almost certainly "yes". Your user may have to enter data in a text field, for example. At a more basic level, any data that comes through a communications link or stored in non-volatile storage may be corrupted to random values: No random value should be able to trigger misbehaviour.</div>
+    </div>
+
+
+    <div class="step thin" data-x-rel="200" data-y-rel="0" data-scale="0.25">
+        <h3>How do you verify that trust?</h3>
+        <p>Is data encrypted? How strong is that encryption?</p>
+        <p>Is the encryption routine itself safe and bug-free?</p>
+        <p>Are error-checking and identity-checking regimes in place to make sure data received is what was sent, and from who claims to have sent it?</p>
+
+        <div class="notes">It's easy to see that a computer at the other end of a network link may need to have its identity verified when you receive data from it. What's less obvious is that maybe a local device has to have its identity checked too. A computer with a BadUSB stick connected may try and read or write to its hard drive but have that intercepted.  If the computer itself is infected with a virus (e.g. Stuxnet) then the act of reading and writing something may itself have been diverted; how can you guard against that?</div>
+    </div>
+
+    <div class="step thin" data-x-rel="200" data-y-rel="0" data-scale="0.25">
+        <h3>Does your program treat these properly?</h3>
+        <p>How do you know? Has your program been <b>fuzz-tested</b>?</p>
+        <div class="notes">Fuzz-testing is the process of feeding a program a series of random or semi-random inputs over a long time and checking for misbehaviour. The complexity of modern software necessitates this kind of randomized testing as the number of different paths through the code may be too many to be checked by hand.</div>
+    </div>
+
+    <div class="step thin" data-x-rel="ca3:0" data-y-rel="ca3:200" data-scale="0.5">
+        <h1>Common Targets</h1>
+    </div>
+
+    <div class="step thin" data-x-rel="0" data-y-rel="100" data-scale="0.5">
+        <h2>Personal</h2>
+        <ul><li>Credit Card numbers</li>
+            <li>Personal Information</li>
+            <li>Communication &ldquo;metadata&rdquo;</li></ul>
+    </div>
+
+    <div class="step thin" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>Impersonal</h2>
+        <ul><li>Don't care who you are, just what you do</li>
+            <li>Includes tracking information of
+                <ul><li>Physical movement</li>
+                    <li>Online behaviour</li>
+                    <li>Purchasing decisions</li></ul></li></ul>
+
+        <div class="notes">Almost any web site service that you are not paying for with cash, you're paying for with privacy.  Browsing extensions such as <a href="https://www.eff.org/privacybadger">Privacy Badger</a> can help in obfuscating your online movements through browsing.
+
+        If your ES allows for sensitive user interfaction (e.g. sales), how much information are you really giving away? You may remove credit card numbers from transmissions, but are there any uniquely identifying marks left that allow correlation between different locations or times?</div>
+    </div>
+
+    <div class="step thin" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>Intellectual Property</h2>
+        <ul><li>Competitor wants to determine the algorithms you use</li>
+            <li>Attacker wants to find bugs in your programming</li></ul>
+
+        <div class="notes">A while ago we talked about the difference between compiled and interpretted languages. One other difference is that a binary executable (offline-compiled) may be harder for an attacker to reverse-engineer than one where the source code or byte code is present on the deployed system.</div>
+    </div>
+
+    <div class="step thin" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>Espionage</h2>
+        <ul><li>State or Corporate level</li>
+            <li>Wide range of well-resourced attackers possible</li></ul>
+    </div>
+
+    <div class="step thin" data-x="0" data-y="1100" data-scale="0.5">
         <h1>Stuxnet</h1>
 
         <div class="notes"></div>
@@ -149,38 +271,38 @@
         <div class="notes">The damage caused by the virus and who wrote it have not been (and cannot be confirmed).  <a href="http://www.businessinsider.com.au/stuxnet-was-far-more-dangerous-than-previous-thought-2013-11">Source</a></div>
     </div>
 
-    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.5">
         <h3>Identify Security Objectives</h3>
         <p>No possibility of destruction due to the actions of an outside agent.</p>
         <h3>Create a System Overview</h3>
         <p>Complex, but would have included Programmable Logic Controllers.</p>
         <h3>Decompose Design</h3>
-        <p>The PLCs and susceptible to abuse.
+        <p>The PLCs are susceptible to abuse.
             <ul><li>Firmware-upgradeable</li>
                 <li>Directly in control of critical infrastructure</li></ul></p>
         <h3>Identify Threats</h3>
-        <p>Several well-known opponents to Iran's nuclear program</p>
+        <p>That the PLC firmware be changed to cause unsafe operation of critical infrastructure.</p>
         <h3>Identify Vulnerabilities</h3>
         <p>An outside agent must not have the ability to change the PLC programming.</p>
     </div>
 
-    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
         <h2>Vulnerability Mitigation</h2>
-        <p>The Engineers ensured that the PLCs were not accessible from outside.</p>
-        <p>The Engineers ensured that the computers that generated the new PLC firmware were not accessible from the outside.</p>
-        <p>No way to access the PLCs or their firmware generation from remote locations.</p>
+        <ol><li>The Engineers ensured that the PLCs were not accessible from outside.</li>
+        <li>The Engineers ensured that the computers that generated the new PLC firmware were not accessible from the outside.</li>
+        <li>No way to access the PLCs or their firmware generation from remote locations.</li></ol>
     </div>
 
     <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
         <h2>What Went Wrong?</h2>
         <ol><li>Stuxnet infected computers over a network</li>
             <li>It would install itself on USB sticks</li>
-            <li>If it didn't find the PLC Firmware software, it shut itself down</li>
+            <li>If it didn't find the PLC Firmware compiler, it shut itself down</li>
             <li>It was programmed to limit its rate of spread and to delete itself on a date to avoid detection</li></ol>
     </div>
 
     <div class="step point" data-x-rel="0" data-y-rel="200" data-scale="0.5">
-        The computer responsible for creating the PLC firmware did not have network access, but Engineers did occasionally move data to it using a USB stick.
+        Engineers did occasionally move data to the computer with the Firmware compiler using a <b>USB stick</b>. Stuxnet was then able to infect the compiler.
     </div>
 
     <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
@@ -196,7 +318,7 @@
     <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
         <h2>Lessons</h2>
         <ul><li>Unsigned firmware update is a risk, even if you trust the programming computer</li>
-            <li>There are many attack vectors other than networks</li>
+            <li>There are many remote attack vectors other than networks</li>
             <li>Stuxnet relied on four different vulnerabilities in Windows and the PLC software
                 <ul><li>Unusually high</li>
                     <li>Implies high value target</li>
@@ -204,16 +326,146 @@
                     <li>Shows that one cannot trust underlying software and vulnerability analysis must account for this.</li></ul></li></ul>
     </div>
 
-    <div class="step thin" data-x="800" data-y="600" data-scale="0.5">
+    <div class="step thin" data-x="800" data-y="1100" data-scale="0.5">
         <h1>Carna</h1>
 
         <div class="notes"></div>
     </div>
         
-    <div class="step thin" data-x="1600" data-y="600" data-scale="0.5">
-        <h1>Bad USB</h1>
+
+    <div class="step" data-x-rel="0" data-y-rel="100" data-scale="0.5">
+        <ul><li>Virus targeted routers</li>
+            <li>Payload was only a scanner, not malicious</li>
+            <li>Spread was designed to be &ldquo;nice&rdquo;</li>
+            <li>Had the potential for global internet outages, data interception&hellip;</li>
+            <li>Mapped the Internet</li></ul>
 
         <div class="notes"></div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+        <h3>Identify Security Objectives</h3>
+        <p>No possibility of remote modification of device behaviour.</p>
+        <h3>Create a System Overview</h3>
+        <p>Processor with several network interfaces; local and remote.</p>
+        <h3>Decompose Design</h3>
+        <p>The network interfaces are susceptible to abuse.
+            <ul><li>Exposed to the outside world</li>
+                <li>Have access to device functionality by design requirement</li></ul></p>
+        <h3>Identify Threats</h3>
+        <p>That modification of behaviour could expose sensitive data to an attacker.</p>
+        <h3>Identify Vulnerabilities</h3>
+        <p>An outside agent must not have the ability to alter device behaviour by network access.</p>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h2>Vulnerability Mitigation</h2>
+        <ul><li>Device administration firewalled from device operation</li>
+            <li>Administration functions only accessible through password-protected interfaces</li></ul>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>What Went Wrong?</h2>
+        <ol><li>A single firmware image was used for every router produced of a particular model, in order to simplfy production.</li>
+            <li>The administration interface was accessible from the external network port, not just the internal.</li></ol>
+    </div>
+
+    <div class="step point" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        The username and password were easily guessed: <b>root:root</b>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>Once Infected&hellip;</h2>
+        <p>Carna:</p>
+        <p><ul><li>Infected a small number of other routers</li>
+            <li>Scanned all the computers it could reach</li>
+            <li>Sent the data back to a central computer</li>
+            <li>Mapped the Internet!</li></ul></p>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+        <img src="images/security/worldmap.png" style="width:900px">
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <center><img src="images/security/geovideo_lowres.gif"></center>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>Lessons</h2>
+        <ul><li>Use unique, generated passwords for every device produced</li>
+            <li>Think about which interfaces require what functions</li>
+            <li>Be careful of any external interface</li></ul>
+    </div>
+
+    <div class="step thin" data-x="1600" data-y="1100" data-scale="0.5">
+        <h1>Bad USB</h1>
+
+        <div class="notes">This attack was presented at the BlackHat conference 2014. <a href="https://srlabs.de/blog/wp-content/uploads/2014/07/SRLabs-BadUSB-BlackHat-v1.pdf">Source.</a></div>
+    </div>
+
+
+    <div class="step" data-x-rel="0" data-y-rel="100" data-scale="0.5">
+        <ul><li>Virus targets USB devices with onboard microcontrollers (e.g. USB Sticks)</li>
+            <li>USB Stick is instructed to fake another type of USB Device</li>
+            <li>Huge range of possible results</li></ul>
+
+        <div class="notes"></div>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+        <h3>Identify Security Objectives</h3>
+        <p>USB Device should be able to be uniquely and correctly identified as being of the correct type.</p>
+        <h3>Create a System Overview</h3>
+        <p>Will include a microcontroller that is responsible for implementing the USB protocol.</p>
+        <h3>Decompose Design</h3>
+        <p><ul><li>One Interface: USB</li>
+                <li>One vulnerable component: The Microcontroller</li></ul></p>
+        <h3>Identify Threats</h3>
+        <p>That a malicious device could pretend to be something that it isn't, gaining access to a wide range of unintended functionality.</p>
+        <h3>Identify Vulnerabilities</h3>
+        <p>An outside agent must not be able to change the behaviour of a simple USB device.</p>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="300" data-scale="0.5">
+        <h2>Vulnerability Mitigation</h2>
+        <ul><li>Firmware update impossible</li>
+            <li>Firmware update must be signed</li>
+            <li>No mitigation possible if you do not trust your device vendor.</li></ul>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="150" data-scale="0.5">
+        <h2>What Went Wrong?</h2>
+        <ol><li>No vendor identified the vulnerability</li>
+            <li>Firmware update methods are not published, but neither are they effectively guarded against.</li></ol>
+    </div>
+
+    <div class="step point" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        An attacker can easily change the firmware on a wide range of USB devices. This means the device may <b>pretend to be something it isn't</b> and affect your computer's behaviour.
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="200" data-scale="0.5">
+        <h2>Once Infected&hellip;</h2>
+        <p>BadUSB Can:</p>
+        <p><ul><li>Pretend to be a bootable USB stick and install a virus as the computer starts up.</li>
+            <li>Pretend to be a network card and redirect network traffic (e.g. to the attacker's server)</li>
+            <li>Pretend to be a keyboard and issue arbitrary commands
+                <ul><li>Email your files to the attacker</li>
+                    <li>Start a program that requires you enter your password, then steal it</li>
+                    <li>&hellip;</li></ul></li></ul></p>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+        <h2>Lessons</h2>
+        <ul><li>Interfaces that have not been explicitly designed for security can compromise more than just the interface itself.</li>
+            <li>USB in particular has a weakness in the standard that cannot be easily overcome.</li>
+            <li>Trusting any physical device to connect to your system in any way is potentially unsafe.</li>
+            <li>Giving physical access to machines - or devices that will connect to those machines - to untrusted people is unsafe.</li></ul>
+    </div>
+
+    <div class="step" data-x-rel="0" data-y-rel="250" data-scale="0.5">
+        <center><img src="images/security/usb-epoxy.jpg"></center>
+        <div class="notes">Many firmware update procedures require physical access to pins on the controller in order to enter firmware update mode.  Once you have a trusted USB stick (if you ever do), one &ldquo;solution&rdquo; is to cover the stick in epoxy resin so as to prevent access.</div>
     </div>
 
     <!-- Overview pseudo-slide, the data-* elements are filled in by the positioner script -->
