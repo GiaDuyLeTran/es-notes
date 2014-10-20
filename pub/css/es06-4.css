@@ -958,7 +958,9 @@ h3.c {
 
 ol {
   list-style-type: decimal;
-  counter-reset: item; }
+  counter-reset: item;
+  padding-left: 2em;
+  text-indent: -2em; }
 
 ul {
   list-style-type: none;
@@ -996,6 +998,10 @@ li > ul li:before {
   margin-left: 2em;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5; }
+
+li > ul li {
+  text-indent: -4em;
+  padding-left: 2em; }
 
 p {
   margin-bottom: 15px; }

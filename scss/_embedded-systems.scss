@@ -253,6 +253,8 @@ h3.c {
 ol {
     list-style-type: decimal;
     counter-reset: item;
+    padding-left: 2em;
+    text-indent: -2em;
 }
 
 ul {
@@ -293,6 +295,11 @@ li > ul li:before {
     color: $highlight;
     margin-left:2em;
     @include opacity(0.5);
+}
+
+li > ul li {
+    text-indent: -4em;
+    padding-left: 2em;
 }
 
 p {
